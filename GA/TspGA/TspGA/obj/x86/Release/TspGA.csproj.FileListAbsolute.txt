@@ -1,0 +1,12 @@
+E:\Projects\TspGA\TspGA\bin\Release\TspGA.exe
+E:\Projects\TspGA\TspGA\bin\Release\TspGA.pdb
+E:\Projects\TspGA\TspGA\obj\x86\Release\ResolveAssemblyReference.cache
+E:\Projects\TspGA\TspGA\obj\x86\Release\TspGA.frmGa.resources
+E:\Projects\TspGA\TspGA\obj\x86\Release\TspGA.Properties.Resources.resources
+E:\Projects\TspGA\TspGA\obj\x86\Release\GenerateResource.read.1.tlog
+E:\Projects\TspGA\TspGA\obj\x86\Release\GenerateResource.write.1.tlog
+E:\Projects\TspGA\TspGA\obj\x86\Release\TspGA.exe
+E:\Projects\TspGA\TspGA\obj\x86\Release\TspGA.pdb
+E:\Projects\TspGA\TspGA\bin\Release\TspGA.exe.config
+E:\Projects\TspGA\TspGA\obj\x86\Release\GenerateResource-ResGen.read.1.tlog
+E:\Projects\TspGA\TspGA\obj\x86\Release\GenerateResource-ResGen.write.1.tlog

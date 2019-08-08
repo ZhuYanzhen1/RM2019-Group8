@@ -1,0 +1,6 @@
+D:\Desktop\RM2019-Group8\GA\遗传算法\遗传算法\bin\Debug\遗传算法.exe.config
+D:\Desktop\RM2019-Group8\GA\遗传算法\遗传算法\bin\Debug\遗传算法.exe
+D:\Desktop\RM2019-Group8\GA\遗传算法\遗传算法\bin\Debug\遗传算法.pdb
+D:\Desktop\RM2019-Group8\GA\遗传算法\遗传算法\obj\Debug\遗传算法.csprojResolveAssemblyReference.cache
+D:\Desktop\RM2019-Group8\GA\遗传算法\遗传算法\obj\Debug\遗传算法.exe
+D:\Desktop\RM2019-Group8\GA\遗传算法\遗传算法\obj\Debug\遗传算法.pdb
