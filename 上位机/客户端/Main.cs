@@ -271,7 +271,7 @@ namespace 客户端
                             motor6.Text = "Motor6:" + Receive_Package.Motor_Speed[5];
                             motor7.Text = "Motor7:" + Receive_Package.Motor_Speed[6];
                             motor8.Text = "Motor8:" + Receive_Package.Motor_Speed[7];
-                            AddData(Receive_Package.Motor_Speed[0], Receive_Package.Motor_Speed[1], Receive_Package.Motor_Speed[2], Receive_Package.Motor_Speed[3]);
+                            AddData(Receive_Package.Motor_Speed[0]);
                             DrawPIcture();
                             break;
                         case 8:
@@ -342,64 +342,43 @@ namespace 客户端
             Receive_Package.Castle_Bule = new byte[7];
             Receive_Package.Castle_Red = new byte[7];
             Receive_Package.Motor_Speed = new short[8];
-            bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            //bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             Display_Map();
         }
         Queue<float> data1 = new Queue<float>();
-        Queue<float> data2 = new Queue<float>();
-        Queue<float> data3 = new Queue<float>();
-        Queue<float> data4 = new Queue<float>();
-        Bitmap bmp = new Bitmap(5, 2);
-        private void AddData(int number1,int number2,int number3,int number4)
+        private void AddData(int number1)
         {
             data1.Enqueue(number1);
             if (data1.Count > 100)
                 data1.Dequeue();//数据在此时移动
-            data2.Enqueue(number2);
-            if (data2.Count > 100)
-                data2.Dequeue();//数据在此时移动
-            data3.Enqueue(number3);
-            if (data3.Count > 100)
-                data3.Dequeue();//数据在此时移动
-            data1.Enqueue(number4);
-            if (data4.Count > 100)
-                data4.Dequeue();//数据在此时移动
         }
         private Bitmap DrawPIcture()
         {
-            //bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-            pictureBox1.Image = bmp;
+            Bitmap bmp1 = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            pictureBox1.Image = bmp1;
             PointF[] points1 = new PointF[data1.Count];
-            PointF[] points2 = new PointF[data2.Count];
-            PointF[] points3 = new PointF[data3.Count];
-            PointF[] points4 = new PointF[data4.Count];
-            float[] dataInt = data1.ToArray();
+            float[] dataInt1 = data1.ToArray();
             for (int i = 0; i < data1.Count; i++)
             {
-                points1[i] = new PointF((bmp.Width / 100) * i * 1.1f, ((pictureBox1.Height/2) - (dataInt[i] / 100)));
-                points2[i] = new PointF((bmp.Width / 100) * i * 1.1f, ((pictureBox1.Height / 2) - (dataInt[i] / 100)));
-                points3[i] = new PointF((bmp.Width / 100) * i * 1.1f, ((pictureBox1.Height / 2) - (dataInt[i] / 100)));
-                points4[i] = new PointF((bmp.Width / 100) * i * 1.1f, ((pictureBox1.Height / 2) - (dataInt[i] / 100)));
+                points1[i] = new PointF((bmp1.Width / 100) * i * 1.1f, ((pictureBox1.Height/2) - (dataInt1[i] / 200)));
             }
             if (data1.Count > 1)
-                using (var g = Graphics.FromImage(bmp))
+                using (var g1 = Graphics.FromImage(bmp1))
                 {
-                    g.Clear(BackColor);
-                    g.SmoothingMode = SmoothingMode.HighQuality;
-                    g.DrawCurve(Pens.Yellow, points1);
-                    g.DrawCurve(Pens.Red, points2);
-                    g.DrawCurve(Pens.Blue, points3);
-                    g.DrawCurve(Pens.Green, points4);
+                    Pen pe = new Pen(Color.Blue,2);
+                    g1.Clear(BackColor);
+                    g1.SmoothingMode = SmoothingMode.HighQuality;
+                    g1.DrawCurve(pe, points1);
                 }
-            return bmp;
+            return bmp1;
         }
         private void button10_Click(object sender, EventArgs e)
         {
             try
             {
                 socketClient = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                //IPAddress ipaddress = IPAddress.Parse("192.168.4.1");
-                IPAddress ipaddress = IPAddress.Parse("10.21.30.45");
+                IPAddress ipaddress = IPAddress.Parse("192.168.4.1");
+                //IPAddress ipaddress = IPAddress.Parse("10.21.30.45");
                 IPEndPoint endpoint = new IPEndPoint(ipaddress, int.Parse("8080"));
                 socketClient.Connect(endpoint);
                 threadClient = new Thread(RecMsg);

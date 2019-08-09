@@ -52945,11 +52945,13 @@ N#ifndef _DECRYPT_H_
 N#define _DECRYPT_H_
 N
 N#define LOCATION 0x01
+N#define ANGLE 0x02
 N
 Ntypedef struct
 N{
 N  float X_Possition;
 N	float Y_Possition;
+N	float Angle;
 N}Receive_Data_Package;
 Nvoid Received_CallBack(unsigned char Receive_Buffer[]);
 N#endif
@@ -53016,7 +53018,6 @@ N#ifndef _MANIFOLD_H_
 N#define _MANIFOLD_H_
 N#include "mytype.h"
 Nvoid Communicate_Task(void* pvParameters);
-Nvoid Wait_For_HandShake(void);
 N#endif
 L 11 ".\USER\User.h" 2
 N#include "Laser.h"

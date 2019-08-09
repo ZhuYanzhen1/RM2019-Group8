@@ -108,6 +108,7 @@
             this.btn61 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -768,6 +769,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.panel1);
             this.groupBox1.Controls.Add(this.gryo);
             this.groupBox1.Controls.Add(this.angle);
             this.groupBox1.Controls.Add(this.motor4);
@@ -781,7 +783,7 @@
             this.groupBox1.Font = new System.Drawing.Font("等线", 16.2F, System.Drawing.FontStyle.Bold);
             this.groupBox1.Location = new System.Drawing.Point(841, 34);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(468, 257);
+            this.groupBox1.Size = new System.Drawing.Size(468, 447);
             this.groupBox1.TabIndex = 72;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "底盘数据";
@@ -908,28 +910,38 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.pictureBox1);
-            this.panel1.Location = new System.Drawing.Point(841, 316);
+            this.panel1.Location = new System.Drawing.Point(16, 254);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(468, 337);
+            this.panel1.Size = new System.Drawing.Size(445, 181);
             this.panel1.TabIndex = 81;
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Location = new System.Drawing.Point(0, 4);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(464, 333);
+            this.pictureBox1.Size = new System.Drawing.Size(433, 168);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("等线", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Location = new System.Drawing.Point(3, 4);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(100, 29);
+            this.label1.TabIndex = 82;
+            this.label1.Text = "Motor:";
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1329, 689);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.time_least);
             this.Controls.Add(this.red_score);
             this.Controls.Add(this.btn61);
@@ -1005,6 +1017,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -1093,6 +1106,7 @@
         private System.Windows.Forms.Label time_least;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label label1;
     }
 }
 

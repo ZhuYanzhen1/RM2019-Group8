@@ -1,0 +1,332 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FTP</name>
+    </assembly>
+    <members>
+        <member name="T:FTP.FtpClient">
+            <summary>
+            FTPClient 的摘要说明。
+            </summary>
+        </member>
+        <member name="M:FTP.FtpClient.OnFtpLogEvent(FTP.FtpClient.FtpLogEventArgs)">
+            <summary>
+            服务器Log处理事件
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:FTP.FtpClient.OnFtpTranProgressEvent(FTP.FtpClient.FtpTranProgressEventArgs)">
+            <summary>
+            上下载传输时进度处理事件
+            </summary>
+            <param name="e"> 事件参数 </param>
+        </member>
+        <member name="F:FTP.FtpClient.mSocketConnect">
+            <summary>
+            用于连接的Socket
+            </summary>
+        </member>
+        <member name="F:FTP.FtpClient.mStrServer">
+            <summary>
+            服务器
+            </summary>
+        </member>
+        <member name="F:FTP.FtpClient.mIntPort">
+            <summary>
+            服务器端口
+            </summary>
+        </member>
+        <member name="F:FTP.FtpClient.mStrUser">
+            <summary>
+            用户帐号
+            </summary>
+        </member>
+        <member name="F:FTP.FtpClient.mStrPassword">
+            <summary>
+            用户登陆密码
+            </summary>
+        </member>
+        <member name="F:FTP.FtpClient.mStrPath">
+            <summary>
+            服务器目录
+            </summary>
+        </member>
+        <member name="F:FTP.FtpClient.mIsConnected">
+            <summary>
+            是否登陆
+            </summary>
+        </member>
+        <member name="F:FTP.FtpClient.mMode">
+            <summary>
+            服务器支持模式
+            </summary>
+        </member>
+        <member name="F:FTP.FtpClient.mSystemType">
+            <summary>
+            服务器系统类型
+            </summary>
+        </member>
+        <member name="F:FTP.FtpClient.mStrReply">
+            <summary>
+            服务器返回的应答信息，包含应答码
+            </summary>
+        </member>
+        <member name="F:FTP.FtpClient.mIntReplyCode">
+            <summary>
+            服务器返回的应答码
+            </summary>
+        </member>
+        <member name="F:FTP.FtpClient.BLOCK_SIZE">
+            <summary>
+            接收和发送数据的缓存区
+            </summary>
+        </member>
+        <member name="M:FTP.FtpClient.#ctor(System.String,System.String,System.String,System.String,System.Int32,FTP.FtpClient.FtpMode)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="server"> 服务器 </param>
+            <param name="path"> 服务器目录 </param>
+            <param name="user"> 用户帐户 </param>
+            <param name="password"> 登陆密码 </param>
+            <param name="port"> 服务器端口 </param>
+            <param name="mode"> 服务器模式 </param>
+        </member>
+        <member name="M:FTP.FtpClient.Connect">
+            <summary>
+            建立连接
+            </summary>
+        </member>
+        <member name="M:FTP.FtpClient.DisConnect">
+            <summary>
+            关闭连接
+            </summary>
+        </member>
+        <member name="M:FTP.FtpClient.ChDir(System.String)">
+            <summary>
+            改变目录
+            </summary>
+            <param name="strDirName"> 新的工作目录名 </param>
+        </member>
+        <member name="M:FTP.FtpClient.Reset(System.Int64)">
+            <summary>
+            重新开始
+            </summary>
+            <param name="size"></param>
+        </member>
+        <member name="M:FTP.FtpClient.Dir(System.String)">
+            <summary>
+            获取文件列表
+            </summary>
+            <param name="strMark"> 文件名的匹配字符串 </param>
+            <returns></returns>
+        </member>
+        <member name="M:FTP.FtpClient.Put(System.String)">
+            <summary>
+            上传一个文件
+            </summary>
+            <param name="strFile"></param>
+        </member>
+        <member name="M:FTP.FtpClient.Get(System.String,System.String,System.String)">
+            <summary>
+            下载一个文件
+            </summary>
+            <param name="strRemoteFileName"> 服务器上要下载的文件名 </param>
+            <param name="strLocalFolder"> 本地目录(不得以\结束) </param>
+            <param name="strLocalFileName"> 保存在本地的文件名 </param>
+        </member>
+        <member name="M:FTP.FtpClient.Delete(System.String)">
+            <summary>
+            删除一个文件
+            </summary>
+            <param name="strFile"></param>
+        </member>
+        <member name="M:FTP.FtpClient.GetFileSize(System.String)">
+            <summary>
+            获取服务器上文件的大小
+            </summary>
+            <param name="strFileName"> 文件名 </param>
+            <returns> 文件大小 </returns>
+        </member>
+        <member name="M:FTP.FtpClient.ReadLine">
+            <summary>
+            读取socket返回的所有字符串
+            </summary>
+            <returns> 包含应答码的字符串行 </returns>
+        </member>
+        <member name="M:FTP.FtpClient.ReadReply">
+            <summary>
+             将一行应答字符串记录在strReply
+             应答码记录在iReplyCode
+            </summary>
+        </member>
+        <member name="M:FTP.FtpClient.SendCommand(System.String)">
+            <summary>
+            发送命令并获取应答码和最后一行应答字符
+            </summary>
+            <param name="strCommand"></param>
+        </member>
+        <member name="M:FTP.FtpClient.CloseSocketConnect">
+            <summary>
+            关闭socket连接(用于登陆以前)
+            </summary>
+        </member>
+        <member name="M:FTP.FtpClient.CreateDataSocket">
+            <summary>
+            被动模式下：有一个socket用来连接FTP服务器的相关端口(如默认的21)，
+            它负责FTP命令的发送和接收返回的响应信息。
+            然而对于有数据传输的操作，主要是显示远端目录列表，上传，下载文件，
+            不得不依靠另一个socket来完成。
+            在进行这种操作之前，必须发送PASV命令，它返回了227(进入被动模式)开头的信息，
+            在括号中以逗号隔开的六个数字，前四个指服务器的地址，关键是后两个，
+            将倒数第二个*256再加上最后一个数字，其结果就是FTP服务器开放的用于下一条命令
+            来进行数据传输的端口。
+            </summary>
+            <returns> 数据连接socket </returns>
+        </member>
+        <member name="M:FTP.FtpClient.CreateDataListener(System.Net.Sockets.TcpListener@)">
+            <summary>
+            主动模式下：取得本地IP地址和一个随机端口，被把IP和端口用PORT
+            命令发送出去。同时对这个端口进行侦听。
+            </summary>
+            <param name="listener"> 进行侦听的TcpListener </param>
+        </member>
+        <member name="E:FTP.FtpClient.FtpLogEvent">
+            <summary>
+            服务器Log事件
+            </summary>
+        </member>
+        <member name="E:FTP.FtpClient.FtpTranProgressEvent">
+            <summary>
+            上下载传输进度事件
+            </summary>
+        </member>
+        <member name="P:FTP.FtpClient.Connected">
+            <summary>
+            获取是否登陆
+            </summary>
+        </member>
+        <member name="P:FTP.FtpClient.TransferType">
+            <summary>
+            设置传输模式类型
+            </summary>
+        </member>
+        <member name="P:FTP.FtpClient.Mode">
+            <summary>
+            获取或设置服务器模式
+            </summary>
+        </member>
+        <member name="P:FTP.FtpClient.SystemType">
+            <summary>
+            获取或设置FTP服务器的系统类型
+            </summary>
+        </member>
+        <member name="T:FTP.FtpClient.FtpLogEventArgs">
+            <summary>
+            服务器Log事件参数
+            </summary>
+        </member>
+        <member name="F:FTP.FtpClient.FtpLogEventArgs.mStrLog">
+            <summary>
+            服务器返回的Log字串
+            </summary>
+        </member>
+        <member name="M:FTP.FtpClient.FtpLogEventArgs.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="strLog"> Log字串 </param>
+        </member>
+        <member name="P:FTP.FtpClient.FtpLogEventArgs.Log">
+            <summary>
+            获取Log字串
+            </summary>
+        </member>
+        <member name="T:FTP.FtpClient.FtpLogEventHandler">
+            <summary>
+            服务器Log事件委托
+            </summary>
+        </member>
+        <member name="T:FTP.FtpClient.FtpTranProgressEventArgs">
+            <summary>
+            上下载传输进度事件参数
+            </summary>
+        </member>
+        <member name="F:FTP.FtpClient.FtpTranProgressEventArgs.mPercent">
+            <summary>
+            用于保存生成进度的百分比
+            </summary>
+        </member>
+        <member name="F:FTP.FtpClient.FtpTranProgressEventArgs.mCancel">
+            <summary>
+            用于保存生成进度中，是否按下取消
+            </summary>
+        </member>
+        <member name="M:FTP.FtpClient.FtpTranProgressEventArgs.#ctor(System.UInt32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="percent"> 生成进度百分比 </param>
+        </member>
+        <member name="P:FTP.FtpClient.FtpTranProgressEventArgs.Percent">
+            <summary>
+            获取生成进度百分比
+            </summary>
+        </member>
+        <member name="P:FTP.FtpClient.FtpTranProgressEventArgs.Cancel">
+            <summary>
+            获取或设置生成进度中是否按下取消
+            </summary>
+        </member>
+        <member name="T:FTP.FtpClient.FtpTranProgressEventHandler">
+            <summary>
+            上下载传输进度事件委托
+            </summary>
+        </member>
+        <member name="T:FTP.FtpClient.FtpTransferType">
+            <summary>
+            传输模式(二进制，ASCII)
+            </summary>
+        </member>
+        <member name="F:FTP.FtpClient.FtpTransferType.Binary">
+            <summary>
+            二进制模式
+            </summary>
+        </member>
+        <member name="F:FTP.FtpClient.FtpTransferType.ASCII">
+            <summary>
+            ASCII模式
+            </summary>
+        </member>
+        <member name="T:FTP.FtpClient.FtpMode">
+            <summary>
+            服务器模式(Active, Passive)
+            </summary>
+        </member>
+        <member name="F:FTP.FtpClient.FtpMode.Active">
+            <summary>
+            主动模式
+            </summary>
+        </member>
+        <member name="F:FTP.FtpClient.FtpMode.Passive">
+            <summary>
+            被动模式
+            </summary>
+        </member>
+        <member name="T:FTP.FtpClient.FtpSystemType">
+            <summary>
+            服务器系统类型(UNIX, WINDOWS)
+            </summary>
+        </member>
+        <member name="F:FTP.FtpClient.FtpSystemType.UNIX">
+            <summary>
+            UNIX系统服务器
+            </summary>
+        </member>
+        <member name="F:FTP.FtpClient.FtpSystemType.WINDOWS">
+            <summary>
+            WINDOWS系统服务器
+            </summary>
+        </member>
+    </members>
+</doc>

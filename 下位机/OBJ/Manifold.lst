@@ -52795,11 +52795,13 @@ N#ifndef _DECRYPT_H_
 N#define _DECRYPT_H_
 N
 N#define LOCATION 0x01
+N#define ANGLE 0x02
 N
 Ntypedef struct
 N{
 N  float X_Possition;
 N	float Y_Possition;
+N	float Angle;
 N}Receive_Data_Package;
 Nvoid Received_CallBack(unsigned char Receive_Buffer[]);
 N#endif
@@ -52866,7 +52868,6 @@ N#ifndef _MANIFOLD_H_
 N#define _MANIFOLD_H_
 N#include "mytype.h"
 Nvoid Communicate_Task(void* pvParameters);
-Nvoid Wait_For_HandShake(void);
 N#endif
 L 11 ".\USER\User.h" 2
 N#include "Laser.h"
@@ -69562,16 +69563,8 @@ X#if ( 1 == 1 )
 NSummer_Camp_Info_t Summer_Camp_Info;
 NMap_Data_t Map_Data;
 NChassis_Data_t Chassis_Data;
-Nvoid Wait_For_HandShake(void)
-N{
-N	static uint8_t Hand_Shake_Data[8] = {0x5a,0xa5,0x5a,0xa5,0x5a,0xa5,0x5a,0xa5};
-N	Send_Data(PID_HAND_SHAKE, Hand_Shake_Data);
-X	Send_Data(11, Hand_Shake_Data);
-N	
-N}
 Nvoid Communicate_Task(void * pvParameters)
 N{
-N	//Wait_For_HandShake();		//µ»¥˝Œ’ ÷
 N	while(1)
 N	{
 N//		Cvt_Map_Data(&Summer_Camp_Info, &Map_Data);

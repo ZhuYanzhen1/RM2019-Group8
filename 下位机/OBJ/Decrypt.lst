@@ -52795,11 +52795,13 @@ N#ifndef _DECRYPT_H_
 N#define _DECRYPT_H_
 N
 N#define LOCATION 0x01
+N#define ANGLE 0x02
 N
 Ntypedef struct
 N{
 N  float X_Possition;
 N	float Y_Possition;
+N	float Angle;
 N}Receive_Data_Package;
 Nvoid Received_CallBack(unsigned char Receive_Buffer[]);
 N#endif
@@ -52866,7 +52868,6 @@ N#ifndef _MANIFOLD_H_
 N#define _MANIFOLD_H_
 N#include "mytype.h"
 Nvoid Communicate_Task(void* pvParameters);
-Nvoid Wait_For_HandShake(void);
 N#endif
 L 11 ".\USER\User.h" 2
 N#include "Laser.h"
@@ -69608,6 +69609,11 @@ N										Temp_X = ((Data_Buffer[0] << 24)|(Data_Buffer[1] << 16)|(Data_Buffer[
 N										Temp_Y = ((Data_Buffer[4] << 24)|(Data_Buffer[5] << 16)|(Data_Buffer[6] << 8)|Data_Buffer[7]);
 N									  Receive_Package.X_Possition = (Temp_X/10000.0f);
 N										Receive_Package.Y_Possition = (Temp_Y/10000.0f);
+N										break;
+N								case ANGLE:
+X								case 0x02:
+N										Temp_X = ((Data_Buffer[0] << 24)|(Data_Buffer[1] << 16)|(Data_Buffer[2] << 8)|Data_Buffer[3]);
+N									  Receive_Package.Angle = (Temp_X/10000.0f);
 N										break;
 N            }
 N        }

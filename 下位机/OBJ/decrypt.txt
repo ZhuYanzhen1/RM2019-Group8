@@ -11,7 +11,7 @@
 ;;;4      {
 000004  4601              MOV      r1,r0
 ;;;5      		unsigned char Buffer_Data_Counter=0;
-000006  2200              MOVS     r2,#0
+000006  2300              MOVS     r3,#0
 ;;;6      		unsigned char Buffer_Flag=0;
 000008  2500              MOVS     r5,#0
 ;;;7      		while(1)
@@ -20,7 +20,7 @@
 ;;;8      		{
 ;;;9      			if(Buffer_Flag == 0 && Receive_Buffer[Buffer_Data_Counter] == 0xff)
 00000c  b925              CBNZ     r5,|L1.24|
-00000e  5c88              LDRB     r0,[r1,r2]
+00000e  5cc8              LDRB     r0,[r1,r3]
 000010  28ff              CMP      r0,#0xff
 000012  d101              BNE      |L1.24|
 ;;;10     				Buffer_Flag = 1;
@@ -30,25 +30,25 @@
 ;;;11     			else if(Buffer_Flag == 1 && Receive_Buffer[Buffer_Data_Counter] == 0xff)
 000018  2d01              CMP      r5,#1
 00001a  d103              BNE      |L1.36|
-00001c  5c88              LDRB     r0,[r1,r2]
+00001c  5cc8              LDRB     r0,[r1,r3]
 00001e  28ff              CMP      r0,#0xff
 000020  d100              BNE      |L1.36|
 ;;;12     				break;
 000022  e002              B        |L1.42|
                   |L1.36|
 ;;;13     				Buffer_Data_Counter++;
-000024  1c50              ADDS     r0,r2,#1
-000026  b2c2              UXTB     r2,r0
+000024  1c58              ADDS     r0,r3,#1
+000026  b2c3              UXTB     r3,r0
                   |L1.40|
 000028  e7f0              B        |L1.12|
                   |L1.42|
 00002a  bf00              NOP                            ;12
 ;;;14     		}
 ;;;15     		Buffer_Data_Counter++;
-00002c  1c50              ADDS     r0,r2,#1
-00002e  b2c2              UXTB     r2,r0
+00002c  1c58              ADDS     r0,r3,#1
+00002e  b2c3              UXTB     r3,r0
 ;;;16     		if(Buffer_Data_Counter == 12)   //if the package had been broken
-000030  2a0c              CMP      r2,#0xc
+000030  2b0c              CMP      r3,#0xc
 000032  d173              BNE      |L1.284|
 ;;;17         {
 ;;;18     				long Temp_X,Temp_Y;
@@ -61,7 +61,7 @@
 00003a  200f              MOVS     r0,#0xf
 00003c  43b8              BICS     r0,r0,r7
 00003e  42b0              CMP      r0,r6
-000040  d16b              BNE      |L1.282|
+000040  d16d              BNE      |L1.286|
 ;;;22             {
 ;;;23                 uint8_t Temp_Var = 0x00 ;
 000042  2000              MOVS     r0,#0
@@ -130,66 +130,96 @@
 ;;;44     						
 ;;;45                 switch(PID_Bit)
 0000a0  2e01              CMP      r6,#1
-0000a2  d138              BNE      |L1.278|
+0000a2  d002              BEQ      |L1.170|
+0000a4  2e02              CMP      r6,#2
+0000a6  d159              BNE      |L1.348|
+0000a8  e03a              B        |L1.288|
+                  |L1.170|
 ;;;46                 {
 ;;;47                     case LOCATION:
 ;;;48     										Temp_X = ((Data_Buffer[0] << 24)|(Data_Buffer[1] << 16)|(Data_Buffer[2] << 8)|Data_Buffer[3]);
-0000a4  f89d7000          LDRB     r7,[sp,#0]
-0000a8  063f              LSLS     r7,r7,#24
-0000aa  f89dc001          LDRB     r12,[sp,#1]
-0000ae  ea47470c          ORR      r7,r7,r12,LSL #16
-0000b2  f89dc002          LDRB     r12,[sp,#2]
-0000b6  ea47270c          ORR      r7,r7,r12,LSL #8
-0000ba  f89dc003          LDRB     r12,[sp,#3]
-0000be  ea47030c          ORR      r3,r7,r12
+0000aa  f89d7000          LDRB     r7,[sp,#0]
+0000ae  063f              LSLS     r7,r7,#24
+0000b0  f89dc001          LDRB     r12,[sp,#1]
+0000b4  ea47470c          ORR      r7,r7,r12,LSL #16
+0000b8  f89dc002          LDRB     r12,[sp,#2]
+0000bc  ea47270c          ORR      r7,r7,r12,LSL #8
+0000c0  f89dc003          LDRB     r12,[sp,#3]
+0000c4  ea47020c          ORR      r2,r7,r12
 ;;;49     										Temp_Y = ((Data_Buffer[4] << 24)|(Data_Buffer[5] << 16)|(Data_Buffer[6] << 8)|Data_Buffer[7]);
-0000c2  f89d7004          LDRB     r7,[sp,#4]
-0000c6  063f              LSLS     r7,r7,#24
-0000c8  f89dc005          LDRB     r12,[sp,#5]
-0000cc  ea47470c          ORR      r7,r7,r12,LSL #16
-0000d0  f89dc006          LDRB     r12,[sp,#6]
-0000d4  ea47270c          ORR      r7,r7,r12,LSL #8
-0000d8  f89dc007          LDRB     r12,[sp,#7]
-0000dc  ea47040c          ORR      r4,r7,r12
+0000c8  f89d7004          LDRB     r7,[sp,#4]
+0000cc  063f              LSLS     r7,r7,#24
+0000ce  f89dc005          LDRB     r12,[sp,#5]
+0000d2  ea47470c          ORR      r7,r7,r12,LSL #16
+0000d6  f89dc006          LDRB     r12,[sp,#6]
+0000da  ea47270c          ORR      r7,r7,r12,LSL #8
+0000de  f89dc007          LDRB     r12,[sp,#7]
+0000e2  ea47040c          ORR      r4,r7,r12
 ;;;50     									  Receive_Package.X_Possition = (Temp_X/10000.0f);
-0000e0  ee003a10          VMOV     s0,r3
-0000e4  eef80ac0          VCVT.F32.S32 s1,s0
-0000e8  ed9f1a0d          VLDR     s2,|L1.288|
-0000ec  ee800a81          VDIV.F32 s0,s1,s2
-0000f0  ee107a10          VMOV     r7,s0
-0000f4  f8dfc02c          LDR      r12,|L1.292|
-0000f8  f8cc7000          STR      r7,[r12,#0]  ; Receive_Package
+0000e6  ee002a10          VMOV     s0,r2
+0000ea  eef80ac0          VCVT.F32.S32 s1,s0
+0000ee  ed9f1a1e          VLDR     s2,|L1.360|
+0000f2  ee800a81          VDIV.F32 s0,s1,s2
+0000f6  ee107a10          VMOV     r7,s0
+0000fa  f8dfc070          LDR      r12,|L1.364|
+0000fe  f8cc7000          STR      r7,[r12,#0]  ; Receive_Package
 ;;;51     										Receive_Package.Y_Possition = (Temp_Y/10000.0f);
-0000fc  ee004a10          VMOV     s0,r4
-000100  eef80ac0          VCVT.F32.S32 s1,s0
-000104  ed9f1a06          VLDR     s2,|L1.288|
-000108  ee800a81          VDIV.F32 s0,s1,s2
-00010c  ee107a10          VMOV     r7,s0
-000110  f8cc7004          STR      r7,[r12,#4]  ; Receive_Package
+000102  ee004a10          VMOV     s0,r4
+000106  eef80ac0          VCVT.F32.S32 s1,s0
+00010a  ed9f1a17          VLDR     s2,|L1.360|
+00010e  ee800a81          VDIV.F32 s0,s1,s2
+000112  ee107a10          VMOV     r7,s0
+000116  f8cc7004          STR      r7,[r12,#4]  ; Receive_Package
 ;;;52     										break;
-000114  bf00              NOP      
-                  |L1.278|
-000116  bf00              NOP      
-;;;53                 }
-;;;54             }
-000118  bf00              NOP      
-                  |L1.282|
-;;;55     			}
-00011a  bf00              NOP      
+00011a  e01f              B        |L1.348|
                   |L1.284|
-;;;56     }
-00011c  e8bd81fc          POP      {r2-r8,pc}
+00011c  e021              B        |L1.354|
+                  |L1.286|
+00011e  e01f              B        |L1.352|
+                  |L1.288|
+;;;53     								case ANGLE:
+;;;54     										Temp_X = ((Data_Buffer[0] << 24)|(Data_Buffer[1] << 16)|(Data_Buffer[2] << 8)|Data_Buffer[3]);
+000120  f89d7000          LDRB     r7,[sp,#0]
+000124  063f              LSLS     r7,r7,#24
+000126  f89dc001          LDRB     r12,[sp,#1]
+00012a  ea47470c          ORR      r7,r7,r12,LSL #16
+00012e  f89dc002          LDRB     r12,[sp,#2]
+000132  ea47270c          ORR      r7,r7,r12,LSL #8
+000136  f89dc003          LDRB     r12,[sp,#3]
+00013a  ea47020c          ORR      r2,r7,r12
+;;;55     									  Receive_Package.Angle = (Temp_X/10000.0f);
+00013e  ee002a10          VMOV     s0,r2
+000142  eef80ac0          VCVT.F32.S32 s1,s0
+000146  ed9f1a08          VLDR     s2,|L1.360|
+00014a  ee800a81          VDIV.F32 s0,s1,s2
+00014e  ee107a10          VMOV     r7,s0
+000152  f8dfc018          LDR      r12,|L1.364|
+000156  f8cc7008          STR      r7,[r12,#8]  ; Receive_Package
+;;;56     										break;
+00015a  bf00              NOP      
+                  |L1.348|
+00015c  bf00              NOP                            ;52
+;;;57                 }
+;;;58             }
+00015e  bf00              NOP      
+                  |L1.352|
+;;;59     			}
+000160  bf00              NOP      
+                  |L1.354|
+;;;60     }
+000162  e8bd81fc          POP      {r2-r8,pc}
                           ENDP
 
-                  |L1.288|
-000120  461c4000          DCFS     0x461c4000 ; 10000
-                  |L1.292|
+000166  0000              DCW      0x0000
+                  |L1.360|
+000168  461c4000          DCFS     0x461c4000 ; 10000
+                  |L1.364|
                           DCD      Receive_Package
 
-                          AREA ||.data||, DATA, ALIGN=1
+                          AREA ||.bss||, DATA, NOINIT, ALIGN=1
 
                   Receive_Package
-                          %        8
+                          %        12
 
 ;*** Start embedded assembler ***
 

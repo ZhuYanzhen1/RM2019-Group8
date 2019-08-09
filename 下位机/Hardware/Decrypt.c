@@ -50,6 +50,10 @@ void Received_CallBack(unsigned char Receive_Buffer[])
 									  Receive_Package.X_Possition = (Temp_X/10000.0f);
 										Receive_Package.Y_Possition = (Temp_Y/10000.0f);
 										break;
+								case ANGLE:
+										Temp_X = ((Data_Buffer[0] << 24)|(Data_Buffer[1] << 16)|(Data_Buffer[2] << 8)|Data_Buffer[3]);
+									  Receive_Package.Angle = (Temp_X/10000.0f);
+										break;
             }
         }
 			}
