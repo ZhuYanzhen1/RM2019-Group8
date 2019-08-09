@@ -11,6 +11,8 @@ using NativeWifi;
 using System.Net.Sockets;
 using System.Threading;
 using System.Net;
+using System.Windows.Forms.DataVisualization.Charting;
+using System.Drawing.Drawing2D;
 namespace 客户端
 {
 
@@ -41,6 +43,27 @@ namespace 客户端
         byte[] USART3_Rcv_Buffer = new byte[15];
         int RX_Counter = 0x01;
         public Receive_Data_Package Receive_Package = new Receive_Data_Package();
+        void Send_Data(byte pid, byte[] data)
+        {
+	        byte[] Temp_Data=new byte[12];
+	        byte cnt = 0;
+	        Temp_Data[0] =  0xff;
+	        Temp_Data[11] = 0;
+	        for(cnt = 0;cnt<8;cnt++)
+	        {
+		        if(data[cnt] == 0xff)
+		        {
+			        Temp_Data[cnt+2] = 0x00;
+                    Temp_Data[10] = Convert.ToByte(Temp_Data[11] | (1 << cnt));
+		        }
+		        else{
+			        Temp_Data[cnt+2] = data[cnt];
+		        }
+	        }
+            Temp_Data[1] =Convert.ToByte( Convert.ToByte(pid << 4) | Convert.ToByte((~pid) & 0x0f));										//设置pid,并取反校验
+	        Temp_Data[11] = 0xff;				//填充帧尾
+            socketClient.Send(Temp_Data);
+        }
         void Display_Map()
         {
             int Counter = 1;
@@ -69,7 +92,9 @@ namespace 客户端
                 if (Counter == 64)
                     break;
             }
-            time_least.Text = Receive_Package.Least_Time.ToString();
+            time_least.Text = "时间：" + Receive_Package.Least_Time.ToString();
+            blue_score.Text = "蓝方：" + Receive_Package.Score_Blue.ToString();
+            red_score.Text = "红方：" + Receive_Package.Score_Red.ToString();
         }
         void Received_CallBack(byte[] Receive_Buffer)
         {
@@ -246,6 +271,8 @@ namespace 客户端
                             motor6.Text = "Motor6:" + Receive_Package.Motor_Speed[5];
                             motor7.Text = "Motor7:" + Receive_Package.Motor_Speed[6];
                             motor8.Text = "Motor8:" + Receive_Package.Motor_Speed[7];
+                            AddData(Receive_Package.Motor_Speed[0], Receive_Package.Motor_Speed[1], Receive_Package.Motor_Speed[2], Receive_Package.Motor_Speed[3]);
+                            DrawPIcture();
                             break;
                         case 8:
                             Receive_Package.Gryo_Scope_Gryo = Convert.ToInt32(Data_Buffer[0].ToString("X2")
@@ -315,15 +342,64 @@ namespace 客户端
             Receive_Package.Castle_Bule = new byte[7];
             Receive_Package.Castle_Red = new byte[7];
             Receive_Package.Motor_Speed = new short[8];
+            bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             Display_Map();
         }
-
+        Queue<float> data1 = new Queue<float>();
+        Queue<float> data2 = new Queue<float>();
+        Queue<float> data3 = new Queue<float>();
+        Queue<float> data4 = new Queue<float>();
+        Bitmap bmp = new Bitmap(5, 2);
+        private void AddData(int number1,int number2,int number3,int number4)
+        {
+            data1.Enqueue(number1);
+            if (data1.Count > 100)
+                data1.Dequeue();//数据在此时移动
+            data2.Enqueue(number2);
+            if (data2.Count > 100)
+                data2.Dequeue();//数据在此时移动
+            data3.Enqueue(number3);
+            if (data3.Count > 100)
+                data3.Dequeue();//数据在此时移动
+            data1.Enqueue(number4);
+            if (data4.Count > 100)
+                data4.Dequeue();//数据在此时移动
+        }
+        private Bitmap DrawPIcture()
+        {
+            //bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            pictureBox1.Image = bmp;
+            PointF[] points1 = new PointF[data1.Count];
+            PointF[] points2 = new PointF[data2.Count];
+            PointF[] points3 = new PointF[data3.Count];
+            PointF[] points4 = new PointF[data4.Count];
+            float[] dataInt = data1.ToArray();
+            for (int i = 0; i < data1.Count; i++)
+            {
+                points1[i] = new PointF((bmp.Width / 100) * i * 1.1f, ((pictureBox1.Height/2) - (dataInt[i] / 100)));
+                points2[i] = new PointF((bmp.Width / 100) * i * 1.1f, ((pictureBox1.Height / 2) - (dataInt[i] / 100)));
+                points3[i] = new PointF((bmp.Width / 100) * i * 1.1f, ((pictureBox1.Height / 2) - (dataInt[i] / 100)));
+                points4[i] = new PointF((bmp.Width / 100) * i * 1.1f, ((pictureBox1.Height / 2) - (dataInt[i] / 100)));
+            }
+            if (data1.Count > 1)
+                using (var g = Graphics.FromImage(bmp))
+                {
+                    g.Clear(BackColor);
+                    g.SmoothingMode = SmoothingMode.HighQuality;
+                    g.DrawCurve(Pens.Yellow, points1);
+                    g.DrawCurve(Pens.Red, points2);
+                    g.DrawCurve(Pens.Blue, points3);
+                    g.DrawCurve(Pens.Green, points4);
+                }
+            return bmp;
+        }
         private void button10_Click(object sender, EventArgs e)
         {
             try
             {
                 socketClient = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                IPAddress ipaddress = IPAddress.Parse("192.168.4.1");
+                //IPAddress ipaddress = IPAddress.Parse("192.168.4.1");
+                IPAddress ipaddress = IPAddress.Parse("10.21.30.45");
                 IPEndPoint endpoint = new IPEndPoint(ipaddress, int.Parse("8080"));
                 socketClient.Connect(endpoint);
                 threadClient = new Thread(RecMsg);
@@ -336,11 +412,6 @@ namespace 客户端
             {
                 MessageBox.Show("连接失败!");
             }
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

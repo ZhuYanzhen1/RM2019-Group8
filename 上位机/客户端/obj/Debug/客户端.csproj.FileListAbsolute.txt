@@ -8,3 +8,13 @@ D:\Desktop\RM2019-Group8\客户端\客户端\obj\Debug\客户端.csproj.Generate
 D:\Desktop\RM2019-Group8\客户端\客户端\obj\Debug\客户端.exe
 D:\Desktop\RM2019-Group8\客户端\客户端\obj\Debug\客户端.pdb
 D:\Desktop\RM2019-Group8\客户端\客户端\obj\Debug\客户端.Main.resources
+D:\Desktop\RM2019-Group8\上位机\客户端\bin\Debug\客户端.exe.config
+D:\Desktop\RM2019-Group8\上位机\客户端\obj\Debug\客户端.exe
+D:\Desktop\RM2019-Group8\上位机\客户端\obj\Debug\客户端.pdb
+D:\Desktop\RM2019-Group8\上位机\客户端\bin\Debug\客户端.exe
+D:\Desktop\RM2019-Group8\上位机\客户端\bin\Debug\客户端.pdb
+D:\Desktop\RM2019-Group8\上位机\客户端\bin\Debug\ManagedWifi.dll
+D:\Desktop\RM2019-Group8\上位机\客户端\obj\Debug\客户端.csprojResolveAssemblyReference.cache
+D:\Desktop\RM2019-Group8\上位机\客户端\obj\Debug\客户端.Main.resources
+D:\Desktop\RM2019-Group8\上位机\客户端\obj\Debug\客户端.Properties.Resources.resources
+D:\Desktop\RM2019-Group8\上位机\客户端\obj\Debug\客户端.csproj.GenerateResource.Cache

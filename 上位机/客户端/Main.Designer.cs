@@ -96,7 +96,6 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.gryo = new System.Windows.Forms.Label();
             this.angle = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.time_least = new System.Windows.Forms.Label();
             this.red_score = new System.Windows.Forms.Label();
             this.blue_score = new System.Windows.Forms.Label();
@@ -107,8 +106,11 @@
             this.btn36 = new System.Windows.Forms.Button();
             this.btn57 = new System.Windows.Forms.Button();
             this.btn61 = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // btn10
@@ -675,10 +677,10 @@
             // 
             // Connect_To
             // 
-            this.Connect_To.Font = new System.Drawing.Font("等线", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Connect_To.Location = new System.Drawing.Point(284, 34);
+            this.Connect_To.Font = new System.Drawing.Font("等线", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Connect_To.Location = new System.Drawing.Point(544, 34);
             this.Connect_To.Name = "Connect_To";
-            this.Connect_To.Size = new System.Drawing.Size(238, 52);
+            this.Connect_To.Size = new System.Drawing.Size(215, 52);
             this.Connect_To.TabIndex = 63;
             this.Connect_To.Text = "连接到下位机";
             this.Connect_To.UseVisualStyleBackColor = true;
@@ -693,7 +695,6 @@
             this.motor1.Size = new System.Drawing.Size(180, 29);
             this.motor1.TabIndex = 64;
             this.motor1.Text = "Motor1:0000";
-            this.motor1.Click += new System.EventHandler(this.label1_Click);
             // 
             // motor2
             // 
@@ -805,45 +806,35 @@
             this.angle.TabIndex = 72;
             this.angle.Text = "Angle:0.0000";
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.time_least);
-            this.groupBox2.Controls.Add(this.red_score);
-            this.groupBox2.Controls.Add(this.blue_score);
-            this.groupBox2.Font = new System.Drawing.Font("等线", 16.2F, System.Drawing.FontStyle.Bold);
-            this.groupBox2.Location = new System.Drawing.Point(841, 326);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(468, 200);
-            this.groupBox2.TabIndex = 73;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "场地数据";
-            // 
             // time_least
             // 
             this.time_least.AutoSize = true;
-            this.time_least.Location = new System.Drawing.Point(30, 150);
+            this.time_least.Font = new System.Drawing.Font("等线", 16.2F, System.Drawing.FontStyle.Bold);
+            this.time_least.Location = new System.Drawing.Point(358, 46);
             this.time_least.Name = "time_least";
-            this.time_least.Size = new System.Drawing.Size(153, 29);
+            this.time_least.Size = new System.Drawing.Size(97, 29);
             this.time_least.TabIndex = 2;
-            this.time_least.Text = "剩余时间：";
+            this.time_least.Text = "时间：";
             // 
             // red_score
             // 
             this.red_score.AutoSize = true;
-            this.red_score.Location = new System.Drawing.Point(30, 100);
+            this.red_score.Font = new System.Drawing.Font("等线", 16.2F, System.Drawing.FontStyle.Bold);
+            this.red_score.Location = new System.Drawing.Point(200, 46);
             this.red_score.Name = "red_score";
-            this.red_score.Size = new System.Drawing.Size(153, 29);
+            this.red_score.Size = new System.Drawing.Size(97, 29);
             this.red_score.TabIndex = 1;
-            this.red_score.Text = "红方分数：";
+            this.red_score.Text = "红方：";
             // 
             // blue_score
             // 
             this.blue_score.AutoSize = true;
-            this.blue_score.Location = new System.Drawing.Point(30, 50);
+            this.blue_score.Font = new System.Drawing.Font("等线", 16.2F, System.Drawing.FontStyle.Bold);
+            this.blue_score.Location = new System.Drawing.Point(42, 46);
             this.blue_score.Name = "blue_score";
-            this.blue_score.Size = new System.Drawing.Size(153, 29);
+            this.blue_score.Size = new System.Drawing.Size(97, 29);
             this.blue_score.TabIndex = 0;
-            this.blue_score.Text = "蓝方分数：";
+            this.blue_score.Text = "蓝方：";
             // 
             // btn3
             // 
@@ -915,19 +906,40 @@
             this.btn61.Text = "堡垒";
             this.btn61.UseVisualStyleBackColor = true;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.pictureBox1);
+            this.panel1.Location = new System.Drawing.Point(841, 316);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(468, 337);
+            this.panel1.TabIndex = 81;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(464, 333);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1368, 701);
+            this.ClientSize = new System.Drawing.Size(1329, 689);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.time_least);
+            this.Controls.Add(this.red_score);
             this.Controls.Add(this.btn61);
+            this.Controls.Add(this.blue_score);
             this.Controls.Add(this.btn57);
             this.Controls.Add(this.btn36);
             this.Controls.Add(this.btn32);
             this.Controls.Add(this.btn28);
             this.Controls.Add(this.btn7);
             this.Controls.Add(this.btn3);
-            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.Connect_To);
             this.Controls.Add(this.btn50);
@@ -986,17 +998,16 @@
             this.Controls.Add(this.btn12);
             this.Controls.Add(this.btn11);
             this.Controls.Add(this.btn10);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.Name = "Main";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "上位机";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -1070,7 +1081,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label gryo;
         private System.Windows.Forms.Label angle;
-        private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label blue_score;
         private System.Windows.Forms.Label red_score;
         private System.Windows.Forms.Button btn3;
@@ -1081,6 +1091,8 @@
         private System.Windows.Forms.Button btn57;
         private System.Windows.Forms.Button btn61;
         private System.Windows.Forms.Label time_least;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 
