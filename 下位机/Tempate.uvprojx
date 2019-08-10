@@ -503,6 +503,11 @@
               <FileType>1</FileType>
               <FilePath>.\App\Odometer.c</FilePath>
             </File>
+            <File>
+              <FileName>Referee_Decode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\App\Referee_Decode.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

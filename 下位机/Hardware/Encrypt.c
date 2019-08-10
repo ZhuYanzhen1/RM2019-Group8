@@ -90,16 +90,18 @@ uint8_t Cvt_Region_Occupy(uint8_t status, uint8_t belong)
 void Cvt_Map_Data(Summer_Camp_Info_t *Summer_Camp_Info, Map_Data_t *Map_Data)
 {
 	uint8_t cnt = 0;					//定义临时变量
+	memset(Map_Data,0,sizeof(Map_Data_t));
 	//填充城堡能量数据
 	for(cnt=0;cnt<7;cnt++)
 	{
-		Map_Data->Castle_Energy[cnt] = Summer_Camp_Info->castle_energy[cnt].energy[0];
+		Map_Data->Castle_Energy[cnt] = Summer_Camp_Info->castle_energy[cnt].energy[1];
 	}
 	for(cnt=0;cnt<7;cnt++)
 	{
-		Map_Data->Castle_Energy[cnt+7] = Summer_Camp_Info->castle_energy[cnt].energy[1];
+		Map_Data->Castle_Energy[cnt+7] = Summer_Camp_Info->castle_energy[cnt].energy[0];
 	}
 	Append_Cnt = 0;						//清空位移累加值
+	
 	//转换场地数据
 	for(cnt=0;cnt<7;cnt++)
 	{
@@ -113,8 +115,8 @@ void Cvt_Map_Data(Summer_Camp_Info_t *Summer_Camp_Info, Map_Data_t *Map_Data)
 		}
 	}
 	//复制车辆位置
-	Map_Data->Car_Location[0] = Summer_Camp_Info->car_location[0];
-	Map_Data->Car_Location[1] = Summer_Camp_Info->car_location[1];
+	Map_Data->Car_Location[0] = Summer_Camp_Info->car_location[1];
+	Map_Data->Car_Location[1] = Summer_Camp_Info->car_location[0];
 	//复制回合剩余时间
 	Map_Data->Round_Remain_Time = Summer_Camp_Info->round_remain_tick;
 	//复制剩余回合
@@ -122,8 +124,8 @@ void Cvt_Map_Data(Summer_Camp_Info_t *Summer_Camp_Info, Map_Data_t *Map_Data)
 	//复制属于阵营
 	Map_Data->Team = Summer_Camp_Info->round_team;
 	//复制双方得分
-	Map_Data->Score[0] = Summer_Camp_Info->realtime_score[0];
-	Map_Data->Score[1] = Summer_Camp_Info->realtime_score[1];
+	Map_Data->Score[0] = Summer_Camp_Info->realtime_score[1];
+	Map_Data->Score[1] = Summer_Camp_Info->realtime_score[0];
 }
 void Send_Map_Data(Map_Data_t *map_data)
 {
@@ -135,17 +137,15 @@ void Send_Map_Data(Map_Data_t *map_data)
 	//一帧一帧发送数据
 	memcpy(data, buffer,8);
 	Send_Data(PID_MAP_DATA_0,data);
-	memcpy(data, buffer+8,7);
-	data[7] = data[6];
-	data[6] = 0;
+	memcpy(data, buffer+8,8);
 	Send_Data(PID_MAP_DATA_1,data);
-	memcpy(data, buffer+15,8);
+	memcpy(data, buffer+16,8);
 	Send_Data(PID_MAP_DATA_2,data);
-	memcpy(data, buffer+23,8);
+	memcpy(data, buffer+24,8);
 	Send_Data(PID_MAP_DATA_3,data);
-	memcpy(data, buffer+31,8);
+	memcpy(data, buffer+32,8);
 	Send_Data(PID_MAP_DATA_4,data);
-	memcpy(data, buffer+39,8);
+	memcpy(data, buffer+40,8);
 	Send_Data(PID_MAP_DATA_5,data);
 }
 void Send_Data(unsigned char pid, unsigned char data[])
