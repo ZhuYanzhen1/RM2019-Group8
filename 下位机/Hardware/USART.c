@@ -8,7 +8,10 @@ USART_Receve USART2_Receve_Handler;
 USART_Receve USART3_Receve_Handler;
 UART_HandleTypeDef USART3_Handler; //UART3句柄
 UART_HandleTypeDef USART2_Handler; //UART2句柄
-u8 aRxBuffer3;
+UART_HandleTypeDef USART6_Handler; //UART6句柄
+uint8_t aRxBuffer3;
+uint8_t aRxBuffer;
+uint8_t aRxBuffer6;
 #if 1
 #pragma import(__use_no_semihosting)             
 //标准库需要的支持函数
@@ -31,8 +34,7 @@ int fputc(int ch, FILE *f)
 	return ch;
 }
 #endif 
-u8 aRxBuffer;
-extern u8 aRxBuffer3;
+
 void USART2_init(u32 bound)
 {
 	GPIO_InitTypeDef GPIO_Initure;
@@ -62,9 +64,13 @@ unsigned char USART3_Rcv_Buffer[15];
 unsigned char RX_Counter=0x01;
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
+	if(huart->Instance==USART6)//如果是串口6
+	{
+		Referee_Decode(aRxBuffer6);	//裁判系统解码
+	}
 	if(huart->Instance==USART2)//如果是串口2
 	{
-		
+		//Referee_Decode(aRxBuffer);	//裁判系统解码
 	}
 	if(huart->Instance==USART3)//如果是串口3
 	{
@@ -189,6 +195,50 @@ void USART3_IRQHandler(void)
 	}
 	timeout=0;
 	while(HAL_UART_Receive_IT(&USART3_Handler, &aRxBuffer3, 1) != HAL_OK)//一次处理完成之后，重新开启中断并设置RxXferCount为1
+	{
+	 timeout++; //超时处理
+	 if(timeout>maxDelay) break;	
+	}
+}
+
+
+void USART6_Init(unsigned long baud)
+{
+	GPIO_InitTypeDef GPIO_Initure;
+	__HAL_RCC_GPIOG_CLK_ENABLE();			//使能GPIOD时钟
+	__HAL_RCC_USART6_CLK_ENABLE();			//使能USART3时钟
+	GPIO_Initure.Pin=GPIO_PIN_9|GPIO_PIN_14;
+	GPIO_Initure.Mode=GPIO_MODE_AF_PP;		//复用推挽输出
+	GPIO_Initure.Pull=GPIO_PULLUP;	 		//上拉
+	GPIO_Initure.Speed=GPIO_SPEED_FREQ_VERY_HIGH;		//高速
+	GPIO_Initure.Alternate=GPIO_AF8_USART6;	//复用为USART3
+	HAL_GPIO_Init(GPIOG,&GPIO_Initure);	   	//初始化PG9,PG14
+	USART6_Handler.Instance=USART6;					    //USART6
+	USART6_Handler.Init.BaudRate=baud;				    //波特率
+	USART6_Handler.Init.WordLength=UART_WORDLENGTH_8B;   //字长为8位数据格式
+	USART6_Handler.Init.StopBits=UART_STOPBITS_1;	    //一个停止位
+	USART6_Handler.Init.Parity=UART_PARITY_NONE;		    //无奇偶校验位
+	USART6_Handler.Init.HwFlowCtl=UART_HWCONTROL_NONE;   //无硬件流控
+	USART6_Handler.Init.Mode=UART_MODE_TX_RX;		    //收发模式
+	USART3_Handler.Init.OverSampling = UART_OVERSAMPLING_16;
+	HAL_UART_Init(&USART6_Handler);
+	HAL_NVIC_EnableIRQ(USART6_IRQn);		//使能USART6中断通道
+	HAL_NVIC_SetPriority(USART6_IRQn,USART6_Priority,0);	//抢占优先级0，子优先级0
+	HAL_UART_Receive_IT(&USART6_Handler,&aRxBuffer6, 1);
+}
+void USART6_IRQHandler(void)
+{ 
+	uint32_t timeout=0;
+	uint32_t maxDelay=0x1FFFF;
+	HAL_UART_IRQHandler(&USART6_Handler);	//调用HAL库中断处理公用函数
+	timeout=0;
+    while (HAL_UART_GetState(&USART6_Handler) != HAL_UART_STATE_READY)//等待就绪
+	{
+	 timeout++;////超时处理
+     if(timeout>maxDelay) break;		
+	}
+	timeout=0;
+	while(HAL_UART_Receive_IT(&USART6_Handler, &aRxBuffer6, 1) != HAL_OK)//一次处理完成之后，重新开启中断并设置RxXferCount为1
 	{
 	 timeout++; //超时处理
 	 if(timeout>maxDelay) break;	

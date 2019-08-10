@@ -1,5 +1,6 @@
 #ifndef _USER_H_
 #define _USER_H_
+#include "Referee_Decode.h"
 #include "Algorithm.h"
 #include "Odometer.h"
 #include "Encrypt.h"

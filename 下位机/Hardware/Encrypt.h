@@ -31,6 +31,7 @@
 
 #define HAND_SHAKE_DATA		[0xa5,0x5a,0xa5,0x5a,0xa5,0x5a,0xa5]
 
+#pragma pack(push, 1)
 typedef struct
 {
   struct castle_energy
@@ -42,14 +43,15 @@ typedef struct
   {
     uint8_t status : 2; // 0 = no one, 1 = weak, 2 = strong
     uint8_t belong : 2; // 0 = no one, 1 = red, 2 = blue
-    uint8_t have_robot : 2;
-    uint8_t resv : 2;
+    //uint8_t have_robot : 2;
+    uint8_t resv : 4;
   }region_occupy[9][7];
 
   uint8_t car_location[2];
-  uint8_t round_remain_tick;
-  uint8_t round_remain_cnt;
-  uint8_t round_team;
+  uint8_t round_step_move[2];
+	uint8_t round_remain_tick;
+  uint8_t round_remain_cnt : 7;
+  uint8_t round_team : 1;
   int16_t realtime_score[2];
 } Summer_Camp_Info_t;
 
@@ -70,7 +72,7 @@ typedef struct
 	unsigned char Round_Remain_Time;	//回合剩余时间
 	unsigned char Round_Remain_Cnt;		//剩余回合
 	unsigned char Team;							//属于阵营
-	unsigned char Score[2];						//两方实时得分
+	short Score[2];						//两方实时得分
 }Map_Data_t;
 
 

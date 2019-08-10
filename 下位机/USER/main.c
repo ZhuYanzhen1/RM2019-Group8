@@ -16,6 +16,7 @@ void Init_Task(void* pvParameters)
 	num++;
 	oled_printf(num,Pen_Write,"RNG Init Success");   //3
 	USART2_init(115200);							//初始化串口2(蓝牙串口)，波特率115200
+	USART6_Init(115200);
 	num++;
 	oled_printf(num,Pen_Write,"USART2 Init Success");//4
 	ADC1_Init();										//初始化ADC

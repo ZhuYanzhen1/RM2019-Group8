@@ -1,5 +1,5 @@
 #include "User.h"
-float VectorO_X , VectorO_Y , RotateO ,VO_X,VO_Y;
+float Odom_VectorO_X , Odom_VectorO_Y , Odom_RotateO ,VO_X,VO_Y;
 float Des_Vx , Des_Vy , Des_Wz , L_Des_Vx , L_Des_Vy , L_Des_Wz;
 void Odometer_Summary(void *pvParameters)
 {
@@ -10,9 +10,9 @@ void Odometer_Summary(void *pvParameters)
 		Mecanum_To_Chassis(Des_Wheel,&Des_Vx,&Des_Vy,&Des_Wz);
 		VO_X = Des_Vx;
 		VO_Y = Des_Vy;
-		VectorO_X += (0.5f * (Des_Vx + L_Des_Vx))*(0.005f);
-		VectorO_Y += (0.5f * (Des_Vy + L_Des_Vy))*(0.005f);
-		RotateO  +=  (0.5f * (Des_Wz + L_Des_Wz))*(0.005f);
+		Odom_VectorO_X += (0.5f * (Des_Vx + L_Des_Vx))*(0.005f);
+		Odom_VectorO_Y += (0.5f * (Des_Vy + L_Des_Vy))*(0.005f);
+		Odom_RotateO  +=  (0.5f * (Des_Wz + L_Des_Wz))*(0.005f);
 		vTaskDelay(5);
 	}
 }

@@ -18,3 +18,15 @@ D:\Desktop\RM2019-Group8\上位机\客户端\obj\Debug\客户端.csprojResolveAs
 D:\Desktop\RM2019-Group8\上位机\客户端\obj\Debug\客户端.Main.resources
 D:\Desktop\RM2019-Group8\上位机\客户端\obj\Debug\客户端.Properties.Resources.resources
 D:\Desktop\RM2019-Group8\上位机\客户端\obj\Debug\客户端.csproj.GenerateResource.Cache
+C:\Users\blx\Desktop\RM19\RM2019-Group8\上位机\客户端\bin\Debug\客户端.exe.config
+C:\Users\blx\Desktop\RM19\RM2019-Group8\上位机\客户端\bin\Debug\客户端.exe
+C:\Users\blx\Desktop\RM19\RM2019-Group8\上位机\客户端\bin\Debug\客户端.pdb
+C:\Users\blx\Desktop\RM19\RM2019-Group8\上位机\客户端\bin\Debug\ManagedWifi.dll
+C:\Users\blx\Desktop\RM19\RM2019-Group8\上位机\客户端\obj\Debug\客户端.csprojAssemblyReference.cache
+C:\Users\blx\Desktop\RM19\RM2019-Group8\上位机\客户端\obj\Debug\客户端.Main.resources
+C:\Users\blx\Desktop\RM19\RM2019-Group8\上位机\客户端\obj\Debug\客户端.Properties.Resources.resources
+C:\Users\blx\Desktop\RM19\RM2019-Group8\上位机\客户端\obj\Debug\客户端.csproj.GenerateResource.cache
+C:\Users\blx\Desktop\RM19\RM2019-Group8\上位机\客户端\obj\Debug\客户端.csproj.CoreCompileInputs.cache
+C:\Users\blx\Desktop\RM19\RM2019-Group8\上位机\客户端\obj\Debug\客户端.csproj.CopyComplete
+C:\Users\blx\Desktop\RM19\RM2019-Group8\上位机\客户端\obj\Debug\客户端.exe
+C:\Users\blx\Desktop\RM19\RM2019-Group8\上位机\客户端\obj\Debug\客户端.pdb

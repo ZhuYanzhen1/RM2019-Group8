@@ -11,4 +11,5 @@ typedef struct
 	float Angle;
 }Receive_Data_Package;
 void Received_CallBack(unsigned char Receive_Buffer[]);
+extern Receive_Data_Package Receive_Package;
 #endif

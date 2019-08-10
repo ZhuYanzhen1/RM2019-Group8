@@ -86,6 +86,7 @@ void Remote_Control(void* pvParameters)              //周期处理遥控器接收值
 			Chassis_Wz.User = 0;
 		}
 		vTaskDelay(5);
+		Blanket_Open();
 	}
 }
 

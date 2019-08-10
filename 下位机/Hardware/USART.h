@@ -21,4 +21,6 @@ void USART2_IRQHandler(void);
 extern UART_HandleTypeDef huart1;
 extern DMA_HandleTypeDef hdma_usart1_rx;
 void USART1_Init(void);
+void USART6_Init(unsigned long baud);
+void USART6_IRQHandler(void);
 #endif

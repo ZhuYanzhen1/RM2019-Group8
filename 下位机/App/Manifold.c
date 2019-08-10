@@ -7,10 +7,12 @@ void Communicate_Task(void * pvParameters)
 {
 	while(1)
 	{
-//		Cvt_Map_Data(&Summer_Camp_Info, &Map_Data);
-//		Send_Map_Data(&Map_Data);
+		taskENTER_CRITICAL();
+		Cvt_Map_Data(&Summer_Camp_Info, &Map_Data);
+		taskEXIT_CRITICAL();
+		Send_Map_Data(&Map_Data);
 		Send_Chassis_Data(&Chassis_Data);
-		vTaskDelay(100);
+		vTaskDelay(1000);
 	}
 }
 

@@ -73,17 +73,17 @@ uint8_t Cvt_Region_Occupy(uint8_t status, uint8_t belong)
 {
 	if(belong == 0)
 	{
-		return BELONG_NONE;
-	}
-	else if(belong == 1)
-	{
 		if(status == 1) return BELONG_RED_WEAK;
 		if(status == 2) return BELONG_RED_STRONG;
 	}
-	else if(belong == 2)
+	else if(belong == 1)
 	{
 		if(status == 1) return BELONG_BLUE_WEAK;
 		if(status == 2) return BELONG_BLUE_STRONG;
+	}
+	else if(belong == 2)
+	{
+		return BELONG_NONE;
 	}
 	return BELONG_NONE;				//不可能到达的位置
 }
@@ -145,7 +145,7 @@ void Send_Map_Data(Map_Data_t *map_data)
 	Send_Data(PID_MAP_DATA_3,data);
 	memcpy(data, buffer+31,8);
 	Send_Data(PID_MAP_DATA_4,data);
-	memcpy(data, buffer+39,6);
+	memcpy(data, buffer+39,8);
 	Send_Data(PID_MAP_DATA_5,data);
 }
 void Send_Data(unsigned char pid, unsigned char data[])
