@@ -26,20 +26,23 @@
 ```c
 typedef struct
 {
-	unsigned char Castle_Bule[7];   //The Number Of Every Castle Score Blue Side
-	unsigned char Castle_Red[7];    //The Number Of Every Castle Score Red Side
-	unsigned char Block[63];   		//Every Block Status
-	unsigned char Car_Blue[2]; 		//First Byte is X
-	unsigned char Car_Red[2]; 		//First Byte is X
-	unsigned char Least_Time;  		//How Many Time Have Left
-	unsigned char Score_Blue;  	    //Blue Score Now
-	unsigned char Score_Red;    	//Red Score Now
-	short Motor_Speed[8];			//Eight Motor Speed (rpm)
-	long Gryo_Scope_Gryo; 			//Gryo Speed from sensor now
-	long Gryo_Scope_Angle;			//Angle Sumary from sensor now
+	public byte[] Castle_Bule;   //The Number Of Every Castle Score Blue Side
+	public byte[] Castle_Red;   //The Number Of Every Castle Score Red Side
+	public byte[] Block;   //Every Block Status
+	public byte[] Car_Blue; //First Byte is X
+	public byte[] Car_Red; //First Byte is X 
+	public byte Least_Time;  //How Many Time Have Left
+	public short Score_Blue;    //Blue Score Now
+	public short Score_Red;    //Red Score Now
+	public short[] Motor_Speed;//Eight Motor Speed (rpm)
+	public float Gryo_Scope_Gryo; //Gryo Speed from sensor now
+	public float Gryo_Scope_Angle;//Angle Sumary from sensor now
+	public float X_Possition;      //Car_Possition X
+	public float Y_Possition;      //Car_Possition Y
 	
 }Receive_Data_Package;
 ```
+将地图数据上传给上位机用于显示和决策算法，将底盘数据传递给上位机显示参数便于实时监控底盘状态。
 #### 妙算返回结构体
 ```c
 typedef struct
@@ -49,6 +52,7 @@ typedef struct
 	float Angle;
 }Receive_Data_Package;
 ```
+妙算给下位机视觉融合定位出的底盘朝向和XY坐标，下位机把视觉定位信息与里程计累计信息进行融合，最终得出准确的底盘位置数据用于PID闭环。
 #### PC返回结构体
 ```c
 typedef struct
@@ -56,9 +60,9 @@ typedef struct
 	float X_Possition;
 	float Y_Possition;
 	
-}Receive_Data_Package;
+}Transmmit_Data_Package;
 ```
-
+PC上位机给定底盘位置PID的User值，由下位机完成PID闭环和定位操作，上位机执行的是参数监控和决策算法。
 ***
 
 ## 遗传算法
@@ -73,6 +77,14 @@ typedef struct
 	
 }Map_Data;
 ```
+##### 遗传算法思路
+种群评估：加入“自相残杀”概念，指两个个体进行模拟比赛，并根据当前回合的分数相差给予选择概率的调整，如：一号个体和二号个体比赛，相差1分，则一号个体0.7，二号个体为为0.6；三号个体和四号个体比赛，相差10分，三号个体0.9，四号个体0.2；
+
+第一轮：随机生成若干个体，开始算法，互相打架，结束后开始繁殖，控制个体数量，选到的扔掉让儿子代替，没选到的继续，不够的话继续随机生成，同时第一轮要保存一定数量的场地数据；
+
+若干轮：导入上一轮的场地数据，导入遗留下来个体，继续自相残杀，继续繁殖，重复上述的步骤。跑完六个回合之后，我们需要进行最后一次筛选，这里就是筛出最优解。
+
+终止条件：近乎最优解（最终的占领区域数最大，1：超过五十代没有比目前优解更大的则视为最优解；2：自行判断，人为的加上循环次数；）
 
 ***
 

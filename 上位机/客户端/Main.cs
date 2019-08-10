@@ -15,7 +15,6 @@ using System.Windows.Forms.DataVisualization.Charting;
 using System.Drawing.Drawing2D;
 namespace 客户端
 {
-
     public partial class Main : Form
     {
         public Main()
@@ -36,9 +35,10 @@ namespace 客户端
             public short[] Motor_Speed;//Eight Motor Speed (rpm)  from motor1~motor8
             public float Gryo_Scope_Gryo; //Gryo Speed from sensor now
             public float Gryo_Scope_Angle;//Angle Sumary from sensor now
+            public float X_Possition;      //Car_Possition X
+            public float Y_Possition;      //Car_Possition Y
         };
         Socket socketClient = null;
-        Thread threadClient = null;
         int Rcv_Flg = 0; //若为1则已经收到过帧头
         byte[] USART3_Rcv_Buffer = new byte[15];
         int RX_Counter = 0x01;
@@ -70,6 +70,7 @@ namespace 客户端
             while (true)
             {
                 Button name = (Button)this.Controls.Find("btn"+Counter.ToString(), true)[0];
+                name.BackgroundImage = null;
                 switch(Receive_Package.Block[Counter-1])
                 {
                     case 0:
@@ -92,11 +93,65 @@ namespace 客户端
                 if (Counter == 64)
                     break;
             }
+            int Car_Blue_Location = Receive_Package.Car_Blue[0] + 1 + Receive_Package.Car_Blue[1] * 9;
+            int Car_Red_Location = Receive_Package.Car_Red[0] + 1 + Receive_Package.Car_Red[1] * 9;
+            Button Location = (Button)this.Controls.Find("btn" + Car_Blue_Location.ToString(), true)[0];
+            Location.BackgroundImage = 客户端.Properties.Resources.蓝车;
+            Location = (Button)this.Controls.Find("btn" + Car_Red_Location.ToString(), true)[0];
+            Location.BackgroundImage = 客户端.Properties.Resources.红车;
             time_least.Text = "时间：" + Receive_Package.Least_Time.ToString();
             blue_score.Text = "蓝方：" + Receive_Package.Score_Blue.ToString();
             red_score.Text = "红方：" + Receive_Package.Score_Red.ToString();
         }
+        void Display_Data()
+        {
+            while (true)
+            {
+                Pos_X.Text = "X_Possition：" + Receive_Package.X_Possition.ToString();
+                Pos_Y.Text = "Y_Possition：" + Receive_Package.Y_Possition.ToString();
+                angle.Text = "Angle:" + Receive_Package.Gryo_Scope_Angle.ToString();
+                gryo.Text = "Gryo:" + Receive_Package.Gryo_Scope_Gryo.ToString();
+                motor1.Text = "Motor1:" + Receive_Package.Motor_Speed[0];
+                motor2.Text = "Motor2:" + Receive_Package.Motor_Speed[1];
+                motor3.Text = "Motor3:" + Receive_Package.Motor_Speed[2];
+                motor4.Text = "Motor4:" + Receive_Package.Motor_Speed[3];
+                motor5.Text = "Motor5:" + Receive_Package.Motor_Speed[4];
+                motor6.Text = "Motor6:" + Receive_Package.Motor_Speed[5];
+                motor7.Text = "Motor7:" + Receive_Package.Motor_Speed[6];
+                motor8.Text = "Motor8:" + Receive_Package.Motor_Speed[7];
+                time_count++;
+                if (time_count == delta_time)
+                {
+                    time_count = 0;
+                    Error_Package = 0;
+                    Success_Package = 0;
+                }
+                if (Error_Package == 0)
+                    err_package_rate.Text = "丢包率：0%";
+                else
+                    err_package_rate.Text = "丢包率：" + (((float)Error_Package / (float)(Success_Package + Error_Package)) * 100).ToString("F2") + "%";
+                if(Last_Error_Package==Error_Package)
+                {
+                    correct_flag.Text = "正确";
+                    correct_flag.ForeColor = Color.Green;
+                }
+                else
+                {
+                    correct_flag.Text = "错误";
+                    correct_flag.ForeColor = Color.Red;
+
+                }
+                Last_Error_Package = Error_Package;
+                AddData(Receive_Package.Motor_Speed[0]);
+                DrawPIcture();
+                Display_Map();
+                Thread.Sleep(100);
+            }
+        }
         byte Temp_Register = 0x00;  //Which Contains the data haven't been Handle
+        float c = 0;
+        int Error_Package = 0, Success_Package = 0, Last_Error_Package = 0;
+        byte[] Rec_Buffer1 = new byte[1];  //接收缓冲区1
         void Received_CallBack(byte[] Receive_Buffer)
         {
             byte Buffer_Data_Counter = 0;
@@ -107,6 +162,12 @@ namespace 客户端
                     Buffer_Flag = 1;
                 else if (Buffer_Flag == 1 && Receive_Buffer[Buffer_Data_Counter] == 0xff)
                     break;
+                else if (Buffer_Data_Counter>11)
+                {
+                    err_msg.AppendText("丢桢尾\r\n");
+                    Error_Package++;
+                    break;
+                }
                 Buffer_Data_Counter++;
             }
             Buffer_Data_Counter++;
@@ -137,6 +198,7 @@ namespace 客户端
                                 break;
                         }
                     }
+                    Success_Package++;
                     switch (PID_Bit)
                     {
                         case 0:
@@ -239,7 +301,6 @@ namespace 客户端
                             Receive_Package.Least_Time = Data_Buffer[1];
                             Receive_Package.Score_Blue = Convert.ToInt16(Data_Buffer[5].ToString("X2") + Data_Buffer[4].ToString("X2"), 16);
                             Receive_Package.Score_Red = Convert.ToInt16(Data_Buffer[7].ToString("X2") + Data_Buffer[6].ToString("X2"), 16);
-                            Display_Map();
                             break;
                         case 6:
                             Temp_Var = 0;
@@ -257,38 +318,41 @@ namespace 客户端
                             Temp_Var = 0;
                             while (true)
                             {
-                                Receive_Package.Motor_Speed[(Temp_Var / 2)+4] = Convert.ToInt16((Data_Buffer[Temp_Var + 1].ToString("X2")
+                                Receive_Package.Motor_Speed[(Temp_Var / 2) + 4] = Convert.ToInt16((Data_Buffer[Temp_Var + 1].ToString("X2")
                                     + Data_Buffer[Temp_Var].ToString("X2")), 16);
                                 Temp_Var += 2;
                                 if (Temp_Var == 8)
                                     break;
                             }
-                            motor1.Text = "Motor1:" + Receive_Package.Motor_Speed[0];
-                            motor2.Text = "Motor2:" + Receive_Package.Motor_Speed[1];
-                            motor3.Text = "Motor3:" + Receive_Package.Motor_Speed[2];
-                            motor4.Text = "Motor4:" + Receive_Package.Motor_Speed[3];
-                            motor5.Text = "Motor5:" + Receive_Package.Motor_Speed[4];
-                            motor6.Text = "Motor6:" + Receive_Package.Motor_Speed[5];
-                            motor7.Text = "Motor7:" + Receive_Package.Motor_Speed[6];
-                            motor8.Text = "Motor8:" + Receive_Package.Motor_Speed[7];
-                            AddData(Receive_Package.Motor_Speed[0]);
-                            DrawPIcture();
                             break;
                         case 8:
                             Receive_Package.Gryo_Scope_Gryo = Convert.ToInt32(Data_Buffer[0].ToString("X2")
-                                    + Data_Buffer[1].ToString("X2")+ Data_Buffer[2].ToString("X2")+ Data_Buffer[3].ToString("X2"), 16);
+                                    + Data_Buffer[1].ToString("X2") + Data_Buffer[2].ToString("X2") + Data_Buffer[3].ToString("X2"), 16);
                             Receive_Package.Gryo_Scope_Angle = Convert.ToInt32(Data_Buffer[4].ToString("X2")
                                     + Data_Buffer[5].ToString("X2") + Data_Buffer[6].ToString("X2") + Data_Buffer[7].ToString("X2"), 16);
                             Receive_Package.Gryo_Scope_Gryo = Receive_Package.Gryo_Scope_Gryo / 10000.0f;
                             Receive_Package.Gryo_Scope_Angle = Receive_Package.Gryo_Scope_Angle / 10000.0f;
-                            angle.Text = "Angle:" + Receive_Package.Gryo_Scope_Angle.ToString();
-                            gryo.Text = "Gryo:" + Receive_Package.Gryo_Scope_Gryo.ToString();
                             break;
                         case 9:
+                            Receive_Package.X_Possition = Convert.ToInt32(Data_Buffer[0].ToString("X2")
+                                    + Data_Buffer[1].ToString("X2") + Data_Buffer[2].ToString("X2") + Data_Buffer[3].ToString("X2"), 16);
+                            Receive_Package.Y_Possition = Convert.ToInt32(Data_Buffer[4].ToString("X2")
+                                    + Data_Buffer[5].ToString("X2") + Data_Buffer[6].ToString("X2") + Data_Buffer[7].ToString("X2"), 16);
+                            Receive_Package.X_Possition = (Receive_Package.X_Possition / 10000.0f);
+                            Receive_Package.Y_Possition = (Receive_Package.Y_Possition / 10000.0f);
+                            //Application.DoEvents();
+                            break;
+                        case 10:
                             //Here To Do The ACK Response
                             break;
                     }
                 }
+            }
+            else
+            {
+                err_msg.AppendText("丢数据包\r\n");
+                Error_Package++;
+                Thread.Sleep(100);
             }
         }
         static void Fill_Array(byte[] arr, byte fill)
@@ -296,42 +360,6 @@ namespace 客户端
             for (int i = 0; i < arr.Length; i++)
             {
                 arr[i] = fill;
-            }
-        }
-        private void RecMsg()
-        {
-            while (true)
-            {
-                byte[] Buffer = new byte[1];
-                try
-                {
-                    socketClient.Receive(Buffer);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("系统异常消息:" + ex.Message);
-                    Connect_To.Enabled = true;
-                    break;
-                }
-                if (Buffer[0] == 0xff && Rcv_Flg == 1)
-                {
-                    Rcv_Flg = 0;//结束收发
-                    RX_Counter = 1;
-                    USART3_Rcv_Buffer[11] = 0xff;
-                    Received_CallBack(USART3_Rcv_Buffer);
-                }
-                else if (Buffer[0] == 0xff && Rcv_Flg == 0)
-                {
-                    Rcv_Flg = 1;
-                    RX_Counter = 1;
-                    Fill_Array(USART3_Rcv_Buffer, 0x00);
-                    USART3_Rcv_Buffer[0] = 0xff;
-                }
-                else if (Rcv_Flg == 1)
-                {
-                    USART3_Rcv_Buffer[RX_Counter] = Buffer[0];
-                    RX_Counter++;
-                }
             }
         }
         private void Form1_Load(object sender, EventArgs e)
@@ -342,8 +370,6 @@ namespace 客户端
             Receive_Package.Castle_Bule = new byte[7];
             Receive_Package.Castle_Red = new byte[7];
             Receive_Package.Motor_Speed = new short[8];
-            //bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-            Display_Map();
         }
         Queue<float> data1 = new Queue<float>();
         private void AddData(int number1)
@@ -372,6 +398,72 @@ namespace 客户端
                 }
             return bmp1;
         }
+        byte Ignore_Flag = 0;
+        int delta_time = 20;
+        int time_count = 0;
+        private void RecMsg()
+        {
+            while (true)
+            {
+                byte[] Buffer = new byte[1];
+                try
+                {
+                    socketClient.Receive(Buffer);
+                    if (Buffer[0] == 0xff && Rcv_Flg == 1 && Ignore_Flag == 0)
+                    {
+                        Rcv_Flg = 0;//结束收发
+                        RX_Counter = 1;
+                        USART3_Rcv_Buffer[11] = 0xff;
+                        if (USART3_Rcv_Buffer[0] == 0xff && USART3_Rcv_Buffer[1] == 0x00 && USART3_Rcv_Buffer[11] == 0xff)
+                        {
+                            err_msg.AppendText("包错误\r\n");
+                            Ignore_Flag = 1;
+                            Fill_Array(USART3_Rcv_Buffer, 0x00);
+                            Rcv_Flg = 0;//结束收发
+                            RX_Counter = 1;
+                            Error_Package++;
+                            Thread.Sleep(1000);
+                        }
+                        else
+                            Received_CallBack(USART3_Rcv_Buffer);
+                    }
+                    else if (Buffer[0] == 0xff && Ignore_Flag == 1)
+                    {
+                        Ignore_Flag = 0;
+                        Fill_Array(USART3_Rcv_Buffer, 0x00);
+                        Rcv_Flg = 0;//结束收发
+                        RX_Counter = 1;
+                        Error_Package++;
+                    }
+                    else if (Buffer[0] == 0xff && Rcv_Flg == 0 && Ignore_Flag == 0 )
+                    {
+                        Rcv_Flg = 1;
+                        RX_Counter = 1;
+                        Fill_Array(USART3_Rcv_Buffer, 0x00);
+                        USART3_Rcv_Buffer[0] = 0xff;
+                    }
+                    else if (Rcv_Flg == 1)
+                    {
+                        USART3_Rcv_Buffer[RX_Counter] = Buffer[0];
+                        RX_Counter++;
+                        if (RX_Counter > 11)
+                        {
+                            Rcv_Flg = 1;
+                            RX_Counter = 0;
+                            Fill_Array(USART3_Rcv_Buffer, 0x00);
+                            err_msg.AppendText("中断丢桢尾\r\n");
+                            Thread.Sleep(100);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("系统异常消息:" + ex.Message);
+                    Connect_To.Enabled = true;
+                    break;
+                }
+            }
+        }
         private void button10_Click(object sender, EventArgs e)
         {
             try
@@ -381,16 +473,24 @@ namespace 客户端
                 //IPAddress ipaddress = IPAddress.Parse("10.21.30.45");
                 IPEndPoint endpoint = new IPEndPoint(ipaddress, int.Parse("8080"));
                 socketClient.Connect(endpoint);
-                threadClient = new Thread(RecMsg);
+                Thread threadClient = new Thread(RecMsg);
                 threadClient.IsBackground = true;
                 threadClient.Start();
                 MessageBox.Show("已与服务端建立连接,可以开始通信...\r\n");
                 Connect_To.Enabled = false;
+                Thread Display_Thread = new Thread(Display_Data);
+                Display_Thread.IsBackground = true;
+                Display_Thread.Start();
             }
             catch
             {
                 MessageBox.Show("连接失败!");
             }
+        }
+
+        private void Main_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

@@ -106,8 +106,8 @@
     <MDIClientArea>
       <RegID>0</RegID>
       <MDITabState>
-        <Len>535</Len>
-        <Data>0100000004000000010000000100000001000000010000000000000002000000000000000100000001000000000000002800000028000000010000000500000004000000010000002B443A5C4465736B746F705C524D323031392D47726F7570385CCFC2CEBBBBFA5C555345525C557365722E630000000006557365722E6300000000C5D4F200FFFFFFFF2B443A5C4465736B746F705C524D323031392D47726F7570385CCFC2CEBBBBFA5C4170705C5461736B732E6300000000075461736B732E6300000000FFDC7800FFFFFFFF32443A5C4465736B746F705C524D323031392D47726F7570385CCFC2CEBBBBFA5C48617264776172655C446563727970742E630000000009446563727970742E6300000000BECEA100FFFFFFFF32443A5C4465736B746F705C524D323031392D47726F7570385CCFC2CEBBBBFA5C48617264776172655C456E63727970742E630000000009456E63727970742E6300000000F0A0A100FFFFFFFF2E443A5C4465736B746F705C524D323031392D47726F7570385CCFC2CEBBBBFA5C4170705C4D616E69666F6C642E63000000000A4D616E69666F6C642E6300000000BCA8E100FFFFFFFF0100000010000000C5D4F200FFDC7800BECEA100F0A0A100BCA8E1009CC1B600F7B88600D9ADC200A5C2D700B3A6BE00EAD6A300F6FA7D00B5E99D005FC3CF00C1838300CACAD500010000000000000002000000380100006600000000060000B3020000</Data>
+        <Len>381</Len>
+        <Data>0100000004000000010000000100000001000000010000000000000002000000000000000100000001000000000000002800000028000000010000000300000002000000010000002B443A5C4465736B746F705C524D323031392D47726F7570385CCFC2CEBBBBFA5C555345525C557365722E630000000006557365722E6300000000C5D4F200FFFFFFFF2B443A5C4465736B746F705C524D323031392D47726F7570385CCFC2CEBBBBFA5C4170705C5461736B732E6300000000075461736B732E6300000000FFDC7800FFFFFFFF2E443A5C4465736B746F705C524D323031392D47726F7570385CCFC2CEBBBBFA5C4170705C4F646F6D657465722E63000000000A4F646F6D657465722E6300000000BECEA100FFFFFFFF0100000010000000C5D4F200FFDC7800BECEA100F0A0A100BCA8E1009CC1B600F7B88600D9ADC200A5C2D700B3A6BE00EAD6A300F6FA7D00B5E99D005FC3CF00C1838300CACAD500010000000000000002000000380100006600000000060000B3020000</Data>
       </MDITabState>
     </MDIClientArea>
     <ViewEx>
@@ -1656,7 +1656,7 @@
       <Window>
         <RegID>50018</RegID>
         <PaneID>50018</PaneID>
-        <IsVisible>0</IsVisible>
+        <IsVisible>1</IsVisible>
         <IsFloating>0</IsFloating>
         <IsTabbed>0</IsTabbed>
         <IsActivated>0</IsActivated>
@@ -1666,11 +1666,11 @@
         <RecentRowIndex>0</RecentRowIndex>
         <RectRecentDocked>
           <Len>16</Len>
-          <Data>B3030000660000006D0400008C010000</Data>
+          <Data>C7000000660000006D04000081000000</Data>
         </RectRecentDocked>
         <RectRecentFloat>
           <Len>16</Len>
-          <Data>560000006D000000160100000D010000</Data>
+          <Data>0A0000000A0000006E0000006E000000</Data>
         </RectRecentFloat>
       </Window>
       <Window>
@@ -3599,48 +3599,30 @@
     <ActiveMDIGroup>0</ActiveMDIGroup>
     <MDIGroup>
       <Size>100</Size>
-      <ActiveTab>4</ActiveTab>
+      <ActiveTab>2</ActiveTab>
       <Doc>
         <Name>.\USER\User.c</Name>
-        <ColumnNumber>16</ColumnNumber>
-        <TopLine>14</TopLine>
-        <CurrentLine>45</CurrentLine>
+        <ColumnNumber>23</ColumnNumber>
+        <TopLine>1</TopLine>
+        <CurrentLine>21</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>
       </Doc>
       <Doc>
         <Name>.\App\Tasks.c</Name>
-        <ColumnNumber>0</ColumnNumber>
-        <TopLine>59</TopLine>
-        <CurrentLine>81</CurrentLine>
-        <Folding>1</Folding>
-        <ContractedFolders></ContractedFolders>
-        <PaneID>0</PaneID>
-      </Doc>
-      <Doc>
-        <Name>.\Hardware\Decrypt.c</Name>
-        <ColumnNumber>27</ColumnNumber>
-        <TopLine>27</TopLine>
-        <CurrentLine>45</CurrentLine>
-        <Folding>1</Folding>
-        <ContractedFolders></ContractedFolders>
-        <PaneID>0</PaneID>
-      </Doc>
-      <Doc>
-        <Name>.\Hardware\Encrypt.c</Name>
-        <ColumnNumber>28</ColumnNumber>
-        <TopLine>106</TopLine>
-        <CurrentLine>131</CurrentLine>
-        <Folding>1</Folding>
-        <ContractedFolders>72</ContractedFolders>
-        <PaneID>0</PaneID>
-      </Doc>
-      <Doc>
-        <Name>.\App\Manifold.c</Name>
-        <ColumnNumber>25</ColumnNumber>
+        <ColumnNumber>13</ColumnNumber>
         <TopLine>1</TopLine>
-        <CurrentLine>10</CurrentLine>
+        <CurrentLine>16</CurrentLine>
+        <Folding>1</Folding>
+        <ContractedFolders></ContractedFolders>
+        <PaneID>0</PaneID>
+      </Doc>
+      <Doc>
+        <Name>.\App\Odometer.c</Name>
+        <ColumnNumber>18</ColumnNumber>
+        <TopLine>1</TopLine>
+        <CurrentLine>11</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>
