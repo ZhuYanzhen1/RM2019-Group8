@@ -106,7 +106,7 @@ void Cvt_Map_Data(Summer_Camp_Info_t *Summer_Camp_Info, Map_Data_t *Map_Data)
 		uint8_t inner_cnt;
 		for(inner_cnt=0;inner_cnt<9;inner_cnt++)
 		{
-			uint8_t status = Cvt_Region_Occupy(Summer_Camp_Info-> region_occupy[inner_cnt][cnt].status,\
+			uint8_t status = Cvt_Region_Occupy(Summer_Camp_Info-> region_occupy[inner_cnt][cnt].status,
 			Summer_Camp_Info-> region_occupy[inner_cnt][cnt].belong);
 			
 			Append_Data(status,Map_Data->Region_Occupy);

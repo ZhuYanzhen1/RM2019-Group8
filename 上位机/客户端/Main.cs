@@ -31,8 +31,8 @@ namespace 客户端
             public byte[] Car_Blue; //First Byte is X
             public byte[] Car_Red; //First Byte is X 
             public byte Least_Time;  //How Many Time Have Left
-            public byte Score_Blue;    //Blue Score Now
-            public byte Score_Red;    //Red Score Now
+            public short Score_Blue;    //Blue Score Now
+            public short Score_Red;    //Red Score Now
             public short[] Motor_Speed;//Eight Motor Speed (rpm)  from motor1~motor8
             public float Gryo_Scope_Gryo; //Gryo Speed from sensor now
             public float Gryo_Scope_Angle;//Angle Sumary from sensor now
@@ -96,6 +96,7 @@ namespace 客户端
             blue_score.Text = "蓝方：" + Receive_Package.Score_Blue.ToString();
             red_score.Text = "红方：" + Receive_Package.Score_Red.ToString();
         }
+        byte Temp_Register = 0x00;  //Which Contains the data haven't been Handle
         void Received_CallBack(byte[] Receive_Buffer)
         {
             byte Buffer_Data_Counter = 0;
@@ -116,7 +117,6 @@ namespace 客户端
                 if (PID_Bit == ((~(Receive_Buffer[1] & 0x0f)) & 0x0f))  //PID Verify Success
                 {
                     byte Temp_Var = 0x00;
-                    byte Temp_Register = 0x00;  //Which Contains the data haven't been Handle
                     while (true)     //Memory Copy
                     {
                         Data_Buffer[Temp_Var] = Receive_Buffer[2 + Temp_Var];
@@ -161,10 +161,10 @@ namespace 客户端
                             }
                             Receive_Package.Block[0] = Convert.ToByte(Data_Buffer[7] >> 5);
                             Receive_Package.Block[1] = Convert.ToByte(((Data_Buffer[7] & 0x1C) >> 2));
-                            Temp_Register = Convert.ToByte(Data_Buffer[7] & 0x03);
+                            Temp_Register = Convert.ToByte((Data_Buffer[7] & 0x03) << 1);
                             break;
                         case 2:
-                            Receive_Package.Block[2] = Convert.ToByte((Temp_Register << 1) | Data_Buffer[0] >> 7);
+                            Receive_Package.Block[2] = Convert.ToByte((Temp_Register) | (Data_Buffer[0] >> 7));
                             Receive_Package.Block[3] = Convert.ToByte((Data_Buffer[0] & 0x70) >> 4);
                             Receive_Package.Block[4] = Convert.ToByte((Data_Buffer[0] & 0x0e) >> 1);
                             Receive_Package.Block[5] = Convert.ToByte(((Data_Buffer[0] & 0x01) << 2) | (Data_Buffer[1] >> 6));
@@ -237,8 +237,8 @@ namespace 客户端
                             Receive_Package.Car_Red[0] = Convert.ToByte(Data_Buffer[0] >> 4);
                             Receive_Package.Car_Red[1] = Convert.ToByte(Data_Buffer[0] & 0x0F);
                             Receive_Package.Least_Time = Data_Buffer[1];
-                            Receive_Package.Score_Blue = Data_Buffer[4];
-                            Receive_Package.Score_Red = Data_Buffer[5];
+                            Receive_Package.Score_Blue = Convert.ToInt16(Data_Buffer[5].ToString("X2") + Data_Buffer[4].ToString("X2"), 16);
+                            Receive_Package.Score_Red = Convert.ToInt16(Data_Buffer[7].ToString("X2") + Data_Buffer[6].ToString("X2"), 16);
                             Display_Map();
                             break;
                         case 6:
