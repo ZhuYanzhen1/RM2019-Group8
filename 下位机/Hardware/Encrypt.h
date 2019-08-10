@@ -67,6 +67,7 @@ typedef struct
 typedef struct
 {
 	unsigned char Castle_Energy[14];	//碉堡能量
+	unsigned char Reserve;
 	unsigned char Region_Occupy[24];	//场地状态
 	unsigned char Car_Location[2];		//红蓝车辆位置
 	unsigned char Round_Remain_Time;	//回合剩余时间
