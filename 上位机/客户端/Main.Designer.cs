@@ -94,6 +94,9 @@
             this.motor6 = new System.Windows.Forms.Label();
             this.motor5 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.gryo = new System.Windows.Forms.Label();
             this.angle = new System.Windows.Forms.Label();
             this.time_least = new System.Windows.Forms.Label();
@@ -106,9 +109,11 @@
             this.btn36 = new System.Windows.Forms.Button();
             this.btn57 = new System.Windows.Forms.Button();
             this.btn61 = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.Pos_X = new System.Windows.Forms.Label();
+            this.Pos_Y = new System.Windows.Forms.Label();
+            this.err_msg = new System.Windows.Forms.TextBox();
+            this.err_package_rate = new System.Windows.Forms.Label();
+            this.correct_flag = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -116,6 +121,7 @@
             // 
             // btn10
             // 
+            this.btn10.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn10.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn10.Location = new System.Drawing.Point(47, 187);
             this.btn10.Name = "btn10";
@@ -126,6 +132,7 @@
             // 
             // btn11
             // 
+            this.btn11.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn11.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn11.Location = new System.Drawing.Point(126, 187);
             this.btn11.Name = "btn11";
@@ -136,6 +143,7 @@
             // 
             // btn13
             // 
+            this.btn13.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn13.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn13.Location = new System.Drawing.Point(284, 187);
             this.btn13.Name = "btn13";
@@ -146,6 +154,7 @@
             // 
             // btn12
             // 
+            this.btn12.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn12.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn12.Location = new System.Drawing.Point(205, 187);
             this.btn12.Name = "btn12";
@@ -156,6 +165,7 @@
             // 
             // btn17
             // 
+            this.btn17.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn17.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn17.Location = new System.Drawing.Point(600, 187);
             this.btn17.Name = "btn17";
@@ -166,6 +176,7 @@
             // 
             // btn16
             // 
+            this.btn16.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn16.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn16.Location = new System.Drawing.Point(521, 187);
             this.btn16.Name = "btn16";
@@ -176,6 +187,7 @@
             // 
             // btn15
             // 
+            this.btn15.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn15.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn15.Location = new System.Drawing.Point(442, 187);
             this.btn15.Name = "btn15";
@@ -186,6 +198,7 @@
             // 
             // btn18
             // 
+            this.btn18.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn18.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn18.Location = new System.Drawing.Point(679, 187);
             this.btn18.Name = "btn18";
@@ -196,6 +209,7 @@
             // 
             // btn14
             // 
+            this.btn14.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn14.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn14.Location = new System.Drawing.Point(363, 187);
             this.btn14.Name = "btn14";
@@ -207,6 +221,7 @@
             // btn5
             // 
             this.btn5.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btn5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn5.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn5.Location = new System.Drawing.Point(363, 108);
             this.btn5.Name = "btn5";
@@ -217,6 +232,7 @@
             // 
             // btn8
             // 
+            this.btn8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn8.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn8.Location = new System.Drawing.Point(600, 108);
             this.btn8.Name = "btn8";
@@ -228,6 +244,7 @@
             // btn6
             // 
             this.btn6.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btn6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn6.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn6.Location = new System.Drawing.Point(442, 108);
             this.btn6.Name = "btn6";
@@ -238,6 +255,7 @@
             // 
             // btn9
             // 
+            this.btn9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn9.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn9.Location = new System.Drawing.Point(679, 108);
             this.btn9.Name = "btn9";
@@ -248,6 +266,7 @@
             // 
             // btn4
             // 
+            this.btn4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn4.Location = new System.Drawing.Point(284, 108);
             this.btn4.Name = "btn4";
@@ -258,6 +277,7 @@
             // 
             // btn2
             // 
+            this.btn2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn2.Location = new System.Drawing.Point(126, 108);
             this.btn2.Name = "btn2";
@@ -268,16 +288,20 @@
             // 
             // btn1
             // 
+            this.btn1.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btn1.BackgroundImage = global::客户端.Properties.Resources.红车;
+            this.btn1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn1.Location = new System.Drawing.Point(47, 108);
             this.btn1.Name = "btn1";
             this.btn1.Size = new System.Drawing.Size(80, 80);
             this.btn1.TabIndex = 9;
             this.btn1.Text = "(0,0)";
-            this.btn1.UseVisualStyleBackColor = true;
+            this.btn1.UseVisualStyleBackColor = false;
             // 
             // btn23
             // 
+            this.btn23.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn23.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn23.Location = new System.Drawing.Point(363, 266);
             this.btn23.Name = "btn23";
@@ -288,6 +312,7 @@
             // 
             // btn26
             // 
+            this.btn26.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn26.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn26.Location = new System.Drawing.Point(600, 266);
             this.btn26.Name = "btn26";
@@ -298,6 +323,7 @@
             // 
             // btn25
             // 
+            this.btn25.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn25.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn25.Location = new System.Drawing.Point(521, 266);
             this.btn25.Name = "btn25";
@@ -308,6 +334,7 @@
             // 
             // btn24
             // 
+            this.btn24.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn24.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn24.Location = new System.Drawing.Point(442, 266);
             this.btn24.Name = "btn24";
@@ -318,6 +345,7 @@
             // 
             // btn27
             // 
+            this.btn27.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn27.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn27.Location = new System.Drawing.Point(679, 266);
             this.btn27.Name = "btn27";
@@ -328,6 +356,7 @@
             // 
             // btn22
             // 
+            this.btn22.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn22.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn22.Location = new System.Drawing.Point(284, 266);
             this.btn22.Name = "btn22";
@@ -338,6 +367,7 @@
             // 
             // btn21
             // 
+            this.btn21.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn21.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn21.Location = new System.Drawing.Point(205, 266);
             this.btn21.Name = "btn21";
@@ -348,6 +378,7 @@
             // 
             // btn20
             // 
+            this.btn20.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn20.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn20.Location = new System.Drawing.Point(126, 266);
             this.btn20.Name = "btn20";
@@ -358,6 +389,7 @@
             // 
             // btn19
             // 
+            this.btn19.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn19.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn19.Location = new System.Drawing.Point(47, 266);
             this.btn19.Name = "btn19";
@@ -368,6 +400,7 @@
             // 
             // btn35
             // 
+            this.btn35.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn35.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn35.Location = new System.Drawing.Point(600, 345);
             this.btn35.Name = "btn35";
@@ -378,6 +411,7 @@
             // 
             // btn34
             // 
+            this.btn34.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn34.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn34.Location = new System.Drawing.Point(521, 345);
             this.btn34.Name = "btn34";
@@ -388,6 +422,7 @@
             // 
             // btn33
             // 
+            this.btn33.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn33.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn33.Location = new System.Drawing.Point(442, 345);
             this.btn33.Name = "btn33";
@@ -398,6 +433,7 @@
             // 
             // btn31
             // 
+            this.btn31.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn31.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn31.Location = new System.Drawing.Point(284, 345);
             this.btn31.Name = "btn31";
@@ -408,6 +444,7 @@
             // 
             // btn30
             // 
+            this.btn30.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn30.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn30.Location = new System.Drawing.Point(205, 345);
             this.btn30.Name = "btn30";
@@ -418,6 +455,7 @@
             // 
             // btn29
             // 
+            this.btn29.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn29.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn29.Location = new System.Drawing.Point(126, 345);
             this.btn29.Name = "btn29";
@@ -428,6 +466,7 @@
             // 
             // btn50
             // 
+            this.btn50.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn50.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn50.Location = new System.Drawing.Point(363, 503);
             this.btn50.Name = "btn50";
@@ -438,6 +477,7 @@
             // 
             // btn53
             // 
+            this.btn53.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn53.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn53.Location = new System.Drawing.Point(600, 503);
             this.btn53.Name = "btn53";
@@ -448,6 +488,7 @@
             // 
             // btn52
             // 
+            this.btn52.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn52.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn52.Location = new System.Drawing.Point(521, 503);
             this.btn52.Name = "btn52";
@@ -458,6 +499,7 @@
             // 
             // btn51
             // 
+            this.btn51.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn51.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn51.Location = new System.Drawing.Point(442, 503);
             this.btn51.Name = "btn51";
@@ -468,6 +510,7 @@
             // 
             // btn54
             // 
+            this.btn54.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn54.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn54.Location = new System.Drawing.Point(679, 503);
             this.btn54.Name = "btn54";
@@ -478,6 +521,7 @@
             // 
             // btn49
             // 
+            this.btn49.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn49.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn49.Location = new System.Drawing.Point(284, 503);
             this.btn49.Name = "btn49";
@@ -488,6 +532,7 @@
             // 
             // btn48
             // 
+            this.btn48.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn48.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn48.Location = new System.Drawing.Point(205, 503);
             this.btn48.Name = "btn48";
@@ -498,6 +543,7 @@
             // 
             // btn47
             // 
+            this.btn47.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn47.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn47.Location = new System.Drawing.Point(126, 503);
             this.btn47.Name = "btn47";
@@ -508,6 +554,7 @@
             // 
             // btn46
             // 
+            this.btn46.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn46.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn46.Location = new System.Drawing.Point(47, 503);
             this.btn46.Name = "btn46";
@@ -518,6 +565,7 @@
             // 
             // btn59
             // 
+            this.btn59.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn59.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn59.Location = new System.Drawing.Point(363, 582);
             this.btn59.Name = "btn59";
@@ -528,6 +576,7 @@
             // 
             // btn62
             // 
+            this.btn62.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn62.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn62.Location = new System.Drawing.Point(600, 582);
             this.btn62.Name = "btn62";
@@ -538,6 +587,7 @@
             // 
             // btn60
             // 
+            this.btn60.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn60.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn60.Location = new System.Drawing.Point(442, 582);
             this.btn60.Name = "btn60";
@@ -548,16 +598,20 @@
             // 
             // btn63
             // 
+            this.btn63.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btn63.BackgroundImage = global::客户端.Properties.Resources.蓝车;
+            this.btn63.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn63.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn63.Location = new System.Drawing.Point(679, 582);
             this.btn63.Name = "btn63";
             this.btn63.Size = new System.Drawing.Size(80, 80);
             this.btn63.TabIndex = 49;
             this.btn63.Text = "(8,6)";
-            this.btn63.UseVisualStyleBackColor = true;
+            this.btn63.UseVisualStyleBackColor = false;
             // 
             // btn58
             // 
+            this.btn58.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn58.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn58.Location = new System.Drawing.Point(284, 582);
             this.btn58.Name = "btn58";
@@ -568,6 +622,7 @@
             // 
             // btn55
             // 
+            this.btn55.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn55.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn55.Location = new System.Drawing.Point(47, 582);
             this.btn55.Name = "btn55";
@@ -578,6 +633,7 @@
             // 
             // btn41
             // 
+            this.btn41.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn41.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn41.Location = new System.Drawing.Point(363, 424);
             this.btn41.Name = "btn41";
@@ -588,6 +644,7 @@
             // 
             // btn44
             // 
+            this.btn44.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn44.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn44.Location = new System.Drawing.Point(600, 424);
             this.btn44.Name = "btn44";
@@ -598,6 +655,7 @@
             // 
             // btn43
             // 
+            this.btn43.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn43.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn43.Location = new System.Drawing.Point(521, 424);
             this.btn43.Name = "btn43";
@@ -608,6 +666,7 @@
             // 
             // btn42
             // 
+            this.btn42.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn42.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn42.Location = new System.Drawing.Point(442, 424);
             this.btn42.Name = "btn42";
@@ -618,6 +677,7 @@
             // 
             // btn45
             // 
+            this.btn45.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn45.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn45.Location = new System.Drawing.Point(679, 424);
             this.btn45.Name = "btn45";
@@ -628,6 +688,7 @@
             // 
             // btn40
             // 
+            this.btn40.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn40.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn40.Location = new System.Drawing.Point(284, 424);
             this.btn40.Name = "btn40";
@@ -638,6 +699,7 @@
             // 
             // btn39
             // 
+            this.btn39.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn39.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn39.Location = new System.Drawing.Point(205, 424);
             this.btn39.Name = "btn39";
@@ -648,6 +710,7 @@
             // 
             // btn38
             // 
+            this.btn38.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn38.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn38.Location = new System.Drawing.Point(126, 424);
             this.btn38.Name = "btn38";
@@ -658,6 +721,7 @@
             // 
             // btn37
             // 
+            this.btn37.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn37.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn37.Location = new System.Drawing.Point(47, 424);
             this.btn37.Name = "btn37";
@@ -668,6 +732,7 @@
             // 
             // btn56
             // 
+            this.btn56.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn56.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn56.Location = new System.Drawing.Point(126, 582);
             this.btn56.Name = "btn56";
@@ -679,11 +744,11 @@
             // Connect_To
             // 
             this.Connect_To.Font = new System.Drawing.Font("等线", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Connect_To.Location = new System.Drawing.Point(544, 34);
+            this.Connect_To.Location = new System.Drawing.Point(633, 34);
             this.Connect_To.Name = "Connect_To";
-            this.Connect_To.Size = new System.Drawing.Size(215, 52);
+            this.Connect_To.Size = new System.Drawing.Size(126, 52);
             this.Connect_To.TabIndex = 63;
-            this.Connect_To.Text = "连接到下位机";
+            this.Connect_To.Text = "连接";
             this.Connect_To.UseVisualStyleBackColor = true;
             this.Connect_To.Click += new System.EventHandler(this.button10_Click);
             // 
@@ -788,6 +853,35 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "底盘数据";
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.pictureBox1);
+            this.panel1.Location = new System.Drawing.Point(16, 254);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(445, 181);
+            this.panel1.TabIndex = 81;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("等线", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Location = new System.Drawing.Point(3, 4);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(100, 29);
+            this.label1.TabIndex = 82;
+            this.label1.Text = "Motor:";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(0, 4);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(433, 168);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
             // gryo
             // 
             this.gryo.AutoSize = true;
@@ -840,6 +934,7 @@
             // 
             // btn3
             // 
+            this.btn3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn3.Location = new System.Drawing.Point(205, 108);
             this.btn3.Name = "btn3";
@@ -850,6 +945,7 @@
             // 
             // btn7
             // 
+            this.btn7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn7.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn7.Location = new System.Drawing.Point(521, 108);
             this.btn7.Name = "btn7";
@@ -860,6 +956,7 @@
             // 
             // btn28
             // 
+            this.btn28.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn28.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn28.Location = new System.Drawing.Point(47, 345);
             this.btn28.Name = "btn28";
@@ -870,6 +967,7 @@
             // 
             // btn32
             // 
+            this.btn32.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn32.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn32.Location = new System.Drawing.Point(363, 345);
             this.btn32.Name = "btn32";
@@ -880,6 +978,7 @@
             // 
             // btn36
             // 
+            this.btn36.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn36.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn36.Location = new System.Drawing.Point(679, 345);
             this.btn36.Name = "btn36";
@@ -890,6 +989,7 @@
             // 
             // btn57
             // 
+            this.btn57.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn57.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn57.Location = new System.Drawing.Point(205, 582);
             this.btn57.Name = "btn57";
@@ -900,6 +1000,7 @@
             // 
             // btn61
             // 
+            this.btn61.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn61.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn61.Location = new System.Drawing.Point(521, 582);
             this.btn61.Name = "btn61";
@@ -908,40 +1009,66 @@
             this.btn61.Text = "堡垒";
             this.btn61.UseVisualStyleBackColor = true;
             // 
-            // panel1
+            // Pos_X
             // 
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.pictureBox1);
-            this.panel1.Location = new System.Drawing.Point(16, 254);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(445, 181);
-            this.panel1.TabIndex = 81;
+            this.Pos_X.AutoSize = true;
+            this.Pos_X.Font = new System.Drawing.Font("等线", 16.2F, System.Drawing.FontStyle.Bold);
+            this.Pos_X.Location = new System.Drawing.Point(835, 497);
+            this.Pos_X.Name = "Pos_X";
+            this.Pos_X.Size = new System.Drawing.Size(184, 29);
+            this.Pos_X.TabIndex = 81;
+            this.Pos_X.Text = "X_Possition：";
             // 
-            // pictureBox1
+            // Pos_Y
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(0, 4);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(433, 168);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.Pos_Y.AutoSize = true;
+            this.Pos_Y.Font = new System.Drawing.Font("等线", 16.2F, System.Drawing.FontStyle.Bold);
+            this.Pos_Y.Location = new System.Drawing.Point(836, 541);
+            this.Pos_Y.Name = "Pos_Y";
+            this.Pos_Y.Size = new System.Drawing.Size(183, 29);
+            this.Pos_Y.TabIndex = 82;
+            this.Pos_Y.Text = "Y_Possition：";
             // 
-            // label1
+            // err_msg
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("等线", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(3, 4);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(100, 29);
-            this.label1.TabIndex = 82;
-            this.label1.Text = "Motor:";
+            this.err_msg.Location = new System.Drawing.Point(1123, 497);
+            this.err_msg.Multiline = true;
+            this.err_msg.Name = "err_msg";
+            this.err_msg.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.err_msg.Size = new System.Drawing.Size(186, 180);
+            this.err_msg.TabIndex = 83;
+            // 
+            // err_package_rate
+            // 
+            this.err_package_rate.AutoSize = true;
+            this.err_package_rate.Font = new System.Drawing.Font("等线", 16.2F, System.Drawing.FontStyle.Bold);
+            this.err_package_rate.Location = new System.Drawing.Point(836, 582);
+            this.err_package_rate.Name = "err_package_rate";
+            this.err_package_rate.Size = new System.Drawing.Size(125, 29);
+            this.err_package_rate.TabIndex = 84;
+            this.err_package_rate.Text = "丢包率：";
+            // 
+            // correct_flag
+            // 
+            this.correct_flag.AutoSize = true;
+            this.correct_flag.Font = new System.Drawing.Font("等线", 16.2F, System.Drawing.FontStyle.Bold);
+            this.correct_flag.ForeColor = System.Drawing.Color.Lime;
+            this.correct_flag.Location = new System.Drawing.Point(545, 46);
+            this.correct_flag.Name = "correct_flag";
+            this.correct_flag.Size = new System.Drawing.Size(69, 29);
+            this.correct_flag.TabIndex = 85;
+            this.correct_flag.Text = "正确";
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1329, 689);
+            this.Controls.Add(this.correct_flag);
+            this.Controls.Add(this.err_package_rate);
+            this.Controls.Add(this.err_msg);
+            this.Controls.Add(this.Pos_Y);
+            this.Controls.Add(this.Pos_X);
             this.Controls.Add(this.time_least);
             this.Controls.Add(this.red_score);
             this.Controls.Add(this.btn61);
@@ -1013,6 +1140,7 @@
             this.MaximizeBox = false;
             this.Name = "Main";
             this.Text = "上位机";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -1107,6 +1235,11 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label Pos_X;
+        private System.Windows.Forms.Label Pos_Y;
+        private System.Windows.Forms.TextBox err_msg;
+        private System.Windows.Forms.Label err_package_rate;
+        private System.Windows.Forms.Label correct_flag;
     }
 }
 
