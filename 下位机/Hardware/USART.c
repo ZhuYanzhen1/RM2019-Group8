@@ -62,6 +62,11 @@ void USART2_init(u32 bound)
 unsigned char Rcv_Flg=0; //若为1则已经收到过帧头
 unsigned char USART3_Rcv_Buffer[15];
 unsigned char RX_Counter=0x01;
+
+unsigned char Rcv_Flg2=0; //若为1则已经收到过帧头
+unsigned char USART2_Rcv_Buffer[15];
+unsigned char RX_Counter2=0x01;
+
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
 	if(huart->Instance==USART6)//如果是串口6
@@ -70,7 +75,25 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	}
 	if(huart->Instance==USART2)//如果是串口2
 	{
-		//Referee_Decode(aRxBuffer);	//裁判系统解码
+		if(aRxBuffer == 0xff && Rcv_Flg2 == 1)
+		{
+			Rcv_Flg2 = 0;//结束收发
+			RX_Counter2=1;
+			USART2_Rcv_Buffer[11]=0xff;
+			USART2_Received_CallBack((unsigned char *)&USART2_Rcv_Buffer);
+		}
+		else if(aRxBuffer == 0xff && Rcv_Flg2 == 0)
+		{
+			Rcv_Flg2 = 1;
+			RX_Counter2=1;
+			memset(&USART2_Rcv_Buffer,0x00,sizeof(USART2_Rcv_Buffer));
+			USART2_Rcv_Buffer[0]=0xff;
+		}
+		else if(Rcv_Flg2 == 1)
+		{
+			USART2_Rcv_Buffer[RX_Counter2] = aRxBuffer;
+			RX_Counter2++;
+		}
 	}
 	if(huart->Instance==USART3)//如果是串口3
 	{
@@ -79,7 +102,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 			Rcv_Flg = 0;//结束收发
 			RX_Counter=1;
 			USART3_Rcv_Buffer[11]=0xff;
-			Received_CallBack((unsigned char *)&USART3_Rcv_Buffer);
+			USART3_Received_CallBack((unsigned char *)&USART3_Rcv_Buffer);
 		}
 		else if(aRxBuffer3 == 0xff && Rcv_Flg == 0)
 		{

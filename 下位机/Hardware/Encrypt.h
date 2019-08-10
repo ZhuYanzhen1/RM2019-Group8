@@ -25,9 +25,8 @@
 #define PID_CHASSIS_DATA_1		7
 #define PID_CHASSIS_DATA_2		8
 
-#define PID_ACK		9
-#define PID_RESERVE_DATA		10
-#define PID_HAND_SHAKE		11
+#define PID_VECTOR_DATA		9
+
 
 #define HAND_SHAKE_DATA		[0xa5,0x5a,0xa5,0x5a,0xa5,0x5a,0xa5]
 
@@ -92,4 +91,5 @@ uint8_t Cvt_Region_Occupy(uint8_t status, uint8_t belong);
 void Cvt_Map_Data(Summer_Camp_Info_t *Summer_Camp_Info, Map_Data_t *Map_Data);
 void Send_Map_Data(Map_Data_t *map_data);
 void Send_Data(unsigned char pid, unsigned char data[8]);
+void Send_Vector_Data(void);
 #endif

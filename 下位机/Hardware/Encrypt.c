@@ -148,6 +148,26 @@ void Send_Map_Data(Map_Data_t *map_data)
 	memcpy(data, buffer+40,8);
 	Send_Data(PID_MAP_DATA_5,data);
 }
+
+void Send_Vector_Data(void)
+{
+	uint8_t data[8];											//要发送的数据
+	long x ,y;
+	x = (long)(Mult_Vector_X*10000)/1;
+	y = (long)(Mult_Vector_Y*10000)/1;
+	memset(data,0,8);											//清空发送数据缓存
+	data[0]=(x>>24);
+	data[1]=((x&0x00ff0000)>>16);
+	data[2]=((x&0x0000ff00)>>8);
+	data[3]=(x&0x000000ff);
+	data[4]=(y>>24);
+	data[5]=((y&0x00ff0000)>>16);
+	data[6]=((y&0x0000ff00)>>8);
+	data[7]=(y&0x000000ff);
+	Send_Data(PID_VECTOR_DATA,data);
+}
+
+
 void Send_Data(unsigned char pid, unsigned char data[])
 {
 	Comm_Pkt_t pkt;										//定义结构体

@@ -66,6 +66,9 @@ void Remote_Control(void* pvParameters)              //周期处理遥控器接收值
 			Chassis_Vx.User = -1*(Remote.ch1/330.0f);
 			Chassis_Vy.User = Remote.ch2/330.0f;
 			Chassis_Wz.User = Remote.ch3/16.0f;
+//			Chassis_Vx.User = -1*Remote.ch1;
+//			Chassis_Vy.User = Remote.ch2;
+//			Chassis_Wz.User = Remote.ch3;
 		}
 		else if(Remote.sw1==Left_L&&Remote.sw2==Right_M)
 		{
@@ -86,7 +89,7 @@ void Remote_Control(void* pvParameters)              //周期处理遥控器接收值
 			Chassis_Wz.User = 0;
 		}
 		vTaskDelay(5);
-		Blanket_Open();
+
 	}
 }
 
