@@ -76,7 +76,6 @@ void USART2_Received_CallBack(unsigned char Receive_Buffer[])
 		Buffer_Data_Counter++;
 		if(Buffer_Data_Counter == 12)   //if the package had been broken
     {
-				long Temp_X,Temp_Y;
         uint8_t Data_Buffer[8];
         uint8_t PID_Bit = Receive_Buffer[1]>>4;  //Get The PID Bit
         if(PID_Bit == ((~(Receive_Buffer[1] & 0x0f)) & 0x0f) )  //PID Verify Success

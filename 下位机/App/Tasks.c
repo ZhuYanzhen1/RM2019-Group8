@@ -1,5 +1,10 @@
 #include "User.h"
 #if(USING_TASK == 1)
+
+void Auto_Mode(void);
+void Manual_Mode(void);
+
+
 void Renew_PID(void)         //更新PID值
 {
 	PID_Renew(&PID1,moto_chassis[0].speed_rpm);
@@ -63,33 +68,47 @@ void Remote_Control(void* pvParameters)              //周期处理遥控器接收值
 	{
 		if(Remote.sw1==Left_L&&Remote.sw2==Right_L)
 		{
-			Chassis_Vx.User = -1*(Remote.ch1/330.0f);
-			Chassis_Vy.User = Remote.ch2/330.0f;
-			Chassis_Wz.User = Remote.ch3/16.0f;
-//			Chassis_Vx.User = -1*Remote.ch1;
-//			Chassis_Vy.User = Remote.ch2;
-//			Chassis_Wz.User = Remote.ch3;
-		}
-		else if(Remote.sw1==Left_L&&Remote.sw2==Right_M)
-		{
-			Ball1_Angle.User+=49152;
-			vTaskDelay(1000);
-		}
-		else if(Remote.sw1==Left_M&&Remote.sw2==Right_M)
-		{
-			Ball2_Angle.User+=49152;
-			vTaskDelay(1000);
+			Auto_Mode();
 		}
 		else
 		{
-			PID5.User=0;
-			PID6.User=0;
-			Chassis_Vx.User = 0;
-			Chassis_Vy.User = 0;
-			Chassis_Wz.User = 0;
+			Manual_Mode();
 		}
 		vTaskDelay(5);
 
+	}
+}
+
+
+void Auto_Mode(void)
+{
+	
+}
+
+void Manual_Mode(void)
+{
+	Chassis_Vx.User = -1*(Remote.ch1/330.0f);
+	Chassis_Vy.User = Remote.ch2/330.0f;
+	Chassis_Wz.User = Remote.ch3/16.0f;
+	if(Remote.sw1==Left_M&&Remote.sw2==Right_L)
+	{
+		//装球
+		Ball_Reload(1);
+		Ball_Reload(2);
+		Ball_Reload(3);
+		Ball_Reload(4);
+	}
+	else if(Remote.sw1==Left_M&&Remote.sw2==Right_M)
+	{
+		//放球
+		Ball_Place(1);
+		Ball_Place(2);
+		Ball_Place(3);
+		Ball_Place(4);
+	}
+	if(Remote.sw1==Left_H&&Remote.sw2==Right_H)
+	{
+		//放杯
 	}
 }
 
