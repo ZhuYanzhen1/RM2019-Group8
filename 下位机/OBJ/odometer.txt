@@ -7,81 +7,91 @@
                   Mecanum_To_Chassis PROC
 ;;;18     }
 ;;;19     void Mecanum_To_Chassis(float Wheel[4],float *Vx,float *Vy,float *Wz)
-000000  e92d41f0          PUSH     {r4-r8,lr}
+000000  edd01a00          VLDR     s3,[r0,#0]
 ;;;20     {
-000004  ed2d8b08          VPUSH    {d8-d11}
-000008  4604              MOV      r4,r0
-00000a  460d              MOV      r5,r1
-00000c  4616              MOV      r6,r2
-00000e  461f              MOV      r7,r3
-;;;21     	float buf1,buf2,buf3;
-;;;22     	buf1 = (Wheel[0]+Wheel[1])/2.0f;//x+wz
-000010  ed940a00          VLDR     s0,[r4,#0]
-000014  edd40a01          VLDR     s1,[r4,#4]
-000018  ee300a20          VADD.F32 s0,s0,s1
-00001c  eef00a00          VMOV.F32 s1,#2.00000000
-000020  ee801a20          VDIV.F32 s2,s0,s1
-000024  eef08a41          VMOV.F32 s17,s2
-;;;23     	buf2 = (Wheel[0]+Wheel[2])/2.0f;//wz
-000028  ed940a00          VLDR     s0,[r4,#0]
-00002c  edd40a02          VLDR     s1,[r4,#8]
-000030  ee300a20          VADD.F32 s0,s0,s1
-000034  eef00a00          VMOV.F32 s1,#2.00000000
-000038  ee801a20          VDIV.F32 s2,s0,s1
-00003c  eeb08a41          VMOV.F32 s16,s2
-;;;24     	buf3 = (Wheel[1]+Wheel[2])/2.0f;//y+wz
-000040  ed940a01          VLDR     s0,[r4,#4]
-000044  edd40a02          VLDR     s1,[r4,#8]
-000048  ee300a20          VADD.F32 s0,s0,s1
-00004c  eef00a00          VMOV.F32 s1,#2.00000000
-000050  ee801a20          VDIV.F32 s2,s0,s1
-000054  eeb09a41          VMOV.F32 s18,s2
-;;;25     	*Vx = (buf1-buf2)/(19.0/60.0/60*23.55f/1.6f);
-000058  ee380ac8          VSUB.F32 s0,s17,s16
-00005c  ee101a10          VMOV     r1,s0
-000060  4608              MOV      r0,r1
-000062  f7fffffe          BL       __aeabi_f2d
-000066  ec410b1b          VMOV     d11,r0,r1
-00006a  ed9f0b1a          VLDR     d0,|L1.212|
-00006e  ec532b10          VMOV     r2,r3,d0
-000072  f7fffffe          BL       __aeabi_ddiv
-000076  ec410b1a          VMOV     d10,r0,r1
-00007a  f7fffffe          BL       __aeabi_d2f
-00007e  6028              STR      r0,[r5,#0]
-;;;26     	*Vy = (buf3-buf2)/(19.0/60.0/60*23.55f/1.6f);
-000080  ee390a48          VSUB.F32 s0,s18,s16
-000084  ee101a10          VMOV     r1,s0
-000088  4608              MOV      r0,r1
-00008a  f7fffffe          BL       __aeabi_f2d
-00008e  ec410b1b          VMOV     d11,r0,r1
-000092  ed9f0b10          VLDR     d0,|L1.212|
-000096  ec532b10          VMOV     r2,r3,d0
-00009a  f7fffffe          BL       __aeabi_ddiv
-00009e  ec410b1a          VMOV     d10,r0,r1
-0000a2  f7fffffe          BL       __aeabi_d2f
-0000a6  6030              STR      r0,[r6,#0]
-;;;27     	*Wz = (buf2)/(19.0/60.0/(A+B)/3.0/1.4f);
-0000a8  ee180a10          VMOV     r0,s16
-0000ac  f7fffffe          BL       __aeabi_f2d
-0000b0  ec410b1b          VMOV     d11,r0,r1
-0000b4  ed9f0b09          VLDR     d0,|L1.220|
-0000b8  ec532b10          VMOV     r2,r3,d0
-0000bc  f7fffffe          BL       __aeabi_ddiv
-0000c0  ec410b1a          VMOV     d10,r0,r1
-0000c4  f7fffffe          BL       __aeabi_d2f
-0000c8  6038              STR      r0,[r7,#0]
-;;;28     }
-0000ca  ecbd8b08          VPOP     {d8-d11}
-0000ce  e8bd81f0          POP      {r4-r8,pc}
+;;;21     //	float buf1,buf2,buf3;
+;;;22     //	buf1 = (Wheel[0]+Wheel[1])/2.0f;//x+wz
+;;;23     //	buf2 = (Wheel[0]+Wheel[2])/2.0f;//wz
+;;;24     //	buf3 = (Wheel[1]+Wheel[2])/2.0f;//y+wz
+;;;25     //	*Vx = (buf1-buf2)/(36.0/60.0/60*23.55f/1.6f);
+;;;26     //	*Vy = (buf3-buf2)/(36.0/60.0/60*23.55f/1.6f);
+;;;27     //	*Wz = (buf2)/(36.0/60.0/(A+B)/3.0/1.4f);
+;;;28     	float buf1,buf2,buf3;
+;;;29     	buf1 = (Wheel[0]+Wheel[1])/2;//x+wz
+000004  ed902a01          VLDR     s4,[r0,#4]
+000008  ee711a82          VADD.F32 s3,s3,s4
+00000c  eeb02a00          VMOV.F32 s4,#2.00000000
+000010  eec12a82          VDIV.F32 s5,s3,s4
+000014  eef00a62          VMOV.F32 s1,s5
+;;;30     	buf2 = (Wheel[0]+Wheel[2])/2;//wz
+000018  edd01a00          VLDR     s3,[r0,#0]
+00001c  ed902a02          VLDR     s4,[r0,#8]
+000020  ee711a82          VADD.F32 s3,s3,s4
+000024  eeb02a00          VMOV.F32 s4,#2.00000000
+000028  eec12a82          VDIV.F32 s5,s3,s4
+00002c  eeb00a62          VMOV.F32 s0,s5
+;;;31     	buf3 = (Wheel[1]+Wheel[2])/2;//y+wz
+000030  edd01a01          VLDR     s3,[r0,#4]
+000034  ed902a02          VLDR     s4,[r0,#8]
+000038  ee711a82          VADD.F32 s3,s3,s4
+00003c  eeb02a00          VMOV.F32 s4,#2.00000000
+000040  eec12a82          VDIV.F32 s5,s3,s4
+000044  eeb01a62          VMOV.F32 s2,s5
+;;;32     	*Vx = (buf1-buf2)/36/60/60*23.55f/1.6f;
+000048  ee302ac0          VSUB.F32 s4,s1,s0
+00004c  eddf2a22          VLDR     s5,|L1.216|
+000050  eec21a22          VDIV.F32 s3,s4,s5
+000054  eddf2a21          VLDR     s5,|L1.220|
+000058  ee812aa2          VDIV.F32 s4,s3,s5
+00005c  eddf1a1f          VLDR     s3,|L1.220|
+000060  eec22a21          VDIV.F32 s5,s4,s3
+000064  eddf1a1e          VLDR     s3,|L1.224|
+000068  ee621aa1          VMUL.F32 s3,s5,s3
+00006c  ed9f2a1d          VLDR     s4,|L1.228|
+000070  eec12a82          VDIV.F32 s5,s3,s4
+000074  edc12a00          VSTR     s5,[r1,#0]
+;;;33     	*Vy = (buf3-buf2)/36/60/60*23.55f/1.6f;
+000078  ee312a40          VSUB.F32 s4,s2,s0
+00007c  eddf2a16          VLDR     s5,|L1.216|
+000080  eec21a22          VDIV.F32 s3,s4,s5
+000084  eddf2a15          VLDR     s5,|L1.220|
+000088  ee812aa2          VDIV.F32 s4,s3,s5
+00008c  eddf2a13          VLDR     s5,|L1.220|
+000090  eec21a22          VDIV.F32 s3,s4,s5
+000094  ed9f2a12          VLDR     s4,|L1.224|
+000098  ee611a82          VMUL.F32 s3,s3,s4
+00009c  ed9f2a11          VLDR     s4,|L1.228|
+0000a0  eec12a82          VDIV.F32 s5,s3,s4
+0000a4  edc22a00          VSTR     s5,[r2,#0]
+;;;34     	*Wz = (buf2)/36/60/(A+B)/3/1.4f;
+0000a8  ed9f2a0b          VLDR     s4,|L1.216|
+0000ac  eec01a02          VDIV.F32 s3,s0,s4
+0000b0  ed9f2a0a          VLDR     s4,|L1.220|
+0000b4  eec12a82          VDIV.F32 s5,s3,s4
+0000b8  eddf1a0b          VLDR     s3,|L1.232|
+0000bc  ee822aa1          VDIV.F32 s4,s5,s3
+0000c0  eef02a08          VMOV.F32 s5,#3.00000000
+0000c4  eec21a22          VDIV.F32 s3,s4,s5
+0000c8  ed9f2a08          VLDR     s4,|L1.236|
+0000cc  eec12a82          VDIV.F32 s5,s3,s4
+0000d0  edc32a00          VSTR     s5,[r3,#0]
+;;;35     }
+0000d4  4770              BX       lr
                           ENDP
 
-0000d2  0000              DCW      0x0000
-                  |L1.212|
-0000d4  8667f6ea          DCFD     0x3fb3e2fc8667f6ea ; 0.077682287992469817
-0000d8  3fb3e2fc
+0000d6  0000              DCW      0x0000
+                  |L1.216|
+0000d8  42100000          DCFS     0x42100000 ; 36
                   |L1.220|
-0000dc  320ffba3          DCFD     0x40004211320ffba3 ; 2.0322593604209529
-0000e0  40004211
+0000dc  42700000          DCFS     0x42700000 ; 60
+                  |L1.224|
+0000e0  41bc6666          DCFS     0x41bc6666 ; 23.549999237060547
+                  |L1.228|
+0000e4  3fcccccd          DCFS     0x3fcccccd ; 1.6000000238418579
+                  |L1.232|
+0000e8  3ccccccd          DCFS     0x3ccccccd ; 0.02500000037252903
+                  |L1.236|
+0000ec  3fb33333          DCFS     0x3fb33333 ; 1.3999999761581421
 
                           AREA ||i.Odometer_Summary||, CODE, READONLY, ALIGN=2
 

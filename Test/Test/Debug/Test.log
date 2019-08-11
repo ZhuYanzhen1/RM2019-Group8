@@ -1,0 +1,29 @@
+﻿生成启动时间为 2019/8/11 19:53:20。
+     1>项目“D:\Desktop\RM2019-Group8\Test\Test\Test.vcxproj”在节点 2 上(Build 个目标)。
+     1>ClCompile:
+         D:\Visual Studio 2013\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\Test.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Test.cpp
+         Test.cpp
+     1>d:\desktop\rm2019-group8\test\test\game.h(245): warning C4805: “==”: 在操作中将类型“int8_t”与类型“bool”混合不安全
+     1>d:\desktop\rm2019-group8\test\test\game.h(246): warning C4805: “!=”: 在操作中将类型“int8_t”与类型“bool”混合不安全
+     1>d:\desktop\rm2019-group8\test\test\game.h(299): warning C4805: “==”: 在操作中将类型“int8_t”与类型“bool”混合不安全
+     1>d:\desktop\rm2019-group8\test\test\game.h(402): warning C4805: “==”: 在操作中将类型“int8_t”与类型“bool”混合不安全
+     1>d:\desktop\rm2019-group8\test\test\game.h(472): error C2065: “timeval”: 未声明的标识符
+     1>d:\desktop\rm2019-group8\test\test\game.h(472): error C2146: 语法错误: 缺少“;”(在标识符“T_start”的前面)
+     1>d:\desktop\rm2019-group8\test\test\game.h(472): error C2065: “T_start”: 未声明的标识符
+     1>d:\desktop\rm2019-group8\test\test\game.h(472): error C2065: “T_end”: 未声明的标识符
+     1>d:\desktop\rm2019-group8\test\test\game.h(473): error C2065: “T_start”: 未声明的标识符
+     1>d:\desktop\rm2019-group8\test\test\game.h(473): error C3861: “gettimeofday”:  找不到标识符
+     1>d:\desktop\rm2019-group8\test\test\game.h(489): error C2065: “T_end”: 未声明的标识符
+     1>d:\desktop\rm2019-group8\test\test\game.h(489): error C3861: “gettimeofday”:  找不到标识符
+     1>d:\desktop\rm2019-group8\test\test\game.h(491): error C2065: “T_end”: 未声明的标识符
+     1>d:\desktop\rm2019-group8\test\test\game.h(491): error C2228: “.tv_sec”的左边必须有类/结构/联合
+                 类型是“unknown-type”
+     1>d:\desktop\rm2019-group8\test\test\game.h(491): error C2228: “.tv_usec”的左边必须有类/结构/联合
+                 类型是“unknown-type”
+     1>d:\desktop\rm2019-group8\test\test\game.h(491): error C2065: “T_start”: 未声明的标识符
+     1>d:\desktop\rm2019-group8\test\test\game.h(558): error C4146: 一元负运算符应用于无符号类型，结果仍为无符号类型
+     1>已完成生成项目“D:\Desktop\RM2019-Group8\Test\Test\Test.vcxproj”(Build 个目标)的操作 - 失败。
+
+生成失败。
+
+已用时间 00:00:00.23

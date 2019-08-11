@@ -19,23 +19,23 @@ void Control_Task(void *pvParameter)
 	while(1)
 	{
 		
-		if(Receive_Package.X_Possition != 0 && \
-			Receive_Package.Y_Possition != 0 && \
-			Receive_Package.Angle != 0)
+		if(Receive_Package3.X_Possition != 0 && \
+			Receive_Package3.Y_Possition != 0 && \
+			Receive_Package3.Angle != 0)
 		{
-			Mult_Vector_X = Receive_Package.X_Possition;
-			Mult_Vector_Y = Receive_Package.Y_Possition;
-			Mult_Vector_WZ = Receive_Package.Angle;
+			Mult_Vector_X = Receive_Package3.X_Possition;
+			Mult_Vector_Y = Receive_Package3.Y_Possition;
+			Mult_Vector_WZ = Receive_Package3.Angle;
 			
-			Last_CV_Vector_X = Receive_Package.X_Possition;
-			Last_CV_Vector_Y = Receive_Package.Y_Possition;
-			Last_CV_Vector_Angle = Receive_Package.Angle;
+			Last_CV_Vector_X = Receive_Package3.X_Possition;
+			Last_CV_Vector_Y = Receive_Package3.Y_Possition;
+			Last_CV_Vector_Angle = Receive_Package3.Angle;
 			
 			CV_Offline = 0;
 		}
-		if( ( Receive_Package.X_Possition == 0 || \
-			Receive_Package.Y_Possition == 0 || \
-			Receive_Package.Angle == 0 ) && CV_Offline == 0 )
+		if( ( Receive_Package3.X_Possition == 0 || \
+			Receive_Package3.Y_Possition == 0 || \
+			Receive_Package3.Angle == 0 ) && CV_Offline == 0 )
 		{
 			Odom_Vector_X_Start_Val = Odom_VectorO_X;
 			Odom_Vector_Y_Start_Val = Odom_VectorO_Y;
@@ -50,6 +50,6 @@ void Control_Task(void *pvParameter)
 			Mult_Vector_Y = Last_CV_Vector_Y + (Odom_VectorO_Y - Odom_Vector_Y_Start_Val);
 			Mult_Vector_WZ = Last_CV_Vector_Angle + (Odom_RotateO - Odom_Vector_Angle_Start_Val);
 		}
-		vTaskDelay(10);
+		vTaskDelay(20);
 	}
 }

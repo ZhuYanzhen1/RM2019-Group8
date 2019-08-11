@@ -19,3 +19,13 @@ D:\Desktop\RM2019-Group8\TspGA\TspGA\obj\x86\Debug\TspGA.csprojResolveAssemblyRe
 D:\Desktop\RM2019-Group8\TspGA\TspGA\obj\x86\Debug\TspGA.frmGa.resources
 D:\Desktop\RM2019-Group8\TspGA\TspGA\obj\x86\Debug\TspGA.Properties.Resources.resources
 D:\Desktop\RM2019-Group8\TspGA\TspGA\obj\x86\Debug\TspGA.csproj.GenerateResource.Cache
+C:\Users\blx\Desktop\RM19\RM2019-Group8\GA\TspGA\TspGA\bin\Debug\TspGA.exe.config
+C:\Users\blx\Desktop\RM19\RM2019-Group8\GA\TspGA\TspGA\bin\Debug\TspGA.exe
+C:\Users\blx\Desktop\RM19\RM2019-Group8\GA\TspGA\TspGA\bin\Debug\TspGA.pdb
+C:\Users\blx\Desktop\RM19\RM2019-Group8\GA\TspGA\TspGA\obj\x86\Debug\TspGA.csprojAssemblyReference.cache
+C:\Users\blx\Desktop\RM19\RM2019-Group8\GA\TspGA\TspGA\obj\x86\Debug\TspGA.frmGa.resources
+C:\Users\blx\Desktop\RM19\RM2019-Group8\GA\TspGA\TspGA\obj\x86\Debug\TspGA.Properties.Resources.resources
+C:\Users\blx\Desktop\RM19\RM2019-Group8\GA\TspGA\TspGA\obj\x86\Debug\TspGA.csproj.GenerateResource.cache
+C:\Users\blx\Desktop\RM19\RM2019-Group8\GA\TspGA\TspGA\obj\x86\Debug\TspGA.csproj.CoreCompileInputs.cache
+C:\Users\blx\Desktop\RM19\RM2019-Group8\GA\TspGA\TspGA\obj\x86\Debug\TspGA.exe
+C:\Users\blx\Desktop\RM19\RM2019-Group8\GA\TspGA\TspGA\obj\x86\Debug\TspGA.pdb

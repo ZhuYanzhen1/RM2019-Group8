@@ -7,7 +7,7 @@
                   Communicate_Task PROC
 ;;;5      Chassis_Data_t Chassis_Data;
 ;;;6      void Communicate_Task(void * pvParameters)
-000000  e011              B        |L1.38|
+000000  e012              B        |L1.40|
                   |L1.2|
 ;;;7      {
 ;;;8      	while(1)
@@ -15,32 +15,35 @@
 ;;;10     		taskENTER_CRITICAL();
 000002  f7fffffe          BL       vPortEnterCritical
 ;;;11     		Cvt_Map_Data(&Summer_Camp_Info, &Map_Data);
-000006  4908              LDR      r1,|L1.40|
-000008  4808              LDR      r0,|L1.44|
+000006  4909              LDR      r1,|L1.44|
+000008  4809              LDR      r0,|L1.48|
 00000a  f7fffffe          BL       Cvt_Map_Data
 ;;;12     		taskEXIT_CRITICAL();
 00000e  f7fffffe          BL       vPortExitCritical
 ;;;13     		Send_Map_Data(&Map_Data);
-000012  4805              LDR      r0,|L1.40|
+000012  4806              LDR      r0,|L1.44|
 000014  f7fffffe          BL       Send_Map_Data
 ;;;14     		Send_Chassis_Data(&Chassis_Data);
-000018  4805              LDR      r0,|L1.48|
+000018  4806              LDR      r0,|L1.52|
 00001a  f7fffffe          BL       Send_Chassis_Data
-;;;15     		vTaskDelay(1000);
-00001e  f44f707a          MOV      r0,#0x3e8
-000022  f7fffffe          BL       vTaskDelay
-                  |L1.38|
-000026  e7ec              B        |L1.2|
-;;;16     	}
-;;;17     }
-;;;18     
+;;;15     		Send_Vector_Data();
+00001e  f7fffffe          BL       Send_Vector_Data
+;;;16     		vTaskDelay(100);
+000022  2064              MOVS     r0,#0x64
+000024  f7fffffe          BL       vTaskDelay
+                  |L1.40|
+000028  e7eb              B        |L1.2|
+;;;17     	}
+;;;18     }
+;;;19     
                           ENDP
 
-                  |L1.40|
-                          DCD      Map_Data
+00002a  0000              DCW      0x0000
                   |L1.44|
-                          DCD      Summer_Camp_Info
+                          DCD      Map_Data
                   |L1.48|
+                          DCD      Summer_Camp_Info
+                  |L1.52|
                           DCD      Chassis_Data
 
                           AREA ||.bss||, DATA, NOINIT, ALIGN=1

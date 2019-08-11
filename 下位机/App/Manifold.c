@@ -12,7 +12,8 @@ void Communicate_Task(void * pvParameters)
 		taskEXIT_CRITICAL();
 		Send_Map_Data(&Map_Data);
 		Send_Chassis_Data(&Chassis_Data);
-		vTaskDelay(1000);
+		Send_Vector_Data();
+		vTaskDelay(100);
 	}
 }
 

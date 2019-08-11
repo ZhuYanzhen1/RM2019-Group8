@@ -10,39 +10,35 @@
 000000  e015              B        |L1.46|
                   |L1.2|
 ;;;26     {
-;;;27     //	char Buffer[256];
-;;;28     	while(1)
-;;;29     	{
-;;;30     		LED_R=1;
+;;;27     	while(1)
+;;;28     	{
+;;;29     		LED_R=1;
 000002  2001              MOVS     r0,#1
 000004  490a              LDR      r1,|L1.48|
 000006  6008              STR      r0,[r1,#0]
-;;;31     		LED_G=0;
+;;;30     		LED_G=0;
 000008  2000              MOVS     r0,#0
 00000a  490a              LDR      r1,|L1.52|
 00000c  f8c102b8          STR      r0,[r1,#0x2b8]
-;;;32     		vTaskDelay(500);
+;;;31     		vTaskDelay(500);
 000010  f44f70fa          MOV      r0,#0x1f4
 000014  f7fffffe          BL       vTaskDelay
-;;;33     		LED_R=0;
+;;;32     		LED_R=0;
 000018  2000              MOVS     r0,#0
 00001a  4905              LDR      r1,|L1.48|
 00001c  6008              STR      r0,[r1,#0]
-;;;34     		LED_G=1;
+;;;33     		LED_G=1;
 00001e  2001              MOVS     r0,#1
 000020  4904              LDR      r1,|L1.52|
 000022  f8c102b8          STR      r0,[r1,#0x2b8]
-;;;35     		vTaskDelay(500);
+;;;34     		vTaskDelay(500);
 000026  f44f70fa          MOV      r0,#0x1f4
 00002a  f7fffffe          BL       vTaskDelay
                   |L1.46|
 00002e  e7e8              B        |L1.2|
-;;;36     //		memset(&Buffer,' ',sizeof(Buffer));
-;;;37     //		vTaskGetRunTimeStats(Buffer);
-;;;38     //		printf("%s \r\n",Buffer);
-;;;39     	}
-;;;40     }
-;;;41     
+;;;35     	}
+;;;36     }
+;;;37     
                           ENDP
 
                   |L1.48|

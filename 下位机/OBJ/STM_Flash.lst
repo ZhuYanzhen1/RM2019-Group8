@@ -51112,9 +51112,9 @@ N#ifndef _ALGORITHM_H_
 N#define _ALGORITHM_H_
 Nvoid Control_Task(void *pvParameter);
 N
-Nextern float Mult_Victor_X;
-Nextern float Mult_Victor_Y;
-Nextern float Mult_Victor_WZ;
+Nextern float Mult_Vector_X;
+Nextern float Mult_Vector_Y;
+Nextern float Mult_Vector_WZ;
 N
 N#endif
 L 5 ".\USER\User.h" 2
@@ -51123,6 +51123,7 @@ L 1 ".\App\Odometer.h" 1
 N#ifndef _ODOMETER_H_
 N#define _ODOMETER_H_
 Nextern float Odom_VectorO_X , Odom_VectorO_Y , Odom_RotateO ,VO_X,VO_Y;
+Nextern float Des_Vx , Des_Vy , Des_Wz , L_Des_Vx , L_Des_Vy , L_Des_Wz;;
 Nvoid Odometer_Summary(void *pvParameters);
 Nvoid Mecanum_To_Chassis(float Wheel[4],float *Vx,float *Vy,float *Wz);
 N#endif
@@ -52903,9 +52904,8 @@ N#define PID_CHASSIS_DATA_0		6
 N#define PID_CHASSIS_DATA_1		7
 N#define PID_CHASSIS_DATA_2		8
 N
-N#define PID_ACK		9
-N#define PID_RESERVE_DATA		10
-N#define PID_HAND_SHAKE		11
+N#define PID_VECTOR_DATA		9
+N
 N
 N#define HAND_SHAKE_DATA		[0xa5,0x5a,0xa5,0x5a,0xa5,0x5a,0xa5]
 N
@@ -52945,6 +52945,7 @@ N
 Ntypedef struct
 N{
 N	unsigned char Castle_Energy[14];	//碉堡能量
+N	unsigned char Reserve;
 N	unsigned char Region_Occupy[24];	//场地状态
 N	unsigned char Car_Location[2];		//红蓝车辆位置
 N	unsigned char Round_Remain_Time;	//回合剩余时间
@@ -52969,6 +52970,7 @@ Nuint8_t Cvt_Region_Occupy(uint8_t status, uint8_t belong);
 Nvoid Cvt_Map_Data(Summer_Camp_Info_t *Summer_Camp_Info, Map_Data_t *Map_Data);
 Nvoid Send_Map_Data(Map_Data_t *map_data);
 Nvoid Send_Data(unsigned char pid, unsigned char data[8]);
+Nvoid Send_Vector_Data(void);
 N#endif
 L 7 ".\USER\User.h" 2
 N#include "Decrypt.h"
@@ -52984,9 +52986,18 @@ N{
 N  float X_Possition;
 N	float Y_Possition;
 N	float Angle;
-N}Receive_Data_Package;
-Nvoid Received_CallBack(unsigned char Receive_Buffer[]);
-Nextern Receive_Data_Package Receive_Package;
+N}USART3_Receive_Data_Package;
+N
+Ntypedef struct
+N{
+N  unsigned char Ball_Cnt;
+N	unsigned char Cup_Cnt;
+N}USART2_Receive_Data_Package;
+N#define BALL_CUP_CNT 				0x00
+Nvoid USART3_Received_CallBack(unsigned char Receive_Buffer[]);
+Nvoid USART2_Received_CallBack(unsigned char Receive_Buffer[]);
+Nextern USART2_Receive_Data_Package Receive_Package2;
+Nextern USART3_Receive_Data_Package Receive_Package3;
 N#endif
 L 8 ".\USER\User.h" 2
 N#include "User_Config.h"
@@ -53034,15 +53045,24 @@ N#include "Machine_Arm.h"
 L 1 ".\App\Machine_Arm.h" 1
 N#ifndef _MACHINE_ARM_H_
 N#define _MACHINE_ARM_H_
-Nvoid SkyTable_Back(void);			//云台转向后方
-Nvoid SkyTable_Front(void);  //云台转向前方
+N
+N#define PWM_CH1_OPEN				0.5f
+N#define PWM_CH2_OPEN				0.5f
+N#define PWM_CH3_OPEN				0.5f
+N#define PWM_CH4_OPEN				0.5f
+N
+N#define PWM_CH1_CLOSE				0.9f
+N#define PWM_CH2_CLOSE				0.9f
+N#define PWM_CH3_CLOSE				0.9f
+N#define PWM_CH4_CLOSE				0.9f
+N
 Nvoid Arm_Lift(void);  //机械臂抬升
 Nvoid Arm_Drop(void);	//机械臂下降
 Nvoid Hand_Grab(void);	//抓手抓取
 Nvoid Hand_Open(void);	//抓手张开
 Nvoid Hand_Drop(void);	//抓手放物块
-Nvoid Blanket_Open(void);//物料盘打开
-Nvoid Blanket_Close(void);//物料盘关闭
+Nvoid Ball_Place(unsigned char num);//放球
+Nvoid Ball_Reload(unsigned char num);//补弹
 N#endif
 L 11 ".\USER\User.h" 2
 N#include "Manifold.h"
@@ -53068,9 +53088,13 @@ N#include "Mecanum_Wheel.h"
 L 1 ".\App\Mecanum_Wheel.h" 1
 N#ifndef __MECANUM_WHEEL_H__
 N#define __MECANUM_WHEEL_H__
-N#define A 0.0211f
-N#define B 0.0160f
-N#define WHEEL_R 0.0152f
+N//#define A 0.0211f
+N//#define B 0.0160f
+N//#define WHEEL_R 0.0152f
+N//#define PI 3.14159265358979f
+N#define A 0.0125f
+N#define B 0.0125f
+N#define WHEEL_R 0.0075f
 N#define PI 3.14159265358979f
 Nvoid Set_Speed(float speed_x,float speed_y,float speed_w);
 Nvoid Speed_To_Wheel(float vx_set, float vy_set,float wz_set,float wheel_speed[4]);

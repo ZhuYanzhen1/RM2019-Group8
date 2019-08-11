@@ -18,11 +18,18 @@ void Odometer_Summary(void *pvParameters)
 }
 void Mecanum_To_Chassis(float Wheel[4],float *Vx,float *Vy,float *Wz)
 {
+//	float buf1,buf2,buf3;
+//	buf1 = (Wheel[0]+Wheel[1])/2.0f;//x+wz
+//	buf2 = (Wheel[0]+Wheel[2])/2.0f;//wz
+//	buf3 = (Wheel[1]+Wheel[2])/2.0f;//y+wz
+//	*Vx = (buf1-buf2)/(36.0/60.0/60*23.55f/1.6f);
+//	*Vy = (buf3-buf2)/(36.0/60.0/60*23.55f/1.6f);
+//	*Wz = (buf2)/(36.0/60.0/(A+B)/3.0/1.4f);
 	float buf1,buf2,buf3;
-	buf1 = (Wheel[0]+Wheel[1])/2.0f;//x+wz
-	buf2 = (Wheel[0]+Wheel[2])/2.0f;//wz
-	buf3 = (Wheel[1]+Wheel[2])/2.0f;//y+wz
-	*Vx = (buf1-buf2)/(19.0/60.0/60*23.55f/1.6f);
-	*Vy = (buf3-buf2)/(19.0/60.0/60*23.55f/1.6f);
-	*Wz = (buf2)/(19.0/60.0/(A+B)/3.0/1.4f);
+	buf1 = (Wheel[0]+Wheel[1])/2;//x+wz
+	buf2 = (Wheel[0]+Wheel[2])/2;//wz
+	buf3 = (Wheel[1]+Wheel[2])/2;//y+wz
+	*Vx = (buf1-buf2)/36/60/60*23.55f/1.6f;
+	*Vy = (buf3-buf2)/36/60/60*23.55f/1.6f;
+	*Wz = (buf2)/36/60/(A+B)/3/1.4f;
 }
