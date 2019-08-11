@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GALib;
 
 namespace 遗传算法
 {
@@ -10,6 +11,8 @@ namespace 遗传算法
     {
         static int POP_NUM = 500;  //个体数
         static int STEP_NUM = 30;  //步数
+        GALib.Individual<>
+        GALib.EvolutionCompleteEventArgs<>
         enum STEP
         {
             UP=0,
@@ -30,7 +33,7 @@ namespace 遗传算法
         static float[] Mate_Prob = new float[POP_NUM];
         static STEP Get_Next_Step(int Counter)
         {
-
+            return STEP.UP;
         }
         static void Init_Seed()
         {

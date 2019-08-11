@@ -107,8 +107,7 @@ namespace 客户端
         {
             while (true)
             {
-                Pos_X.Text = "X_Possition：" + Receive_Package.X_Possition.ToString();
-                Pos_Y.Text = "Y_Possition：" + Receive_Package.Y_Possition.ToString();
+                Locate_Now.Text = "Location：(" + Receive_Package.X_Possition.ToString("F3") + "," + Receive_Package.Y_Possition.ToString("F3") + ")";
                 angle.Text = "Angle:" + Receive_Package.Gryo_Scope_Angle.ToString();
                 gryo.Text = "Gryo:" + Receive_Package.Gryo_Scope_Gryo.ToString();
                 motor1.Text = "Motor1:" + Receive_Package.Motor_Speed[0];
@@ -117,8 +116,6 @@ namespace 客户端
                 motor4.Text = "Motor4:" + Receive_Package.Motor_Speed[3];
                 motor5.Text = "Motor5:" + Receive_Package.Motor_Speed[4];
                 motor6.Text = "Motor6:" + Receive_Package.Motor_Speed[5];
-                motor7.Text = "Motor7:" + Receive_Package.Motor_Speed[6];
-                motor8.Text = "Motor8:" + Receive_Package.Motor_Speed[7];
                 time_count++;
                 if (time_count == delta_time)
                 {
@@ -132,12 +129,12 @@ namespace 客户端
                     err_package_rate.Text = "丢包率：" + (((float)Error_Package / (float)(Success_Package + Error_Package)) * 100).ToString("F2") + "%";
                 if(Last_Error_Package==Error_Package)
                 {
-                    correct_flag.Text = "正确";
+                    correct_flag.Text = "数据包正确";
                     correct_flag.ForeColor = Color.Green;
                 }
                 else
                 {
-                    correct_flag.Text = "错误";
+                    correct_flag.Text = "数据包错误";
                     correct_flag.ForeColor = Color.Red;
 
                 }
@@ -149,7 +146,6 @@ namespace 客户端
             }
         }
         byte Temp_Register = 0x00;  //Which Contains the data haven't been Handle
-        float c = 0;
         int Error_Package = 0, Success_Package = 0, Last_Error_Package = 0;
         byte[] Rec_Buffer1 = new byte[1];  //接收缓冲区1
         void Received_CallBack(byte[] Receive_Buffer)
@@ -399,7 +395,7 @@ namespace 客户端
             return bmp1;
         }
         byte Ignore_Flag = 0;
-        int delta_time = 20;
+        int delta_time = 50;
         int time_count = 0;
         private void RecMsg()
         {
@@ -491,6 +487,13 @@ namespace 客户端
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            byte[] Transmmit_Data=new byte[8];
+            Transmmit_Data[0] = 2;
+            Send_Data(0, Transmmit_Data);
         }
     }
 }
