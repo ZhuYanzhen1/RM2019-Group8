@@ -52991,18 +52991,17 @@ N#define PWM_CH2_OPEN				0.5f
 N#define PWM_CH3_OPEN				0.5f
 N#define PWM_CH4_OPEN				0.5f
 N
-N#define PWM_CH1_CLOSE				0.9f
-N#define PWM_CH2_CLOSE				0.9f
-N#define PWM_CH3_CLOSE				0.9f
-N#define PWM_CH4_CLOSE				0.9f
+N#define PWM_CH1_CLOSE				1.2f
+N#define PWM_CH2_CLOSE				1.2f
+N#define PWM_CH3_CLOSE				1.2f
+N#define PWM_CH4_CLOSE				1.2f
 N
-Nvoid Arm_Lift(void);  //机械臂抬升
-Nvoid Arm_Drop(void);	//机械臂下降
-Nvoid Hand_Grab(void);	//抓手抓取
-Nvoid Hand_Open(void);	//抓手张开
-Nvoid Hand_Drop(void);	//抓手放物块
+N
 Nvoid Ball_Place(unsigned char num);//放球
 Nvoid Ball_Reload(unsigned char num);//补弹
+Nvoid Cup_Press(void);	//按杯子
+Nvoid Cup_Release(void);	//松开杯子
+N
 N#endif
 L 11 ".\USER\User.h" 2
 N#include "Manifold.h"

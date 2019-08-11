@@ -5,24 +5,24 @@
                           AREA ||i.Auto_Mode||, CODE, READONLY, ALIGN=1
 
                   Auto_Mode PROC
-;;;82     
-;;;83     void Auto_Mode(void)
+;;;85     
+;;;86     void Auto_Mode(void)
 000000  4770              BX       lr
-;;;84     {
-;;;85     	
-;;;86     }
-;;;87     
+;;;87     {
+;;;88     	
+;;;89     }
+;;;90     
                           ENDP
 
 
                           AREA ||i.Manual_Mode||, CODE, READONLY, ALIGN=2
 
                   Manual_Mode PROC
-;;;87     
-;;;88     void Manual_Mode(void)
+;;;90     
+;;;91     void Manual_Mode(void)
 000000  b510              PUSH     {r4,lr}
-;;;89     {
-;;;90     	Chassis_Vx.User = -1*(Remote.ch1/330.0f);
+;;;92     {
+;;;93     	Chassis_Vx.User = -1*(Remote.ch1/330.0f);
 000002  482d              LDR      r0,|L2.184|
 000004  f9b00000          LDRSH    r0,[r0,#0]  ; Remote
 000008  ee000a10          VMOV     s0,r0
@@ -34,7 +34,7 @@
 000020  ee100a10          VMOV     r0,s0
 000024  4926              LDR      r1,|L2.192|
 000026  61c8              STR      r0,[r1,#0x1c]  ; Chassis_Vx
-;;;91     	Chassis_Vy.User = Remote.ch2/330.0f;
+;;;94     	Chassis_Vy.User = Remote.ch2/330.0f;
 000028  4823              LDR      r0,|L2.184|
 00002a  f9b00002          LDRSH    r0,[r0,#2]  ; Remote
 00002e  ee000a10          VMOV     s0,r0
@@ -44,7 +44,7 @@
 00003e  ee100a10          VMOV     r0,s0
 000042  4920              LDR      r1,|L2.196|
 000044  61c8              STR      r0,[r1,#0x1c]  ; Chassis_Vy
-;;;92     	Chassis_Wz.User = Remote.ch3/16.0f;
+;;;95     	Chassis_Wz.User = Remote.ch3/16.0f;
 000046  481c              LDR      r0,|L2.184|
 000048  f9b00004          LDRSH    r0,[r0,#4]  ; Remote
 00004c  ee000a10          VMOV     s0,r0
@@ -54,7 +54,7 @@
 00005c  ee100a10          VMOV     r0,s0
 000060  4919              LDR      r1,|L2.200|
 000062  61c8              STR      r0,[r1,#0x1c]  ; Chassis_Wz
-;;;93     	if(Remote.sw1==Left_M&&Remote.sw2==Right_L)
+;;;96     	if(Remote.sw1==Left_M&&Remote.sw2==Right_L)
 000064  4814              LDR      r0,|L2.184|
 000066  7a00              LDRB     r0,[r0,#8]  ; Remote
 000068  2803              CMP      r0,#3
@@ -63,24 +63,24 @@
 00006e  7a40              LDRB     r0,[r0,#9]  ; Remote
 000070  2802              CMP      r0,#2
 000072  d10c              BNE      |L2.142|
-;;;94     	{
-;;;95     		//装球
-;;;96     		Ball_Reload(1);
+;;;97     	{
+;;;98     		//装球
+;;;99     		Ball_Reload(1);
 000074  2001              MOVS     r0,#1
 000076  f7fffffe          BL       Ball_Reload
-;;;97     		Ball_Reload(2);
+;;;100    		Ball_Reload(2);
 00007a  2002              MOVS     r0,#2
 00007c  f7fffffe          BL       Ball_Reload
-;;;98     		Ball_Reload(3);
+;;;101    		Ball_Reload(3);
 000080  2003              MOVS     r0,#3
 000082  f7fffffe          BL       Ball_Reload
-;;;99     		Ball_Reload(4);
+;;;102    		Ball_Reload(4);
 000086  2004              MOVS     r0,#4
 000088  f7fffffe          BL       Ball_Reload
 00008c  e013              B        |L2.182|
                   |L2.142|
-;;;100    	}
-;;;101    	else if(Remote.sw1==Left_M&&Remote.sw2==Right_M)
+;;;103    	}
+;;;104    	else if(Remote.sw1==Left_M&&Remote.sw2==Right_M)
 00008e  480a              LDR      r0,|L2.184|
 000090  7a00              LDRB     r0,[r0,#8]  ; Remote
 000092  2803              CMP      r0,#3
@@ -89,29 +89,29 @@
 000098  7a40              LDRB     r0,[r0,#9]  ; Remote
 00009a  2803              CMP      r0,#3
 00009c  d10b              BNE      |L2.182|
-;;;102    	{
-;;;103    		//放球
-;;;104    		Ball_Place(1);
+;;;105    	{
+;;;106    		//放球
+;;;107    		Ball_Place(1);
 00009e  2001              MOVS     r0,#1
 0000a0  f7fffffe          BL       Ball_Place
-;;;105    		Ball_Place(2);
+;;;108    		Ball_Place(2);
 0000a4  2002              MOVS     r0,#2
 0000a6  f7fffffe          BL       Ball_Place
-;;;106    		Ball_Place(3);
+;;;109    		Ball_Place(3);
 0000aa  2003              MOVS     r0,#3
 0000ac  f7fffffe          BL       Ball_Place
-;;;107    		Ball_Place(4);
+;;;110    		Ball_Place(4);
 0000b0  2004              MOVS     r0,#4
 0000b2  f7fffffe          BL       Ball_Place
                   |L2.182|
-;;;108    	}
-;;;109    	if(Remote.sw1==Left_H&&Remote.sw2==Right_H)
-;;;110    	{
-;;;111    		//放杯
-;;;112    	}
-;;;113    }
+;;;111    	}
+;;;112    	if(Remote.sw1==Left_H&&Remote.sw2==Right_H)
+;;;113    	{
+;;;114    		//放杯
+;;;115    	}
+;;;116    }
 0000b6  bd10              POP      {r4,pc}
-;;;114    
+;;;117    
                           ENDP
 
                   |L2.184|
@@ -256,7 +256,7 @@
 000110  6288              STR      r0,[r1,#0x28]  ; Chassis_Victor_x
 ;;;64     }
 000112  bd10              POP      {r4,pc}
-;;;65     void Remote_Control(void* pvParameters)              //周期处理遥控器接收值
+;;;65     
                           ENDP
 
                   |L3.276|
@@ -297,14 +297,15 @@
                           AREA ||i.Remote_Control||, CODE, READONLY, ALIGN=2
 
                   Remote_Control PROC
-;;;64     }
-;;;65     void Remote_Control(void* pvParameters)              //周期处理遥控器接收值
+;;;66     
+;;;67     void Remote_Control(void* pvParameters)              //周期处理遥控器接收值
 000000  e00f              B        |L4.34|
                   |L4.2|
-;;;66     {
-;;;67     	while(1)
-;;;68     	{
-;;;69     		if(Remote.sw1==Left_L&&Remote.sw2==Right_L)
+;;;68     {
+;;;69     	while(1)
+;;;70     	{
+;;;71     		
+;;;72     		if(Remote.sw1==Left_L&&Remote.sw2==Right_L)
 000002  4808              LDR      r0,|L4.36|
 000004  7a00              LDRB     r0,[r0,#8]  ; Remote
 000006  2802              CMP      r0,#2
@@ -313,27 +314,27 @@
 00000c  7a40              LDRB     r0,[r0,#9]  ; Remote
 00000e  2802              CMP      r0,#2
 000010  d102              BNE      |L4.24|
-;;;70     		{
-;;;71     			Auto_Mode();
+;;;73     		{
+;;;74     			Auto_Mode();
 000012  f7fffffe          BL       Auto_Mode
 000016  e001              B        |L4.28|
                   |L4.24|
-;;;72     		}
-;;;73     		else
-;;;74     		{
-;;;75     			Manual_Mode();
+;;;75     		}
+;;;76     		else
+;;;77     		{
+;;;78     			Manual_Mode();
 000018  f7fffffe          BL       Manual_Mode
                   |L4.28|
-;;;76     		}
-;;;77     		vTaskDelay(5);
+;;;79     		}
+;;;80     		vTaskDelay(5);
 00001c  2005              MOVS     r0,#5
 00001e  f7fffffe          BL       vTaskDelay
                   |L4.34|
 000022  e7ee              B        |L4.2|
-;;;78     
-;;;79     	}
-;;;80     }
 ;;;81     
+;;;82     	}
+;;;83     }
+;;;84     
                           ENDP
 
                   |L4.36|

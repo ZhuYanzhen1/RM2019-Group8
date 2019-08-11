@@ -62,10 +62,13 @@ void PID_Init(void)         //初始化PID值
 	Chassis_Victor_x.Maxinum=0.5;
 	Chassis_Victor_x.Minium=-0.5;
 }
+
+
 void Remote_Control(void* pvParameters)              //周期处理遥控器接收值
 {
 	while(1)
 	{
+		
 		if(Remote.sw1==Left_L&&Remote.sw2==Right_L)
 		{
 			Auto_Mode();
