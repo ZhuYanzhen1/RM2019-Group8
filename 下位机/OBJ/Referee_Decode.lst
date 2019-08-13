@@ -52830,6 +52830,7 @@ N#define _DECRYPT_H_
 N
 N#define LOCATION 0x01
 N#define ANGLE 0x02
+N#define POS_BALL_CNT 0x00
 N
 Ntypedef struct
 N{
@@ -52842,8 +52843,11 @@ Ntypedef struct
 N{
 N  unsigned char Ball_Cnt;
 N	unsigned char Cup_Cnt;
+N	unsigned char Start_Flag;
+N	float X_Possition;
+N	float Y_Possition;
 N}USART2_Receive_Data_Package;
-N#define BALL_CUP_CNT 				0x00
+N
 Nvoid USART3_Received_CallBack(unsigned char Receive_Buffer[]);
 Nvoid USART2_Received_CallBack(unsigned char Receive_Buffer[]);
 Nextern USART2_Receive_Data_Package Receive_Package2;
@@ -52901,18 +52905,17 @@ N#define PWM_CH2_OPEN				0.5f
 N#define PWM_CH3_OPEN				0.5f
 N#define PWM_CH4_OPEN				0.5f
 N
-N#define PWM_CH1_CLOSE				0.9f
-N#define PWM_CH2_CLOSE				0.9f
-N#define PWM_CH3_CLOSE				0.9f
-N#define PWM_CH4_CLOSE				0.9f
+N#define PWM_CH1_CLOSE				1.2f
+N#define PWM_CH2_CLOSE				1.2f
+N#define PWM_CH3_CLOSE				1.2f
+N#define PWM_CH4_CLOSE				1.2f
 N
-Nvoid Arm_Lift(void);  //机械臂抬升
-Nvoid Arm_Drop(void);	//机械臂下降
-Nvoid Hand_Grab(void);	//抓手抓取
-Nvoid Hand_Open(void);	//抓手张开
-Nvoid Hand_Drop(void);	//抓手放物块
+N
 Nvoid Ball_Place(unsigned char num);//放球
 Nvoid Ball_Reload(unsigned char num);//补弹
+Nvoid Cup_Press(void);	//按杯子
+Nvoid Cup_Release(void);	//松开杯子
+N
 N#endif
 L 11 ".\USER\User.h" 2
 N#include "Manifold.h"
@@ -52938,14 +52941,14 @@ N#include "Mecanum_Wheel.h"
 L 1 ".\App\Mecanum_Wheel.h" 1
 N#ifndef __MECANUM_WHEEL_H__
 N#define __MECANUM_WHEEL_H__
-N//#define A 0.0211f
-N//#define B 0.0160f
-N//#define WHEEL_R 0.0152f
-N//#define PI 3.14159265358979f
-N#define A 0.0125f
-N#define B 0.0125f
-N#define WHEEL_R 0.0075f
+N#define A 0.0211f
+N#define B 0.0160f
+N#define WHEEL_R 0.0152f
 N#define PI 3.14159265358979f
+N//#define A 0.0125f
+N//#define B 0.0125f
+N//#define WHEEL_R 0.0075f
+N//#define PI 3.14159265358979f
 Nvoid Set_Speed(float speed_x,float speed_y,float speed_w);
 Nvoid Speed_To_Wheel(float vx_set, float vy_set,float wz_set,float wheel_speed[4]);
 N#endif
@@ -58591,16 +58594,12 @@ Nextern PID_Structure PID2;
 Nextern PID_Structure PID3;
 Nextern PID_Structure PID4;
 Nextern PID_Structure PID5;
-Nextern PID_Structure PID6;
-Nextern PID_Structure PID7;
-Nextern PID_Structure PID8;
 Nextern PID_Structure Chassis_Wz;
 Nextern PID_Structure Chassis_Vx;
 Nextern PID_Structure Chassis_Vy;
 Nextern PID_Structure Chassis_Victor_y;
 Nextern PID_Structure Chassis_Victor_x;
-Nextern PID_Structure Ball2_Angle;
-Nextern PID_Structure Ball1_Angle;
+Nextern PID_Structure Ball_Angle;
 N#endif
 L 24 ".\USER\User.h" 2
 N#include "LED.h"

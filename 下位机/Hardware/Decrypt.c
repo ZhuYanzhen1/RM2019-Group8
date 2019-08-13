@@ -104,9 +104,14 @@ void USART2_Received_CallBack(unsigned char Receive_Buffer[])
 						
             switch(PID_Bit)
             {
-                case BALL_CUP_CNT:
+                case POS_BALL_CNT:
 										Receive_Package2.Ball_Cnt = Data_Buffer[0];
 										Receive_Package2.Cup_Cnt = Data_Buffer[1];
+										Receive_Package2.Start_Flag=Data_Buffer[2];
+										
+										Receive_Package2.X_Possition=((Data_Buffer[4]<<8)|Data_Buffer[5])/1000.0f;
+										Receive_Package2.Y_Possition=((Data_Buffer[6]<<8)|Data_Buffer[7])/1000.0f;
+								
 										break;
             }
         }

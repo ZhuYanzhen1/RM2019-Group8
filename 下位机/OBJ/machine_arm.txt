@@ -6,7 +6,7 @@
 
                   Ball_Place PROC
 ;;;4      
-;;;5      void Ball_Place(unsigned char num)		//物料盘打开
+;;;5      void Ball_Place(unsigned char num)		//放球
 000000  b510              PUSH     {r4,lr}
 ;;;6      {
 000002  4604              MOV      r4,r0
@@ -57,7 +57,7 @@
 
                   Ball_Reload PROC
 ;;;13     
-;;;14     void Ball_Reload(unsigned char num)		//物料盘关闭
+;;;14     void Ball_Reload(unsigned char num)		//重装球
 000000  b510              PUSH     {r4,lr}
 ;;;15     {
 000002  4604              MOV      r4,r0
@@ -100,9 +100,53 @@
 
 000046  0000              DCW      0x0000
                   |L2.72|
-000048  3d3851eb          DCFS     0x3d3851eb ; 0.044999998062849045
+000048  3d75c290          DCFS     0x3d75c290 ; 0.060000002384185791
                   |L2.76|
                           DCD      htim5
+
+                          AREA ||i.Cup_Press||, CODE, READONLY, ALIGN=2
+
+                  Cup_Press PROC
+;;;21     
+;;;22     void Cup_Press(void)
+000000  b510              PUSH     {r4,lr}
+;;;23     {
+;;;24     	PWM_SetDuty(&htim4,TIM_CHANNEL_1,(double)0.6/20.0);
+000002  ed9f0a03          VLDR     s0,|L3.16|
+000006  2100              MOVS     r1,#0
+000008  4802              LDR      r0,|L3.20|
+00000a  f7fffffe          BL       PWM_SetDuty
+;;;25     }
+00000e  bd10              POP      {r4,pc}
+;;;26     
+                          ENDP
+
+                  |L3.16|
+000010  3cf5c28f          DCFS     0x3cf5c28f ; 0.029999999329447746
+                  |L3.20|
+                          DCD      htim4
+
+                          AREA ||i.Cup_Release||, CODE, READONLY, ALIGN=2
+
+                  Cup_Release PROC
+;;;26     
+;;;27     void Cup_Release(void)
+000000  b510              PUSH     {r4,lr}
+;;;28     {
+;;;29     	PWM_SetDuty(&htim4,TIM_CHANNEL_1,(double)1.2/20.0);
+000002  ed9f0a03          VLDR     s0,|L4.16|
+000006  2100              MOVS     r1,#0
+000008  4802              LDR      r0,|L4.20|
+00000a  f7fffffe          BL       PWM_SetDuty
+;;;30     }
+00000e  bd10              POP      {r4,pc}
+;;;31     
+                          ENDP
+
+                  |L4.16|
+000010  3d75c28f          DCFS     0x3d75c28f ; 0.059999998658895493
+                  |L4.20|
+                          DCD      htim4
 
 ;*** Start embedded assembler ***
 

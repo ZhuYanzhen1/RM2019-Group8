@@ -11,7 +11,7 @@ void Send_Chassis_Data(Chassis_Data_t *chassis_Data)
 		chassis_Data->Motor_RPM[cnt] = (short)moto_chassis[cnt].speed_rpm;
 	}
 	chassis_Data->gyro = (long)((single_gyro.gyro*10000)/1);
-	chassis_Data->angle = (long)((single_gyro.angle*10000)/1);
+	chassis_Data->angle = (long)((Mult_Vector_WZ*10000)/1);
 	memset(buffer,0,sizeof(Chassis_Data_t));		//清零缓存
 	memcpy(buffer, chassis_Data,sizeof(Chassis_Data_t));//先把结构体数据复制到缓存中
 	//一帧一帧发送数据
@@ -154,7 +154,7 @@ void Send_Vector_Data(void)
 	uint8_t data[8];											//要发送的数据
 	long x ,y;
 	//x = (long)(Mult_Vector_X*10000)/1;
-	x=(long)((Receive_Package3.Angle*10000)/1);
+	x = (long)((Mult_Vector_X*10000)/1);
 	y = (long)(Mult_Vector_Y*10000)/1;
 	memset(data,0,8);											//清空发送数据缓存
 	data[0]=(x>>24);

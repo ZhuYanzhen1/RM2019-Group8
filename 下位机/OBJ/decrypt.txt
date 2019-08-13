@@ -49,7 +49,7 @@
 00002c  b2c2              UXTB     r2,r0
 ;;;77     		if(Buffer_Data_Counter == 12)   //if the package had been broken
 00002e  2a0c              CMP      r2,#0xc
-000030  d137              BNE      |L1.162|
+000030  d15e              BNE      |L1.240|
 ;;;78         {
 ;;;79             uint8_t Data_Buffer[8];
 ;;;80             uint8_t PID_Bit = Receive_Buffer[1]>>4;  //Get The PID Bit
@@ -60,7 +60,7 @@
 000038  200f              MOVS     r0,#0xf
 00003a  43a8              BICS     r0,r0,r5
 00003c  42a0              CMP      r0,r4
-00003e  d12f              BNE      |L1.160|
+00003e  d156              BNE      |L1.238|
 ;;;82             {
 ;;;83                 uint8_t Temp_Var = 0x00 ;
 000040  2000              MOVS     r0,#0
@@ -128,33 +128,63 @@
                   |L1.138|
 ;;;104    						
 ;;;105                switch(PID_Bit)
-00008a  b93c              CBNZ     r4,|L1.156|
+00008a  bb74              CBNZ     r4,|L1.234|
 ;;;106                {
-;;;107                    case BALL_CUP_CNT:
+;;;107                    case POS_BALL_CNT:
 ;;;108    										Receive_Package2.Ball_Cnt = Data_Buffer[0];
 00008c  f89d5000          LDRB     r5,[sp,#0]
-000090  4e04              LDR      r6,|L1.164|
+000090  4e18              LDR      r6,|L1.244|
 000092  7035              STRB     r5,[r6,#0]
 ;;;109    										Receive_Package2.Cup_Cnt = Data_Buffer[1];
 000094  f89d5001          LDRB     r5,[sp,#1]
 000098  7075              STRB     r5,[r6,#1]
-;;;110    										break;
-00009a  bf00              NOP      
-                  |L1.156|
-00009c  bf00              NOP      
-;;;111                }
-;;;112            }
-00009e  bf00              NOP      
-                  |L1.160|
-;;;113    			}
-0000a0  bf00              NOP      
-                  |L1.162|
-;;;114    }
-0000a2  bdfc              POP      {r2-r7,pc}
+;;;110    										Receive_Package2.Start_Flag=Data_Buffer[2];
+00009a  f89d5002          LDRB     r5,[sp,#2]
+00009e  70b5              STRB     r5,[r6,#2]
+;;;111    										
+;;;112    										Receive_Package2.X_Possition=((Data_Buffer[4]<<8)|Data_Buffer[5])/1000.0f;
+0000a0  f89d5005          LDRB     r5,[sp,#5]
+0000a4  f89d6004          LDRB     r6,[sp,#4]
+0000a8  ea452506          ORR      r5,r5,r6,LSL #8
+0000ac  ee005a10          VMOV     s0,r5
+0000b0  eef80ac0          VCVT.F32.S32 s1,s0
+0000b4  ed9f1a10          VLDR     s2,|L1.248|
+0000b8  ee800a81          VDIV.F32 s0,s1,s2
+0000bc  ee105a10          VMOV     r5,s0
+0000c0  4e0c              LDR      r6,|L1.244|
+0000c2  6075              STR      r5,[r6,#4]  ; Receive_Package2
+;;;113    										Receive_Package2.Y_Possition=((Data_Buffer[6]<<8)|Data_Buffer[7])/1000.0f;
+0000c4  f89d5007          LDRB     r5,[sp,#7]
+0000c8  f89d6006          LDRB     r6,[sp,#6]
+0000cc  ea452506          ORR      r5,r5,r6,LSL #8
+0000d0  ee005a10          VMOV     s0,r5
+0000d4  eef80ac0          VCVT.F32.S32 s1,s0
+0000d8  ed9f1a07          VLDR     s2,|L1.248|
+0000dc  ee800a81          VDIV.F32 s0,s1,s2
+0000e0  ee105a10          VMOV     r5,s0
+0000e4  4e03              LDR      r6,|L1.244|
+0000e6  60b5              STR      r5,[r6,#8]  ; Receive_Package2
+;;;114    								
+;;;115    										break;
+0000e8  bf00              NOP      
+                  |L1.234|
+0000ea  bf00              NOP      
+;;;116                }
+;;;117            }
+0000ec  bf00              NOP      
+                  |L1.238|
+;;;118    			}
+0000ee  bf00              NOP      
+                  |L1.240|
+;;;119    }
+0000f0  bdfc              POP      {r2-r7,pc}
                           ENDP
 
-                  |L1.164|
+0000f2  0000              DCW      0x0000
+                  |L1.244|
                           DCD      Receive_Package2
+                  |L1.248|
+0000f8  447a0000          DCFS     0x447a0000 ; 1000
 
                           AREA ||i.USART3_Received_CallBack||, CODE, READONLY, ALIGN=2
 
@@ -373,13 +403,10 @@
 
                           AREA ||.bss||, DATA, NOINIT, ALIGN=1
 
+                  Receive_Package2
+                          %        12
                   Receive_Package3
                           %        12
-
-                          AREA ||.data||, DATA, ALIGN=0
-
-                  Receive_Package2
-000000  0000              DCB      0x00,0x00
 
 ;*** Start embedded assembler ***
 

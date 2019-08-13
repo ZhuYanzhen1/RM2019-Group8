@@ -7,16 +7,12 @@ PID_Structure PID2;
 PID_Structure PID3;
 PID_Structure PID4;
 PID_Structure PID5;
-PID_Structure PID6;
-PID_Structure PID7;
-PID_Structure PID8;
 PID_Structure Chassis_Wz;
 PID_Structure Chassis_Vx;
 PID_Structure Chassis_Vy;
 PID_Structure Chassis_Victor_y;
 PID_Structure Chassis_Victor_x;
-PID_Structure Ball2_Angle;
-PID_Structure Ball1_Angle;
+PID_Structure Ball_Angle;
 void PID_Renew(PID_Structure* PID_Handler,float new_data)
 {
 	PID_Handler->Collect[1] = PID_Handler->Collect[0];
@@ -107,9 +103,8 @@ void PID_Calculate(void* pvParameters)
 	{
 		Renew_PID();
 		taskENTER_CRITICAL();
-		PID8.User=PID_Get_Result(&Ball2_Angle);
-		PID7.User=PID_Get_Result(&Ball1_Angle);
-		set_moto_current(&hcan1,PID_Get_Result(&PID5),PID_Get_Result(&PID6),PID_Get_Result(&PID7),PID_Get_Result(&PID8),ID_5_8);  //ID为5~8的电机
+		PID5.User=PID_Get_Result(&Ball_Angle);
+		set_moto_current(&hcan1,PID_Get_Result(&PID5),0,0,0,ID_5_8);  //ID为5~8的电机
 		set_moto_current(&hcan1,PID_Get_Result(&PID1),PID_Get_Result(&PID2),PID_Get_Result(&PID3),PID_Get_Result(&PID4),ID_1_4);  //ID为1~4的电机
 		taskEXIT_CRITICAL();
 		vTaskDelay(PID_Time);	
@@ -120,8 +115,11 @@ void Base_Speed_Task(void* pvParameters)   //底盘闭环PID
 	while(1)
 	{
 		float Wheel_Speed[4];
-		//Chassis_Vy.User = PID_Get_Result(&Chassis_Victor_y);
-		//Chassis_Vx.User = PID_Get_Result(&Chassis_Victor_x);
+		if(Receive_Package2.Start_Flag==1)
+		{
+			Chassis_Vy.User = PID_Get_Result(&Chassis_Victor_y);
+			Chassis_Vx.User = PID_Get_Result(&Chassis_Victor_x);
+		}
 		Speed_To_Wheel(PID_Get_Result(&Chassis_Vx),PID_Get_Result(&Chassis_Vy),PID_Get_Result(&Chassis_Wz),Wheel_Speed);
 		PID1.User=Wheel_Speed[0];
 		PID2.User=Wheel_Speed[1];

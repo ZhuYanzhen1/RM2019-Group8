@@ -19,9 +19,8 @@ void Control_Task(void *pvParameter)
 	while(1)
 	{
 		
-		if(Receive_Package3.X_Possition != 0 && \
-			Receive_Package3.Y_Possition != 0 && \
-			Receive_Package3.Angle != 0)
+		if(Receive_Package3.X_Possition != 0 && 
+			Receive_Package3.Y_Possition != 0)
 		{
 			Mult_Vector_X = Receive_Package3.X_Possition;
 			Mult_Vector_Y = Receive_Package3.Y_Possition;
@@ -33,13 +32,13 @@ void Control_Task(void *pvParameter)
 			
 			CV_Offline = 0;
 		}
-		if( ( Receive_Package3.X_Possition == 0 || \
-			Receive_Package3.Y_Possition == 0 || \
-			Receive_Package3.Angle == 0 ) && CV_Offline == 0 )
+		if( Receive_Package3.X_Possition == 0 && 
+			Receive_Package3.Y_Possition == 0 && 
+			Receive_Package3.Angle == 0  && CV_Offline == 0 )
 		{
 			Odom_Vector_X_Start_Val = Odom_VectorO_X;
 			Odom_Vector_Y_Start_Val = Odom_VectorO_Y;
-			Odom_Vector_Angle_Start_Val = Odom_RotateO;
+			Odom_Vector_Angle_Start_Val = single_gyro.angle;
 			
 			CV_Offline = 1;
 		}
@@ -48,8 +47,8 @@ void Control_Task(void *pvParameter)
 		{
 			Mult_Vector_X = Last_CV_Vector_X + (Odom_VectorO_X - Odom_Vector_X_Start_Val);
 			Mult_Vector_Y = Last_CV_Vector_Y + (Odom_VectorO_Y - Odom_Vector_Y_Start_Val);
-			Mult_Vector_WZ = Last_CV_Vector_Angle + (Odom_RotateO - Odom_Vector_Angle_Start_Val);
+			Mult_Vector_WZ = Last_CV_Vector_Angle + (single_gyro.angle - Odom_Vector_Angle_Start_Val);
 		}
-		vTaskDelay(20);
+		vTaskDelay(2);
 	}
 }

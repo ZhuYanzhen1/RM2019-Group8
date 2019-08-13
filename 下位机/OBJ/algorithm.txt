@@ -7,198 +7,191 @@
                   Control_Task PROC
 ;;;16     
 ;;;17     void Control_Task(void *pvParameter)
-000000  e09f              B        |L1.322|
+000000  e095              B        |L1.302|
                   |L1.2|
 ;;;18     {
 ;;;19     	while(1)
 ;;;20     	{
 ;;;21     		
-;;;22     		if(Receive_Package3.X_Possition != 0 && \
-000002  4850              LDR      r0,|L1.324|
+;;;22     		if(Receive_Package3.X_Possition != 0 && 
+000002  484b              LDR      r0,|L1.304|
 000004  6800              LDR      r0,[r0,#0]  ; Receive_Package3
 000006  ee000a10          VMOV     s0,r0
 00000a  eeb50ac0          VCMPE.F32 s0,#0.0
 00000e  eef1fa10          VMRS     APSR_nzcv,FPSCR
-000012  d02c              BEQ      |L1.110|
-;;;23     			Receive_Package3.Y_Possition != 0 && \
-000014  484b              LDR      r0,|L1.324|
+000012  d023              BEQ      |L1.92|
+;;;23     			Receive_Package3.Y_Possition != 0)
+000014  4846              LDR      r0,|L1.304|
 000016  6840              LDR      r0,[r0,#4]  ; Receive_Package3
 000018  ee000a10          VMOV     s0,r0
 00001c  eeb50ac0          VCMPE.F32 s0,#0.0
 000020  eef1fa10          VMRS     APSR_nzcv,FPSCR
-000024  d023              BEQ      |L1.110|
-;;;24     			Receive_Package3.Angle != 0)
-000026  4847              LDR      r0,|L1.324|
-000028  6880              LDR      r0,[r0,#8]  ; Receive_Package3
-00002a  ee000a10          VMOV     s0,r0
-00002e  eeb50ac0          VCMPE.F32 s0,#0.0
-000032  eef1fa10          VMRS     APSR_nzcv,FPSCR
-000036  d01a              BEQ      |L1.110|
-;;;25     		{
-;;;26     			Mult_Vector_X = Receive_Package3.X_Possition;
-000038  4842              LDR      r0,|L1.324|
-00003a  6800              LDR      r0,[r0,#0]  ; Receive_Package3
-00003c  4942              LDR      r1,|L1.328|
-00003e  6008              STR      r0,[r1,#0]  ; Mult_Vector_X
-;;;27     			Mult_Vector_Y = Receive_Package3.Y_Possition;
-000040  4840              LDR      r0,|L1.324|
-000042  6840              LDR      r0,[r0,#4]  ; Receive_Package3
-000044  4941              LDR      r1,|L1.332|
-000046  6008              STR      r0,[r1,#0]  ; Mult_Vector_Y
-;;;28     			Mult_Vector_WZ = Receive_Package3.Angle;
-000048  483e              LDR      r0,|L1.324|
-00004a  6880              LDR      r0,[r0,#8]  ; Receive_Package3
-00004c  4940              LDR      r1,|L1.336|
-00004e  6008              STR      r0,[r1,#0]  ; Mult_Vector_WZ
-;;;29     			
-;;;30     			Last_CV_Vector_X = Receive_Package3.X_Possition;
-000050  483c              LDR      r0,|L1.324|
-000052  6800              LDR      r0,[r0,#0]  ; Receive_Package3
-000054  493f              LDR      r1,|L1.340|
-000056  6008              STR      r0,[r1,#0]  ; Last_CV_Vector_X
-;;;31     			Last_CV_Vector_Y = Receive_Package3.Y_Possition;
-000058  483a              LDR      r0,|L1.324|
-00005a  6840              LDR      r0,[r0,#4]  ; Receive_Package3
-00005c  493e              LDR      r1,|L1.344|
-00005e  6008              STR      r0,[r1,#0]  ; Last_CV_Vector_Y
-;;;32     			Last_CV_Vector_Angle = Receive_Package3.Angle;
-000060  4838              LDR      r0,|L1.324|
-000062  6880              LDR      r0,[r0,#8]  ; Receive_Package3
-000064  493d              LDR      r1,|L1.348|
-000066  6008              STR      r0,[r1,#0]  ; Last_CV_Vector_Angle
-;;;33     			
-;;;34     			CV_Offline = 0;
-000068  2000              MOVS     r0,#0
-00006a  493d              LDR      r1,|L1.352|
-00006c  7008              STRB     r0,[r1,#0]
-                  |L1.110|
-;;;35     		}
-;;;36     		if( ( Receive_Package3.X_Possition == 0 || \
-00006e  4835              LDR      r0,|L1.324|
-000070  6800              LDR      r0,[r0,#0]  ; Receive_Package3
+000024  d01a              BEQ      |L1.92|
+;;;24     		{
+;;;25     			Mult_Vector_X = Receive_Package3.X_Possition;
+000026  4842              LDR      r0,|L1.304|
+000028  6800              LDR      r0,[r0,#0]  ; Receive_Package3
+00002a  4942              LDR      r1,|L1.308|
+00002c  6008              STR      r0,[r1,#0]  ; Mult_Vector_X
+;;;26     			Mult_Vector_Y = Receive_Package3.Y_Possition;
+00002e  4840              LDR      r0,|L1.304|
+000030  6840              LDR      r0,[r0,#4]  ; Receive_Package3
+000032  4941              LDR      r1,|L1.312|
+000034  6008              STR      r0,[r1,#0]  ; Mult_Vector_Y
+;;;27     			Mult_Vector_WZ = Receive_Package3.Angle;
+000036  483e              LDR      r0,|L1.304|
+000038  6880              LDR      r0,[r0,#8]  ; Receive_Package3
+00003a  4940              LDR      r1,|L1.316|
+00003c  6008              STR      r0,[r1,#0]  ; Mult_Vector_WZ
+;;;28     			
+;;;29     			Last_CV_Vector_X = Receive_Package3.X_Possition;
+00003e  483c              LDR      r0,|L1.304|
+000040  6800              LDR      r0,[r0,#0]  ; Receive_Package3
+000042  493f              LDR      r1,|L1.320|
+000044  6008              STR      r0,[r1,#0]  ; Last_CV_Vector_X
+;;;30     			Last_CV_Vector_Y = Receive_Package3.Y_Possition;
+000046  483a              LDR      r0,|L1.304|
+000048  6840              LDR      r0,[r0,#4]  ; Receive_Package3
+00004a  493e              LDR      r1,|L1.324|
+00004c  6008              STR      r0,[r1,#0]  ; Last_CV_Vector_Y
+;;;31     			Last_CV_Vector_Angle = Receive_Package3.Angle;
+00004e  4838              LDR      r0,|L1.304|
+000050  6880              LDR      r0,[r0,#8]  ; Receive_Package3
+000052  493d              LDR      r1,|L1.328|
+000054  6008              STR      r0,[r1,#0]  ; Last_CV_Vector_Angle
+;;;32     			
+;;;33     			CV_Offline = 0;
+000056  2000              MOVS     r0,#0
+000058  493c              LDR      r1,|L1.332|
+00005a  7008              STRB     r0,[r1,#0]
+                  |L1.92|
+;;;34     		}
+;;;35     		if( Receive_Package3.X_Possition == 0 && 
+00005c  4834              LDR      r0,|L1.304|
+00005e  6800              LDR      r0,[r0,#0]  ; Receive_Package3
+000060  ee000a10          VMOV     s0,r0
+000064  eeb50ac0          VCMPE.F32 s0,#0.0
+000068  eef1fa10          VMRS     APSR_nzcv,FPSCR
+00006c  d127              BNE      |L1.190|
+;;;36     			Receive_Package3.Y_Possition == 0 && 
+00006e  4830              LDR      r0,|L1.304|
+000070  6840              LDR      r0,[r0,#4]  ; Receive_Package3
 000072  ee000a10          VMOV     s0,r0
 000076  eeb50ac0          VCMPE.F32 s0,#0.0
 00007a  eef1fa10          VMRS     APSR_nzcv,FPSCR
-00007e  d011              BEQ      |L1.164|
-;;;37     			Receive_Package3.Y_Possition == 0 || \
-000080  4830              LDR      r0,|L1.324|
-000082  6840              LDR      r0,[r0,#4]  ; Receive_Package3
+00007e  d11e              BNE      |L1.190|
+;;;37     			Receive_Package3.Angle == 0  && CV_Offline == 0 )
+000080  482b              LDR      r0,|L1.304|
+000082  6880              LDR      r0,[r0,#8]  ; Receive_Package3
 000084  ee000a10          VMOV     s0,r0
 000088  eeb50ac0          VCMPE.F32 s0,#0.0
 00008c  eef1fa10          VMRS     APSR_nzcv,FPSCR
-000090  d008              BEQ      |L1.164|
-;;;38     			Receive_Package3.Angle == 0 ) && CV_Offline == 0 )
-000092  482c              LDR      r0,|L1.324|
-000094  6880              LDR      r0,[r0,#8]  ; Receive_Package3
-000096  ee000a10          VMOV     s0,r0
-00009a  eeb50ac0          VCMPE.F32 s0,#0.0
-00009e  eef1fa10          VMRS     APSR_nzcv,FPSCR
-0000a2  d117              BNE      |L1.212|
-                  |L1.164|
-0000a4  482e              LDR      r0,|L1.352|
-0000a6  7800              LDRB     r0,[r0,#0]  ; CV_Offline
-0000a8  b9a0              CBNZ     r0,|L1.212|
-;;;39     		{
-;;;40     			Odom_Vector_X_Start_Val = Odom_VectorO_X;
-0000aa  482e              LDR      r0,|L1.356|
-0000ac  ed900a00          VLDR     s0,[r0,#0]
-0000b0  482d              LDR      r0,|L1.360|
-0000b2  ed800a00          VSTR     s0,[r0,#0]
-;;;41     			Odom_Vector_Y_Start_Val = Odom_VectorO_Y;
-0000b6  482d              LDR      r0,|L1.364|
-0000b8  ed900a00          VLDR     s0,[r0,#0]
-0000bc  482c              LDR      r0,|L1.368|
-0000be  ed800a00          VSTR     s0,[r0,#0]
-;;;42     			Odom_Vector_Angle_Start_Val = Odom_RotateO;
-0000c2  482c              LDR      r0,|L1.372|
-0000c4  ed900a00          VLDR     s0,[r0,#0]
-0000c8  482b              LDR      r0,|L1.376|
-0000ca  ed800a00          VSTR     s0,[r0,#0]
-;;;43     			
-;;;44     			CV_Offline = 1;
-0000ce  2001              MOVS     r0,#1
-0000d0  4923              LDR      r1,|L1.352|
-0000d2  7008              STRB     r0,[r1,#0]
-                  |L1.212|
-;;;45     		}
-;;;46     		
-;;;47     		if(CV_Offline == 1)
-0000d4  4822              LDR      r0,|L1.352|
-0000d6  7800              LDRB     r0,[r0,#0]  ; CV_Offline
-0000d8  2801              CMP      r0,#1
-0000da  d12f              BNE      |L1.316|
-;;;48     		{
-;;;49     			Mult_Vector_X = Last_CV_Vector_X + (Odom_VectorO_X - Odom_Vector_X_Start_Val);
-0000dc  4821              LDR      r0,|L1.356|
-0000de  ed900a00          VLDR     s0,[r0,#0]
-0000e2  4821              LDR      r0,|L1.360|
-0000e4  edd00a00          VLDR     s1,[r0,#0]
-0000e8  ee300a60          VSUB.F32 s0,s0,s1
-0000ec  4819              LDR      r0,|L1.340|
+000090  d115              BNE      |L1.190|
+000092  482e              LDR      r0,|L1.332|
+000094  7800              LDRB     r0,[r0,#0]  ; CV_Offline
+000096  b990              CBNZ     r0,|L1.190|
+;;;38     		{
+;;;39     			Odom_Vector_X_Start_Val = Odom_VectorO_X;
+000098  482d              LDR      r0,|L1.336|
+00009a  ed900a00          VLDR     s0,[r0,#0]
+00009e  482d              LDR      r0,|L1.340|
+0000a0  ed800a00          VSTR     s0,[r0,#0]
+;;;40     			Odom_Vector_Y_Start_Val = Odom_VectorO_Y;
+0000a4  482c              LDR      r0,|L1.344|
+0000a6  ed900a00          VLDR     s0,[r0,#0]
+0000aa  482c              LDR      r0,|L1.348|
+0000ac  ed800a00          VSTR     s0,[r0,#0]
+;;;41     			Odom_Vector_Angle_Start_Val = single_gyro.angle;
+0000b0  482b              LDR      r0,|L1.352|
+0000b2  6800              LDR      r0,[r0,#0]  ; single_gyro
+0000b4  492b              LDR      r1,|L1.356|
+0000b6  6008              STR      r0,[r1,#0]  ; Odom_Vector_Angle_Start_Val
+;;;42     			
+;;;43     			CV_Offline = 1;
+0000b8  2001              MOVS     r0,#1
+0000ba  4924              LDR      r1,|L1.332|
+0000bc  7008              STRB     r0,[r1,#0]
+                  |L1.190|
+;;;44     		}
+;;;45     		
+;;;46     		if(CV_Offline == 1)
+0000be  4823              LDR      r0,|L1.332|
+0000c0  7800              LDRB     r0,[r0,#0]  ; CV_Offline
+0000c2  2801              CMP      r0,#1
+0000c4  d130              BNE      |L1.296|
+;;;47     		{
+;;;48     			Mult_Vector_X = Last_CV_Vector_X + (Odom_VectorO_X - Odom_Vector_X_Start_Val);
+0000c6  4822              LDR      r0,|L1.336|
+0000c8  ed900a00          VLDR     s0,[r0,#0]
+0000cc  4821              LDR      r0,|L1.340|
+0000ce  edd00a00          VLDR     s1,[r0,#0]
+0000d2  ee300a60          VSUB.F32 s0,s0,s1
+0000d6  481a              LDR      r0,|L1.320|
+0000d8  edd00a00          VLDR     s1,[r0,#0]
+0000dc  ee300a20          VADD.F32 s0,s0,s1
+0000e0  4814              LDR      r0,|L1.308|
+0000e2  ed800a00          VSTR     s0,[r0,#0]
+;;;49     			Mult_Vector_Y = Last_CV_Vector_Y + (Odom_VectorO_Y - Odom_Vector_Y_Start_Val);
+0000e6  481c              LDR      r0,|L1.344|
+0000e8  ed900a00          VLDR     s0,[r0,#0]
+0000ec  481b              LDR      r0,|L1.348|
 0000ee  edd00a00          VLDR     s1,[r0,#0]
-0000f2  ee300a20          VADD.F32 s0,s0,s1
-0000f6  4814              LDR      r0,|L1.328|
-0000f8  ed800a00          VSTR     s0,[r0,#0]
-;;;50     			Mult_Vector_Y = Last_CV_Vector_Y + (Odom_VectorO_Y - Odom_Vector_Y_Start_Val);
-0000fc  481b              LDR      r0,|L1.364|
-0000fe  ed900a00          VLDR     s0,[r0,#0]
-000102  481b              LDR      r0,|L1.368|
-000104  edd00a00          VLDR     s1,[r0,#0]
-000108  ee300a60          VSUB.F32 s0,s0,s1
-00010c  4812              LDR      r0,|L1.344|
-00010e  edd00a00          VLDR     s1,[r0,#0]
-000112  ee300a20          VADD.F32 s0,s0,s1
-000116  480d              LDR      r0,|L1.332|
-000118  ed800a00          VSTR     s0,[r0,#0]
-;;;51     			Mult_Vector_WZ = Last_CV_Vector_Angle + (Odom_RotateO - Odom_Vector_Angle_Start_Val);
-00011c  4815              LDR      r0,|L1.372|
-00011e  ed900a00          VLDR     s0,[r0,#0]
-000122  4815              LDR      r0,|L1.376|
-000124  edd00a00          VLDR     s1,[r0,#0]
-000128  ee300a60          VSUB.F32 s0,s0,s1
-00012c  480b              LDR      r0,|L1.348|
-00012e  edd00a00          VLDR     s1,[r0,#0]
-000132  ee300a20          VADD.F32 s0,s0,s1
-000136  4806              LDR      r0,|L1.336|
-000138  ed800a00          VSTR     s0,[r0,#0]
-                  |L1.316|
-;;;52     		}
-;;;53     		vTaskDelay(20);
-00013c  2014              MOVS     r0,#0x14
-00013e  f7fffffe          BL       vTaskDelay
-                  |L1.322|
-000142  e75e              B        |L1.2|
-;;;54     	}
-;;;55     }
+0000f2  ee300a60          VSUB.F32 s0,s0,s1
+0000f6  4813              LDR      r0,|L1.324|
+0000f8  edd00a00          VLDR     s1,[r0,#0]
+0000fc  ee300a20          VADD.F32 s0,s0,s1
+000100  480d              LDR      r0,|L1.312|
+000102  ed800a00          VSTR     s0,[r0,#0]
+;;;50     			Mult_Vector_WZ = Last_CV_Vector_Angle + (single_gyro.angle - Odom_Vector_Angle_Start_Val);
+000106  4816              LDR      r0,|L1.352|
+000108  6800              LDR      r0,[r0,#0]  ; single_gyro
+00010a  ee000a10          VMOV     s0,r0
+00010e  4815              LDR      r0,|L1.356|
+000110  edd00a00          VLDR     s1,[r0,#0]
+000114  ee300a60          VSUB.F32 s0,s0,s1
+000118  480b              LDR      r0,|L1.328|
+00011a  edd00a00          VLDR     s1,[r0,#0]
+00011e  ee300a20          VADD.F32 s0,s0,s1
+000122  4806              LDR      r0,|L1.316|
+000124  ed800a00          VSTR     s0,[r0,#0]
+                  |L1.296|
+;;;51     		}
+;;;52     		vTaskDelay(2);
+000128  2002              MOVS     r0,#2
+00012a  f7fffffe          BL       vTaskDelay
+                  |L1.302|
+00012e  e768              B        |L1.2|
+;;;53     	}
+;;;54     }
                           ENDP
 
-                  |L1.324|
+                  |L1.304|
                           DCD      Receive_Package3
-                  |L1.328|
+                  |L1.308|
                           DCD      Mult_Vector_X
-                  |L1.332|
+                  |L1.312|
                           DCD      Mult_Vector_Y
-                  |L1.336|
+                  |L1.316|
                           DCD      Mult_Vector_WZ
-                  |L1.340|
+                  |L1.320|
                           DCD      Last_CV_Vector_X
-                  |L1.344|
+                  |L1.324|
                           DCD      Last_CV_Vector_Y
-                  |L1.348|
+                  |L1.328|
                           DCD      Last_CV_Vector_Angle
-                  |L1.352|
+                  |L1.332|
                           DCD      CV_Offline
-                  |L1.356|
+                  |L1.336|
                           DCD      Odom_VectorO_X
-                  |L1.360|
+                  |L1.340|
                           DCD      Odom_Vector_X_Start_Val
-                  |L1.364|
+                  |L1.344|
                           DCD      Odom_VectorO_Y
-                  |L1.368|
+                  |L1.348|
                           DCD      Odom_Vector_Y_Start_Val
-                  |L1.372|
-                          DCD      Odom_RotateO
-                  |L1.376|
+                  |L1.352|
+                          DCD      single_gyro
+                  |L1.356|
                           DCD      Odom_Vector_Angle_Start_Val
 
                           AREA ||.data||, DATA, ALIGN=2

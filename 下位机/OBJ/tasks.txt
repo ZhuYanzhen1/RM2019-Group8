@@ -2,338 +2,468 @@
 ; commandline ArmCC [--c99 --list --split_sections --debug -c --asm --interleave -o.\obj\tasks.o --asm_dir=.\OBJ\ --list_dir=.\OBJ\ --depend=.\obj\tasks.d --cpu=Cortex-M4.fp --apcs=interwork -O0 --diag_suppress=9931 -I.\CORE -I.\USER -I.\HALLIB\STM32F4xx_HAL_Driver\Inc -I.\SYSTEM -I.\Hardware -I.\App -I.\DSP_LIB\Include -I.\FreeRTOS -I.\MPU9250\DMP -I.\MPU9250 -I.\RTE\_Project -ID:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include -ID:\Keil_v5\ARM\CMSIS\Include -D__UVISION_VERSION=526 -DSTM32F427xx -DSTM32F4 -DUSE_HAL_DRIVER -DSTM32F427xx -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING -DMPL_LOG_NDEBUG=1 -DEMPL -DMPU9250 -DEMPL_TARGET_STM32F4 --omf_browse=.\obj\tasks.crf App\Tasks.c]
                           THUMB
 
-                          AREA ||i.Auto_Mode||, CODE, READONLY, ALIGN=1
+                          AREA ||i.Auto_Mode||, CODE, READONLY, ALIGN=2
 
                   Auto_Mode PROC
-;;;82     
-;;;83     void Auto_Mode(void)
-000000  4770              BX       lr
-;;;84     {
-;;;85     	
-;;;86     }
-;;;87     
+;;;74     uint8_t last_cnt;
+;;;75     void Auto_Mode(void)
+000000  b510              PUSH     {r4,lr}
+;;;76     {
+;;;77     	if(Receive_Package2.Ball_Cnt != last_cnt)
+000002  4813              LDR      r0,|L1.80|
+000004  7800              LDRB     r0,[r0,#0]  ; Receive_Package2
+000006  4913              LDR      r1,|L1.84|
+000008  7809              LDRB     r1,[r1,#0]  ; last_cnt
+00000a  4288              CMP      r0,r1
+00000c  d01f              BEQ      |L1.78|
+;;;78     	{
+;;;79     		last_cnt = Receive_Package2.Ball_Cnt;
+00000e  4810              LDR      r0,|L1.80|
+000010  7800              LDRB     r0,[r0,#0]  ; Receive_Package2
+000012  4910              LDR      r1,|L1.84|
+000014  7008              STRB     r0,[r1,#0]
+;;;80     		Ball_Reload(1);
+000016  2001              MOVS     r0,#1
+000018  f7fffffe          BL       Ball_Reload
+;;;81     		Ball_Reload(2);
+00001c  2002              MOVS     r0,#2
+00001e  f7fffffe          BL       Ball_Reload
+;;;82     		Ball_Reload(3);
+000022  2003              MOVS     r0,#3
+000024  f7fffffe          BL       Ball_Reload
+;;;83     		Ball_Reload(4);
+000028  2004              MOVS     r0,#4
+00002a  f7fffffe          BL       Ball_Reload
+;;;84     		vTaskDelay(500);
+00002e  f44f70fa          MOV      r0,#0x1f4
+000032  f7fffffe          BL       vTaskDelay
+;;;85     		Ball_Place(1);
+000036  2001              MOVS     r0,#1
+000038  f7fffffe          BL       Ball_Place
+;;;86     		Ball_Place(2);
+00003c  2002              MOVS     r0,#2
+00003e  f7fffffe          BL       Ball_Place
+;;;87     		Ball_Place(3);
+000042  2003              MOVS     r0,#3
+000044  f7fffffe          BL       Ball_Place
+;;;88     		Ball_Place(4);
+000048  2004              MOVS     r0,#4
+00004a  f7fffffe          BL       Ball_Place
+                  |L1.78|
+;;;89     	}
+;;;90     }
+00004e  bd10              POP      {r4,pc}
+;;;91     
                           ENDP
 
+                  |L1.80|
+                          DCD      Receive_Package2
+                  |L1.84|
+                          DCD      last_cnt
 
                           AREA ||i.Manual_Mode||, CODE, READONLY, ALIGN=2
 
                   Manual_Mode PROC
-;;;87     
-;;;88     void Manual_Mode(void)
+;;;91     
+;;;92     void Manual_Mode(void)
 000000  b510              PUSH     {r4,lr}
-;;;89     {
-;;;90     	Chassis_Vx.User = -1*(Remote.ch1/330.0f);
-000002  482d              LDR      r0,|L2.184|
-000004  f9b00000          LDRSH    r0,[r0,#0]  ; Remote
-000008  ee000a10          VMOV     s0,r0
-00000c  eeb80ac0          VCVT.F32.S32 s0,s0
-000010  eddf0a2a          VLDR     s1,|L2.188|
-000014  ee801a20          VDIV.F32 s2,s0,s1
-000018  eebf0a00          VMOV.F32 s0,#-1.00000000
-00001c  ee210a00          VMUL.F32 s0,s2,s0
-000020  ee100a10          VMOV     r0,s0
-000024  4926              LDR      r1,|L2.192|
-000026  61c8              STR      r0,[r1,#0x1c]  ; Chassis_Vx
-;;;91     	Chassis_Vy.User = Remote.ch2/330.0f;
-000028  4823              LDR      r0,|L2.184|
-00002a  f9b00002          LDRSH    r0,[r0,#2]  ; Remote
-00002e  ee000a10          VMOV     s0,r0
-000032  eef80ac0          VCVT.F32.S32 s1,s0
-000036  ed9f1a21          VLDR     s2,|L2.188|
-00003a  ee800a81          VDIV.F32 s0,s1,s2
-00003e  ee100a10          VMOV     r0,s0
-000042  4920              LDR      r1,|L2.196|
-000044  61c8              STR      r0,[r1,#0x1c]  ; Chassis_Vy
-;;;92     	Chassis_Wz.User = Remote.ch3/16.0f;
-000046  481c              LDR      r0,|L2.184|
-000048  f9b00004          LDRSH    r0,[r0,#4]  ; Remote
-00004c  ee000a10          VMOV     s0,r0
-000050  eef80ac0          VCVT.F32.S32 s1,s0
-000054  eeb31a00          VMOV.F32 s2,#16.00000000
-000058  ee800a81          VDIV.F32 s0,s1,s2
-00005c  ee100a10          VMOV     r0,s0
-000060  4919              LDR      r1,|L2.200|
-000062  61c8              STR      r0,[r1,#0x1c]  ; Chassis_Wz
-;;;93     	if(Remote.sw1==Left_M&&Remote.sw2==Right_L)
-000064  4814              LDR      r0,|L2.184|
-000066  7a00              LDRB     r0,[r0,#8]  ; Remote
-000068  2803              CMP      r0,#3
-00006a  d110              BNE      |L2.142|
-00006c  4812              LDR      r0,|L2.184|
-00006e  7a40              LDRB     r0,[r0,#9]  ; Remote
-000070  2802              CMP      r0,#2
-000072  d10c              BNE      |L2.142|
-;;;94     	{
-;;;95     		//装球
-;;;96     		Ball_Reload(1);
-000074  2001              MOVS     r0,#1
-000076  f7fffffe          BL       Ball_Reload
-;;;97     		Ball_Reload(2);
-00007a  2002              MOVS     r0,#2
-00007c  f7fffffe          BL       Ball_Reload
-;;;98     		Ball_Reload(3);
-000080  2003              MOVS     r0,#3
-000082  f7fffffe          BL       Ball_Reload
-;;;99     		Ball_Reload(4);
-000086  2004              MOVS     r0,#4
-000088  f7fffffe          BL       Ball_Reload
-00008c  e013              B        |L2.182|
-                  |L2.142|
-;;;100    	}
-;;;101    	else if(Remote.sw1==Left_M&&Remote.sw2==Right_M)
-00008e  480a              LDR      r0,|L2.184|
-000090  7a00              LDRB     r0,[r0,#8]  ; Remote
-000092  2803              CMP      r0,#3
-000094  d10f              BNE      |L2.182|
-000096  4808              LDR      r0,|L2.184|
-000098  7a40              LDRB     r0,[r0,#9]  ; Remote
-00009a  2803              CMP      r0,#3
-00009c  d10b              BNE      |L2.182|
-;;;102    	{
-;;;103    		//放球
-;;;104    		Ball_Place(1);
-00009e  2001              MOVS     r0,#1
-0000a0  f7fffffe          BL       Ball_Place
-;;;105    		Ball_Place(2);
-0000a4  2002              MOVS     r0,#2
-0000a6  f7fffffe          BL       Ball_Place
-;;;106    		Ball_Place(3);
-0000aa  2003              MOVS     r0,#3
-0000ac  f7fffffe          BL       Ball_Place
-;;;107    		Ball_Place(4);
-0000b0  2004              MOVS     r0,#4
-0000b2  f7fffffe          BL       Ball_Place
-                  |L2.182|
-;;;108    	}
-;;;109    	if(Remote.sw1==Left_H&&Remote.sw2==Right_H)
-;;;110    	{
-;;;111    		//放杯
-;;;112    	}
-;;;113    }
-0000b6  bd10              POP      {r4,pc}
-;;;114    
+;;;93     {
+;;;94     	if(Remote.sw1==Left_L&&Remote.sw2==Right_L)
+000002  4864              LDR      r0,|L2.404|
+000004  7a00              LDRB     r0,[r0,#8]  ; Remote
+000006  2802              CMP      r0,#2
+000008  d134              BNE      |L2.116|
+00000a  4862              LDR      r0,|L2.404|
+00000c  7a40              LDRB     r0,[r0,#9]  ; Remote
+00000e  2802              CMP      r0,#2
+000010  d130              BNE      |L2.116|
+;;;95     	{
+;;;96     		Chassis_Vx.User = -1*(Remote.ch1/330.0f);
+000012  4860              LDR      r0,|L2.404|
+000014  f9b00000          LDRSH    r0,[r0,#0]  ; Remote
+000018  ee000a10          VMOV     s0,r0
+00001c  eef80ac0          VCVT.F32.S32 s1,s0
+000020  ed9f1a5d          VLDR     s2,|L2.408|
+000024  ee800a81          VDIV.F32 s0,s1,s2
+000028  eeff0a00          VMOV.F32 s1,#-1.00000000
+00002c  ee200a20          VMUL.F32 s0,s0,s1
+000030  ee100a10          VMOV     r0,s0
+000034  4959              LDR      r1,|L2.412|
+000036  61c8              STR      r0,[r1,#0x1c]  ; Chassis_Vx
+;;;97     		Chassis_Vy.User = Remote.ch2/330.0f;
+000038  4856              LDR      r0,|L2.404|
+00003a  f9b00002          LDRSH    r0,[r0,#2]  ; Remote
+00003e  ee000a10          VMOV     s0,r0
+000042  eef80ac0          VCVT.F32.S32 s1,s0
+000046  ed9f1a54          VLDR     s2,|L2.408|
+00004a  ee800a81          VDIV.F32 s0,s1,s2
+00004e  ee100a10          VMOV     r0,s0
+000052  4953              LDR      r1,|L2.416|
+000054  61c8              STR      r0,[r1,#0x1c]  ; Chassis_Vy
+;;;98     		Chassis_Wz.User = Remote.ch3/16.0f;
+000056  484f              LDR      r0,|L2.404|
+000058  f9b00004          LDRSH    r0,[r0,#4]  ; Remote
+00005c  ee000a10          VMOV     s0,r0
+000060  eef80ac0          VCVT.F32.S32 s1,s0
+000064  eeb31a00          VMOV.F32 s2,#16.00000000
+000068  ee800a81          VDIV.F32 s0,s1,s2
+00006c  ee100a10          VMOV     r0,s0
+000070  494c              LDR      r1,|L2.420|
+000072  61c8              STR      r0,[r1,#0x1c]  ; Chassis_Wz
+                  |L2.116|
+;;;99     	}
+;;;100    	if(Remote.ch1==-660&&Remote.ch2==-660&&Remote.ch3==660&&Remote.ch4==-660)  //下内八放球
+000074  4847              LDR      r0,|L2.404|
+000076  f9b00000          LDRSH    r0,[r0,#0]  ; Remote
+00007a  f5107f25          CMN      r0,#0x294
+00007e  d13d              BNE      |L2.252|
+000080  4844              LDR      r0,|L2.404|
+000082  f9b00002          LDRSH    r0,[r0,#2]  ; Remote
+000086  f5107f25          CMN      r0,#0x294
+00008a  d137              BNE      |L2.252|
+00008c  4841              LDR      r0,|L2.404|
+00008e  f9b00004          LDRSH    r0,[r0,#4]  ; Remote
+000092  f5b07f25          CMP      r0,#0x294
+000096  d131              BNE      |L2.252|
+000098  483e              LDR      r0,|L2.404|
+00009a  f9b00006          LDRSH    r0,[r0,#6]  ; Remote
+00009e  f5107f25          CMN      r0,#0x294
+0000a2  d12b              BNE      |L2.252|
+;;;101    	{
+;;;102    		//装球
+;;;103    		Ball_Reload(1);
+0000a4  2001              MOVS     r0,#1
+0000a6  f7fffffe          BL       Ball_Reload
+;;;104    		Ball_Reload(2);
+0000aa  2002              MOVS     r0,#2
+0000ac  f7fffffe          BL       Ball_Reload
+;;;105    		Ball_Reload(3);
+0000b0  2003              MOVS     r0,#3
+0000b2  f7fffffe          BL       Ball_Reload
+;;;106    		Ball_Reload(4);
+0000b6  2004              MOVS     r0,#4
+0000b8  f7fffffe          BL       Ball_Reload
+;;;107    		vTaskDelay(500);
+0000bc  f44f70fa          MOV      r0,#0x1f4
+0000c0  f7fffffe          BL       vTaskDelay
+;;;108    		Ball_Place(1);
+0000c4  2001              MOVS     r0,#1
+0000c6  f7fffffe          BL       Ball_Place
+;;;109    		Ball_Place(2);
+0000ca  2002              MOVS     r0,#2
+0000cc  f7fffffe          BL       Ball_Place
+;;;110    		Ball_Place(3);
+0000d0  2003              MOVS     r0,#3
+0000d2  f7fffffe          BL       Ball_Place
+;;;111    		Ball_Place(4);
+0000d6  2004              MOVS     r0,#4
+0000d8  f7fffffe          BL       Ball_Place
+;;;112    		while(1)
+0000dc  e00c              B        |L2.248|
+                  |L2.222|
+;;;113    		{
+;;;114    			if(Remote.ch1==0&&Remote.ch2==0&&Remote.ch3==0&&Remote.ch4==0)
+0000de  482d              LDR      r0,|L2.404|
+0000e0  8800              LDRH     r0,[r0,#0]  ; Remote
+0000e2  b948              CBNZ     r0,|L2.248|
+0000e4  482b              LDR      r0,|L2.404|
+0000e6  8840              LDRH     r0,[r0,#2]  ; Remote
+0000e8  b930              CBNZ     r0,|L2.248|
+0000ea  482a              LDR      r0,|L2.404|
+0000ec  8880              LDRH     r0,[r0,#4]  ; Remote
+0000ee  b918              CBNZ     r0,|L2.248|
+0000f0  4828              LDR      r0,|L2.404|
+0000f2  88c0              LDRH     r0,[r0,#6]  ; Remote
+0000f4  b900              CBNZ     r0,|L2.248|
+;;;115    				break;
+0000f6  e000              B        |L2.250|
+                  |L2.248|
+0000f8  e7f1              B        |L2.222|
+                  |L2.250|
+0000fa  e049              B        |L2.400|
+                  |L2.252|
+;;;116    		}
+;;;117    	}
+;;;118    	else if(Remote.ch1==660&&Remote.ch2==-660&&Remote.ch3==-660&&Remote.ch4==-660)  //下外八放杯
+0000fc  4825              LDR      r0,|L2.404|
+0000fe  f9b00000          LDRSH    r0,[r0,#0]  ; Remote
+000102  f5b07f25          CMP      r0,#0x294
+000106  d143              BNE      |L2.400|
+000108  4822              LDR      r0,|L2.404|
+00010a  f9b00002          LDRSH    r0,[r0,#2]  ; Remote
+00010e  f5107f25          CMN      r0,#0x294
+000112  d13d              BNE      |L2.400|
+000114  481f              LDR      r0,|L2.404|
+000116  f9b00004          LDRSH    r0,[r0,#4]  ; Remote
+00011a  f5107f25          CMN      r0,#0x294
+00011e  d137              BNE      |L2.400|
+000120  481c              LDR      r0,|L2.404|
+000122  f9b00006          LDRSH    r0,[r0,#6]  ; Remote
+000126  f5107f25          CMN      r0,#0x294
+00012a  d131              BNE      |L2.400|
+;;;119    	{
+;;;120    		//放杯
+;;;121    		Total_Angle_Sum+=49152;
+00012c  481e              LDR      r0,|L2.424|
+00012e  6800              LDR      r0,[r0,#0]  ; Total_Angle_Sum
+000130  f5004040          ADD      r0,r0,#0xc000
+000134  491c              LDR      r1,|L2.424|
+000136  6008              STR      r0,[r1,#0]  ; Total_Angle_Sum
+;;;122    		Ball_Angle.User=Total_Angle_Sum;
+000138  4608              MOV      r0,r1
+00013a  ed900a00          VLDR     s0,[r0,#0]
+00013e  eeb80a40          VCVT.F32.U32 s0,s0
+000142  ee100a10          VMOV     r0,s0
+000146  4919              LDR      r1,|L2.428|
+000148  61c8              STR      r0,[r1,#0x1c]  ; Ball_Angle
+;;;123    		vTaskDelay(500);
+00014a  f44f70fa          MOV      r0,#0x1f4
+00014e  f7fffffe          BL       vTaskDelay
+;;;124    		Total_Angle_Sum+=49152;
+000152  4815              LDR      r0,|L2.424|
+000154  6800              LDR      r0,[r0,#0]  ; Total_Angle_Sum
+000156  f5004040          ADD      r0,r0,#0xc000
+00015a  4913              LDR      r1,|L2.424|
+00015c  6008              STR      r0,[r1,#0]  ; Total_Angle_Sum
+;;;125    		Ball_Angle.User=Total_Angle_Sum;
+00015e  4608              MOV      r0,r1
+000160  ed900a00          VLDR     s0,[r0,#0]
+000164  eeb80a40          VCVT.F32.U32 s0,s0
+000168  ee100a10          VMOV     r0,s0
+00016c  490f              LDR      r1,|L2.428|
+00016e  61c8              STR      r0,[r1,#0x1c]  ; Ball_Angle
+;;;126    		while(1)
+000170  e00c              B        |L2.396|
+                  |L2.370|
+;;;127    		{
+;;;128    			if(Remote.ch1==0&&Remote.ch2==0&&Remote.ch3==0&&Remote.ch4==0)
+000172  4808              LDR      r0,|L2.404|
+000174  8800              LDRH     r0,[r0,#0]  ; Remote
+000176  b948              CBNZ     r0,|L2.396|
+000178  4806              LDR      r0,|L2.404|
+00017a  8840              LDRH     r0,[r0,#2]  ; Remote
+00017c  b930              CBNZ     r0,|L2.396|
+00017e  4805              LDR      r0,|L2.404|
+000180  8880              LDRH     r0,[r0,#4]  ; Remote
+000182  b918              CBNZ     r0,|L2.396|
+000184  4803              LDR      r0,|L2.404|
+000186  88c0              LDRH     r0,[r0,#6]  ; Remote
+000188  b900              CBNZ     r0,|L2.396|
+;;;129    				break;
+00018a  e000              B        |L2.398|
+                  |L2.396|
+00018c  e7f1              B        |L2.370|
+                  |L2.398|
+00018e  bf00              NOP      
+                  |L2.400|
+;;;130    		}
+;;;131    	}
+;;;132    }
+000190  bd10              POP      {r4,pc}
+;;;133    
                           ENDP
 
-                  |L2.184|
+000192  0000              DCW      0x0000
+                  |L2.404|
                           DCD      Remote
-                  |L2.188|
-0000bc  43a50000          DCFS     0x43a50000 ; 330
-                  |L2.192|
+                  |L2.408|
+000198  43a50000          DCFS     0x43a50000 ; 330
+                  |L2.412|
                           DCD      Chassis_Vx
-                  |L2.196|
+                  |L2.416|
                           DCD      Chassis_Vy
-                  |L2.200|
+                  |L2.420|
                           DCD      Chassis_Wz
+                  |L2.424|
+                          DCD      Total_Angle_Sum
+                  |L2.428|
+                          DCD      Ball_Angle
 
                           AREA ||i.PID_Init||, CODE, READONLY, ALIGN=2
 
                   PID_Init PROC
-;;;29     }
-;;;30     void PID_Init(void)         //初始化PID值
+;;;23     }
+;;;24     void PID_Init(void)         //初始化PID值
 000000  b510              PUSH     {r4,lr}
-;;;31     {
-;;;32     	Set_PID(&PID1,M2006_SPEED);
+;;;25     {
+;;;26     	Set_PID(&PID1,M2006_SPEED);
 000002  2100              MOVS     r1,#0
-000004  4843              LDR      r0,|L3.276|
+000004  483b              LDR      r0,|L3.244|
 000006  f7fffffe          BL       Set_PID
-;;;33     	Set_PID(&PID2,M2006_SPEED);
+;;;27     	Set_PID(&PID2,M2006_SPEED);
 00000a  2100              MOVS     r1,#0
-00000c  4842              LDR      r0,|L3.280|
+00000c  483a              LDR      r0,|L3.248|
 00000e  f7fffffe          BL       Set_PID
-;;;34     	Set_PID(&PID3,M2006_SPEED);
+;;;28     	Set_PID(&PID3,M2006_SPEED);
 000012  2100              MOVS     r1,#0
-000014  4841              LDR      r0,|L3.284|
+000014  4839              LDR      r0,|L3.252|
 000016  f7fffffe          BL       Set_PID
-;;;35     	Set_PID(&PID4,M2006_SPEED);
+;;;29     	Set_PID(&PID4,M2006_SPEED);
 00001a  2100              MOVS     r1,#0
-00001c  4840              LDR      r0,|L3.288|
+00001c  4838              LDR      r0,|L3.256|
 00001e  f7fffffe          BL       Set_PID
-;;;36     	Set_PID(&PID5,M3510_SPEED);
-000022  2104              MOVS     r1,#4
-000024  483f              LDR      r0,|L3.292|
+;;;30     	Set_PID(&PID5,M2006_SPEED);
+000022  2100              MOVS     r1,#0
+000024  4837              LDR      r0,|L3.260|
 000026  f7fffffe          BL       Set_PID
-;;;37     	Set_PID(&PID6,M3510_SPEED);
-00002a  2104              MOVS     r1,#4
-00002c  483e              LDR      r0,|L3.296|
+;;;31     	Set_PID(&Ball_Angle,CASCADE_ANGLE);
+00002a  2106              MOVS     r1,#6
+00002c  4836              LDR      r0,|L3.264|
 00002e  f7fffffe          BL       Set_PID
-;;;38     	Set_PID(&PID7,M2006_SPEED);
-000032  2100              MOVS     r1,#0
-000034  483d              LDR      r0,|L3.300|
-000036  f7fffffe          BL       Set_PID
-;;;39     	Set_PID(&PID8,M2006_SPEED);
-00003a  2100              MOVS     r1,#0
-00003c  483c              LDR      r0,|L3.304|
-00003e  f7fffffe          BL       Set_PID
-;;;40     	Set_PID(&Ball2_Angle,CASCADE_ANGLE);
-000042  2106              MOVS     r1,#6
-000044  483b              LDR      r0,|L3.308|
-000046  f7fffffe          BL       Set_PID
-;;;41     	Set_PID(&Ball1_Angle,CASCADE_ANGLE);
-00004a  2106              MOVS     r1,#6
-00004c  483a              LDR      r0,|L3.312|
-00004e  f7fffffe          BL       Set_PID
-;;;42     	
-;;;43     	Chassis_Vx.Kp=1;
-000052  eeb70a00          VMOV.F32 s0,#1.00000000
-000056  ee100a10          VMOV     r0,s0
-00005a  4938              LDR      r1,|L3.316|
-00005c  6008              STR      r0,[r1,#0]  ; Chassis_Vx
-;;;44     	Chassis_Vy.Kp=1;
-00005e  eeb70a00          VMOV.F32 s0,#1.00000000
+;;;32     	
+;;;33     	Chassis_Vx.Kp=1;
+000032  eeb70a00          VMOV.F32 s0,#1.00000000
+000036  ee100a10          VMOV     r0,s0
+00003a  4934              LDR      r1,|L3.268|
+00003c  6008              STR      r0,[r1,#0]  ; Chassis_Vx
+;;;34     	Chassis_Vy.Kp=1;
+00003e  eeb70a00          VMOV.F32 s0,#1.00000000
+000042  ee100a10          VMOV     r0,s0
+000046  4932              LDR      r1,|L3.272|
+000048  6008              STR      r0,[r1,#0]  ; Chassis_Vy
+;;;35     	Chassis_Vy.Maxinum=2;
+00004a  eeb00a00          VMOV.F32 s0,#2.00000000
+00004e  ee100a10          VMOV     r0,s0
+000052  6248              STR      r0,[r1,#0x24]  ; Chassis_Vy
+;;;36     	Chassis_Vy.Minium=-2;
+000054  eeb80a00          VMOV.F32 s0,#-2.00000000
+000058  ee100a10          VMOV     r0,s0
+00005c  6288              STR      r0,[r1,#0x28]  ; Chassis_Vy
+;;;37     	Chassis_Vx.Maxinum=2;
+00005e  eeb00a00          VMOV.F32 s0,#2.00000000
 000062  ee100a10          VMOV     r0,s0
-000066  4936              LDR      r1,|L3.320|
-000068  6008              STR      r0,[r1,#0]  ; Chassis_Vy
-;;;45     	Chassis_Vy.Maxinum=2;
-00006a  eeb00a00          VMOV.F32 s0,#2.00000000
+000066  4929              LDR      r1,|L3.268|
+000068  6248              STR      r0,[r1,#0x24]  ; Chassis_Vx
+;;;38     	Chassis_Vx.Minium=-2;
+00006a  eeb80a00          VMOV.F32 s0,#-2.00000000
 00006e  ee100a10          VMOV     r0,s0
-000072  6248              STR      r0,[r1,#0x24]  ; Chassis_Vy
-;;;46     	Chassis_Vy.Minium=-2;
-000074  eeb80a00          VMOV.F32 s0,#-2.00000000
+000072  6288              STR      r0,[r1,#0x28]  ; Chassis_Vx
+;;;39     
+;;;40     	Chassis_Wz.Kp=1.7;
+000074  ed9f0a27          VLDR     s0,|L3.276|
 000078  ee100a10          VMOV     r0,s0
-00007c  6288              STR      r0,[r1,#0x28]  ; Chassis_Vy
-;;;47     	Chassis_Vx.Maxinum=2;
-00007e  eeb00a00          VMOV.F32 s0,#2.00000000
-000082  ee100a10          VMOV     r0,s0
-000086  492d              LDR      r1,|L3.316|
-000088  6248              STR      r0,[r1,#0x24]  ; Chassis_Vx
-;;;48     	Chassis_Vx.Minium=-2;
-00008a  eeb80a00          VMOV.F32 s0,#-2.00000000
+00007c  4926              LDR      r1,|L3.280|
+00007e  6008              STR      r0,[r1,#0]  ; Chassis_Wz
+;;;41     	Chassis_Wz.Ki=0;
+000080  ed9f0a26          VLDR     s0,|L3.284|
+000084  ee100a10          VMOV     r0,s0
+000088  6048              STR      r0,[r1,#4]  ; Chassis_Wz
+;;;42     	Chassis_Wz.Kd=5;
+00008a  eeb10a04          VMOV.F32 s0,#5.00000000
 00008e  ee100a10          VMOV     r0,s0
-000092  6288              STR      r0,[r1,#0x28]  ; Chassis_Vx
-;;;49     
-;;;50     	Chassis_Wz.Kp=1.7;
-000094  ed9f0a2b          VLDR     s0,|L3.324|
+000092  6088              STR      r0,[r1,#8]  ; Chassis_Wz
+;;;43     	Chassis_Wz.I_Sum_Max=0;
+000094  ed9f0a21          VLDR     s0,|L3.284|
 000098  ee100a10          VMOV     r0,s0
-00009c  492a              LDR      r1,|L3.328|
-00009e  6008              STR      r0,[r1,#0]  ; Chassis_Wz
-;;;51     	Chassis_Wz.Ki=0;
-0000a0  ed9f0a2a          VLDR     s0,|L3.332|
-0000a4  ee100a10          VMOV     r0,s0
-0000a8  6048              STR      r0,[r1,#4]  ; Chassis_Wz
-;;;52     	Chassis_Wz.Kd=5;
-0000aa  eeb10a04          VMOV.F32 s0,#5.00000000
-0000ae  ee100a10          VMOV     r0,s0
-0000b2  6088              STR      r0,[r1,#8]  ; Chassis_Wz
-;;;53     	Chassis_Wz.I_Sum_Max=20;
-0000b4  eeb30a04          VMOV.F32 s0,#20.00000000
-0000b8  ee100a10          VMOV     r0,s0
-0000bc  62c8              STR      r0,[r1,#0x2c]  ; Chassis_Wz
-;;;54     	Chassis_Wz.Maxinum=30;
-0000be  eeb30a0e          VMOV.F32 s0,#30.00000000
+00009c  62c8              STR      r0,[r1,#0x2c]  ; Chassis_Wz
+;;;44     	Chassis_Wz.Maxinum=30;
+00009e  eeb30a0e          VMOV.F32 s0,#30.00000000
+0000a2  ee100a10          VMOV     r0,s0
+0000a6  6248              STR      r0,[r1,#0x24]  ; Chassis_Wz
+;;;45     	Chassis_Wz.Minium=-30;
+0000a8  eebb0a0e          VMOV.F32 s0,#-30.00000000
+0000ac  ee100a10          VMOV     r0,s0
+0000b0  6288              STR      r0,[r1,#0x28]  ; Chassis_Wz
+;;;46     	
+;;;47     	Chassis_Victor_y.Kp=1;
+0000b2  eeb70a00          VMOV.F32 s0,#1.00000000
+0000b6  ee100a10          VMOV     r0,s0
+0000ba  4919              LDR      r1,|L3.288|
+0000bc  6008              STR      r0,[r1,#0]  ; Chassis_Victor_y
+;;;48     	Chassis_Victor_y.Maxinum=1.5;
+0000be  eeb70a08          VMOV.F32 s0,#1.50000000
 0000c2  ee100a10          VMOV     r0,s0
-0000c6  6248              STR      r0,[r1,#0x24]  ; Chassis_Wz
-;;;55     	Chassis_Wz.Minium=-30;
-0000c8  eebb0a0e          VMOV.F32 s0,#-30.00000000
+0000c6  6248              STR      r0,[r1,#0x24]  ; Chassis_Victor_y
+;;;49     	Chassis_Victor_y.Minium=-1.5;
+0000c8  eebf0a08          VMOV.F32 s0,#-1.50000000
 0000cc  ee100a10          VMOV     r0,s0
-0000d0  6288              STR      r0,[r1,#0x28]  ; Chassis_Wz
-;;;56     	
-;;;57     	Chassis_Victor_y.Kp=1;
+0000d0  6288              STR      r0,[r1,#0x28]  ; Chassis_Victor_y
+;;;50     
+;;;51     	Chassis_Victor_x.Kp=1;
 0000d2  eeb70a00          VMOV.F32 s0,#1.00000000
 0000d6  ee100a10          VMOV     r0,s0
-0000da  491d              LDR      r1,|L3.336|
-0000dc  6008              STR      r0,[r1,#0]  ; Chassis_Victor_y
-;;;58     	Chassis_Victor_y.Maxinum=0.5;
-0000de  eeb60a00          VMOV.F32 s0,#0.50000000
+0000da  4912              LDR      r1,|L3.292|
+0000dc  6008              STR      r0,[r1,#0]  ; Chassis_Victor_x
+;;;52     	Chassis_Victor_x.Maxinum=1.5;
+0000de  eeb70a08          VMOV.F32 s0,#1.50000000
 0000e2  ee100a10          VMOV     r0,s0
-0000e6  6248              STR      r0,[r1,#0x24]  ; Chassis_Victor_y
-;;;59     	Chassis_Victor_y.Minium=-0.5;
-0000e8  eebe0a00          VMOV.F32 s0,#-0.50000000
+0000e6  6248              STR      r0,[r1,#0x24]  ; Chassis_Victor_x
+;;;53     	Chassis_Victor_x.Minium=-1.5;
+0000e8  eebf0a08          VMOV.F32 s0,#-1.50000000
 0000ec  ee100a10          VMOV     r0,s0
-0000f0  6288              STR      r0,[r1,#0x28]  ; Chassis_Victor_y
-;;;60     
-;;;61     	Chassis_Victor_x.Kp=1;
-0000f2  eeb70a00          VMOV.F32 s0,#1.00000000
-0000f6  ee100a10          VMOV     r0,s0
-0000fa  4916              LDR      r1,|L3.340|
-0000fc  6008              STR      r0,[r1,#0]  ; Chassis_Victor_x
-;;;62     	Chassis_Victor_x.Maxinum=0.5;
-0000fe  eeb60a00          VMOV.F32 s0,#0.50000000
-000102  ee100a10          VMOV     r0,s0
-000106  6248              STR      r0,[r1,#0x24]  ; Chassis_Victor_x
-;;;63     	Chassis_Victor_x.Minium=-0.5;
-000108  eebe0a00          VMOV.F32 s0,#-0.50000000
-00010c  ee100a10          VMOV     r0,s0
-000110  6288              STR      r0,[r1,#0x28]  ; Chassis_Victor_x
-;;;64     }
-000112  bd10              POP      {r4,pc}
-;;;65     void Remote_Control(void* pvParameters)              //周期处理遥控器接收值
+0000f0  6288              STR      r0,[r1,#0x28]  ; Chassis_Victor_x
+;;;54     }
+0000f2  bd10              POP      {r4,pc}
+;;;55     
                           ENDP
 
-                  |L3.276|
+                  |L3.244|
                           DCD      PID1
-                  |L3.280|
+                  |L3.248|
                           DCD      PID2
-                  |L3.284|
+                  |L3.252|
                           DCD      PID3
-                  |L3.288|
+                  |L3.256|
                           DCD      PID4
-                  |L3.292|
+                  |L3.260|
                           DCD      PID5
-                  |L3.296|
-                          DCD      PID6
-                  |L3.300|
-                          DCD      PID7
-                  |L3.304|
-                          DCD      PID8
-                  |L3.308|
-                          DCD      Ball2_Angle
-                  |L3.312|
-                          DCD      Ball1_Angle
-                  |L3.316|
+                  |L3.264|
+                          DCD      Ball_Angle
+                  |L3.268|
                           DCD      Chassis_Vx
-                  |L3.320|
+                  |L3.272|
                           DCD      Chassis_Vy
-                  |L3.324|
-000144  3fd9999a          DCFS     0x3fd9999a ; 1.7000000476837158
-                  |L3.328|
+                  |L3.276|
+000114  3fd9999a          DCFS     0x3fd9999a ; 1.7000000476837158
+                  |L3.280|
                           DCD      Chassis_Wz
-                  |L3.332|
-00014c  00000000          DCFS     0x00000000 ; 0
-                  |L3.336|
+                  |L3.284|
+00011c  00000000          DCFS     0x00000000 ; 0
+                  |L3.288|
                           DCD      Chassis_Victor_y
-                  |L3.340|
+                  |L3.292|
                           DCD      Chassis_Victor_x
 
                           AREA ||i.Remote_Control||, CODE, READONLY, ALIGN=2
 
                   Remote_Control PROC
-;;;64     }
-;;;65     void Remote_Control(void* pvParameters)              //周期处理遥控器接收值
+;;;56     
+;;;57     void Remote_Control(void* pvParameters)              //周期处理遥控器接收值
 000000  e00f              B        |L4.34|
                   |L4.2|
-;;;66     {
-;;;67     	while(1)
-;;;68     	{
-;;;69     		if(Remote.sw1==Left_L&&Remote.sw2==Right_L)
+;;;58     {
+;;;59     	while(1)
+;;;60     	{
+;;;61     		
+;;;62     		if(Remote.sw1==Left_H&&Remote.sw2==Right_H)
 000002  4808              LDR      r0,|L4.36|
 000004  7a00              LDRB     r0,[r0,#8]  ; Remote
-000006  2802              CMP      r0,#2
+000006  2801              CMP      r0,#1
 000008  d106              BNE      |L4.24|
 00000a  4806              LDR      r0,|L4.36|
 00000c  7a40              LDRB     r0,[r0,#9]  ; Remote
-00000e  2802              CMP      r0,#2
+00000e  2801              CMP      r0,#1
 000010  d102              BNE      |L4.24|
-;;;70     		{
-;;;71     			Auto_Mode();
+;;;63     		{
+;;;64     			Auto_Mode();
 000012  f7fffffe          BL       Auto_Mode
 000016  e001              B        |L4.28|
                   |L4.24|
-;;;72     		}
-;;;73     		else
-;;;74     		{
-;;;75     			Manual_Mode();
+;;;65     		}
+;;;66     		else
+;;;67     		{
+;;;68     			Manual_Mode();
 000018  f7fffffe          BL       Manual_Mode
                   |L4.28|
-;;;76     		}
-;;;77     		vTaskDelay(5);
+;;;69     		}
+;;;70     		vTaskDelay(5);
 00001c  2005              MOVS     r0,#5
 00001e  f7fffffe          BL       vTaskDelay
                   |L4.34|
 000022  e7ee              B        |L4.2|
-;;;78     
-;;;79     	}
-;;;80     }
-;;;81     
+;;;71     	}
+;;;72     }
+;;;73     
                           ENDP
 
                   |L4.36|
@@ -347,130 +477,126 @@
 000000  b510              PUSH     {r4,lr}
 ;;;9      {
 ;;;10     	PID_Renew(&PID1,moto_chassis[0].speed_rpm);
-000002  483c              LDR      r0,|L5.244|
+000002  482f              LDR      r0,|L5.192|
 000004  f9b00000          LDRSH    r0,[r0,#0]  ; moto_chassis
 000008  ee000a90          VMOV     s1,r0
 00000c  eef80ae0          VCVT.F32.S32 s1,s1
 000010  eeb00a60          VMOV.F32 s0,s1
-000014  4838              LDR      r0,|L5.248|
+000014  482b              LDR      r0,|L5.196|
 000016  f7fffffe          BL       PID_Renew
 ;;;11     	PID_Renew(&PID2,moto_chassis[1].speed_rpm);
-00001a  4836              LDR      r0,|L5.244|
+00001a  4829              LDR      r0,|L5.192|
 00001c  f9b00028          LDRSH    r0,[r0,#0x28]  ; moto_chassis
 000020  ee000a90          VMOV     s1,r0
 000024  eef80ae0          VCVT.F32.S32 s1,s1
 000028  eeb00a60          VMOV.F32 s0,s1
-00002c  4833              LDR      r0,|L5.252|
+00002c  4826              LDR      r0,|L5.200|
 00002e  f7fffffe          BL       PID_Renew
 ;;;12     	PID_Renew(&PID3,moto_chassis[2].speed_rpm);
-000032  4830              LDR      r0,|L5.244|
+000032  4823              LDR      r0,|L5.192|
 000034  f9b00050          LDRSH    r0,[r0,#0x50]  ; moto_chassis
 000038  ee000a90          VMOV     s1,r0
 00003c  eef80ae0          VCVT.F32.S32 s1,s1
 000040  eeb00a60          VMOV.F32 s0,s1
-000044  482e              LDR      r0,|L5.256|
+000044  4821              LDR      r0,|L5.204|
 000046  f7fffffe          BL       PID_Renew
 ;;;13     	PID_Renew(&PID4,moto_chassis[3].speed_rpm);
-00004a  482a              LDR      r0,|L5.244|
+00004a  481d              LDR      r0,|L5.192|
 00004c  f9b00078          LDRSH    r0,[r0,#0x78]  ; moto_chassis
 000050  ee000a90          VMOV     s1,r0
 000054  eef80ae0          VCVT.F32.S32 s1,s1
 000058  eeb00a60          VMOV.F32 s0,s1
-00005c  4829              LDR      r0,|L5.260|
+00005c  481c              LDR      r0,|L5.208|
 00005e  f7fffffe          BL       PID_Renew
 ;;;14     	PID_Renew(&PID5,moto_chassis[4].speed_rpm);
-000062  4824              LDR      r0,|L5.244|
+000062  4817              LDR      r0,|L5.192|
 000064  f9b000a0          LDRSH    r0,[r0,#0xa0]  ; moto_chassis
 000068  ee000a90          VMOV     s1,r0
 00006c  eef80ae0          VCVT.F32.S32 s1,s1
 000070  eeb00a60          VMOV.F32 s0,s1
-000074  4824              LDR      r0,|L5.264|
+000074  4817              LDR      r0,|L5.212|
 000076  f7fffffe          BL       PID_Renew
-;;;15     	PID_Renew(&PID6,moto_chassis[5].speed_rpm);
-00007a  481e              LDR      r0,|L5.244|
-00007c  f9b000c8          LDRSH    r0,[r0,#0xc8]  ; moto_chassis
+;;;15     	PID_Renew(&Ball_Angle,moto_chassis[4].total_angle);
+00007a  4811              LDR      r0,|L5.192|
+00007c  f8d000b2          LDR      r0,[r0,#0xb2]
 000080  ee000a90          VMOV     s1,r0
 000084  eef80ae0          VCVT.F32.S32 s1,s1
 000088  eeb00a60          VMOV.F32 s0,s1
-00008c  481f              LDR      r0,|L5.268|
+00008c  4812              LDR      r0,|L5.216|
 00008e  f7fffffe          BL       PID_Renew
-;;;16     	PID_Renew(&PID7,moto_chassis[6].speed_rpm);
-000092  4818              LDR      r0,|L5.244|
-000094  f9b000f0          LDRSH    r0,[r0,#0xf0]  ; moto_chassis
-000098  ee000a90          VMOV     s1,r0
-00009c  eef80ae0          VCVT.F32.S32 s1,s1
-0000a0  eeb00a60          VMOV.F32 s0,s1
-0000a4  481a              LDR      r0,|L5.272|
-0000a6  f7fffffe          BL       PID_Renew
-;;;17     	PID_Renew(&PID8,moto_chassis[7].speed_rpm);
-0000aa  4812              LDR      r0,|L5.244|
-0000ac  f9b00118          LDRSH    r0,[r0,#0x118]  ; moto_chassis
-0000b0  ee000a90          VMOV     s1,r0
-0000b4  eef80ae0          VCVT.F32.S32 s1,s1
-0000b8  eeb00a60          VMOV.F32 s0,s1
-0000bc  4815              LDR      r0,|L5.276|
-0000be  f7fffffe          BL       PID_Renew
-;;;18     	PID_Renew(&Ball2_Angle,moto_chassis[7].total_angle);
-0000c2  480c              LDR      r0,|L5.244|
-0000c4  f8d0012a          LDR      r0,[r0,#0x12a]
-0000c8  ee000a90          VMOV     s1,r0
-0000cc  eef80ae0          VCVT.F32.S32 s1,s1
-0000d0  eeb00a60          VMOV.F32 s0,s1
-0000d4  4810              LDR      r0,|L5.280|
-0000d6  f7fffffe          BL       PID_Renew
-;;;19     	PID_Renew(&Ball1_Angle,moto_chassis[6].total_angle);
-0000da  4806              LDR      r0,|L5.244|
-0000dc  f8d00102          LDR      r0,[r0,#0x102]
-0000e0  ee000a90          VMOV     s1,r0
-0000e4  eef80ae0          VCVT.F32.S32 s1,s1
-0000e8  eeb00a60          VMOV.F32 s0,s1
-0000ec  480b              LDR      r0,|L5.284|
-0000ee  f7fffffe          BL       PID_Renew
-;;;20     	
-;;;21     //	Chassis_Vy.Collect[1] = Chassis_Vy.Collect[0];
-;;;22     //	Chassis_Vy.Collect[0] = VO_Y;
-;;;23     //	Chassis_Vx.Collect[1] = Chassis_Vx.Collect[0];
-;;;24     //	Chassis_Vx.Collect[0] = VO_X;
-;;;25     //	Chassis_Wz.Collect[1] = Chassis_Wz.Collect[0];
-;;;26     //	Chassis_Wz.Collect[0] = single_gyro.angle;
-;;;27     //	Chassis_Victor_y.Collect[1] = Chassis_Victor_y.Collect[0];
-;;;28     //	Chassis_Victor_y.Collect[0] = VectorO_Y;
-;;;29     }
-0000f2  bd10              POP      {r4,pc}
-;;;30     void PID_Init(void)         //初始化PID值
+;;;16     	
+;;;17     	if(Receive_Package2.Start_Flag==1)
+000092  4812              LDR      r0,|L5.220|
+000094  7880              LDRB     r0,[r0,#2]  ; Receive_Package2
+000096  2801              CMP      r0,#1
+000098  d111              BNE      |L5.190|
+;;;18     	{
+;;;19     		PID_Renew(&Chassis_Wz,Mult_Vector_WZ);
+00009a  4811              LDR      r0,|L5.224|
+00009c  ed900a00          VLDR     s0,[r0,#0]
+0000a0  4810              LDR      r0,|L5.228|
+0000a2  f7fffffe          BL       PID_Renew
+;;;20     		PID_Renew(&Chassis_Victor_y,Mult_Vector_Y);
+0000a6  4810              LDR      r0,|L5.232|
+0000a8  ed900a00          VLDR     s0,[r0,#0]
+0000ac  480f              LDR      r0,|L5.236|
+0000ae  f7fffffe          BL       PID_Renew
+;;;21     		PID_Renew(&Chassis_Victor_x,Mult_Vector_X);
+0000b2  480f              LDR      r0,|L5.240|
+0000b4  ed900a00          VLDR     s0,[r0,#0]
+0000b8  480e              LDR      r0,|L5.244|
+0000ba  f7fffffe          BL       PID_Renew
+                  |L5.190|
+;;;22     	}
+;;;23     }
+0000be  bd10              POP      {r4,pc}
+;;;24     void PID_Init(void)         //初始化PID值
                           ENDP
 
-                  |L5.244|
+                  |L5.192|
                           DCD      moto_chassis
-                  |L5.248|
+                  |L5.196|
                           DCD      PID1
-                  |L5.252|
+                  |L5.200|
                           DCD      PID2
-                  |L5.256|
+                  |L5.204|
                           DCD      PID3
-                  |L5.260|
+                  |L5.208|
                           DCD      PID4
-                  |L5.264|
+                  |L5.212|
                           DCD      PID5
-                  |L5.268|
-                          DCD      PID6
-                  |L5.272|
-                          DCD      PID7
-                  |L5.276|
-                          DCD      PID8
-                  |L5.280|
-                          DCD      Ball2_Angle
-                  |L5.284|
-                          DCD      Ball1_Angle
+                  |L5.216|
+                          DCD      Ball_Angle
+                  |L5.220|
+                          DCD      Receive_Package2
+                  |L5.224|
+                          DCD      Mult_Vector_WZ
+                  |L5.228|
+                          DCD      Chassis_Wz
+                  |L5.232|
+                          DCD      Mult_Vector_Y
+                  |L5.236|
+                          DCD      Chassis_Victor_y
+                  |L5.240|
+                          DCD      Mult_Vector_X
+                  |L5.244|
+                          DCD      Chassis_Victor_x
+
+                          AREA ||.data||, DATA, ALIGN=2
+
+                  Total_Angle_Sum
+                          DCD      0x00000000
+                  last_cnt
+000004  00                DCB      0x00
 
 ;*** Start embedded assembler ***
 
 #line 1 "App\\Tasks.c"
 	AREA ||.rev16_text||, CODE
 	THUMB
-	EXPORT |__asm___7_Tasks_c_453c068e____REV16|
+	EXPORT |__asm___7_Tasks_c_22b6a9d7____REV16|
 #line 388 ".\\CORE\\cmsis_armcc.h"
-|__asm___7_Tasks_c_453c068e____REV16| PROC
+|__asm___7_Tasks_c_22b6a9d7____REV16| PROC
 #line 389
 
  rev16 r0, r0
@@ -478,9 +604,9 @@
 	ENDP
 	AREA ||.revsh_text||, CODE
 	THUMB
-	EXPORT |__asm___7_Tasks_c_453c068e____REVSH|
+	EXPORT |__asm___7_Tasks_c_22b6a9d7____REVSH|
 #line 402
-|__asm___7_Tasks_c_453c068e____REVSH| PROC
+|__asm___7_Tasks_c_22b6a9d7____REVSH| PROC
 #line 403
 
  revsh r0, r0
@@ -488,9 +614,9 @@
 	ENDP
 	AREA ||.rrx_text||, CODE
 	THUMB
-	EXPORT |__asm___7_Tasks_c_453c068e____RRX|
+	EXPORT |__asm___7_Tasks_c_22b6a9d7____RRX|
 #line 587
-|__asm___7_Tasks_c_453c068e____RRX| PROC
+|__asm___7_Tasks_c_22b6a9d7____RRX| PROC
 #line 588
 
  rrx r0, r0

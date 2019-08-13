@@ -31,14 +31,10 @@ extern PID_Structure PID2;
 extern PID_Structure PID3;
 extern PID_Structure PID4;
 extern PID_Structure PID5;
-extern PID_Structure PID6;
-extern PID_Structure PID7;
-extern PID_Structure PID8;
 extern PID_Structure Chassis_Wz;
 extern PID_Structure Chassis_Vx;
 extern PID_Structure Chassis_Vy;
 extern PID_Structure Chassis_Victor_y;
 extern PID_Structure Chassis_Victor_x;
-extern PID_Structure Ball2_Angle;
-extern PID_Structure Ball1_Angle;
+extern PID_Structure Ball_Angle;
 #endif

@@ -3,14 +3,14 @@ N#include "Mecanum_Wheel.h"
 L 1 "App\Mecanum_Wheel.h" 1
 N#ifndef __MECANUM_WHEEL_H__
 N#define __MECANUM_WHEEL_H__
-N//#define A 0.0211f
-N//#define B 0.0160f
-N//#define WHEEL_R 0.0152f
-N//#define PI 3.14159265358979f
-N#define A 0.0125f
-N#define B 0.0125f
-N#define WHEEL_R 0.0075f
+N#define A 0.0211f
+N#define B 0.0160f
+N#define WHEEL_R 0.0152f
 N#define PI 3.14159265358979f
+N//#define A 0.0125f
+N//#define B 0.0125f
+N//#define WHEEL_R 0.0075f
+N//#define PI 3.14159265358979f
 Nvoid Set_Speed(float speed_x,float speed_y,float speed_w);
 Nvoid Speed_To_Wheel(float vx_set, float vy_set,float wz_set,float wheel_speed[4]);
 N#endif
@@ -52,14 +52,14 @@ X#if(1 == 1)
 N
 Nvoid Speed_To_Wheel(float vx_set, float vy_set,float wz_set,float wheel_speed[4])
 N{
-N	  wheel_speed[0] = (float)(+vx_set - vy_set + wz_set*(A+B))/(WHEEL_R * PI)*36*6;
-X	  wheel_speed[0] = (float)(+vx_set - vy_set + wz_set*(0.0125f+0.0125f))/(0.0075f * 3.14159265358979f)*36*6;
-N    wheel_speed[1] = (float)(+vx_set + vy_set + wz_set*(A+B))/(WHEEL_R * PI)*36*6;
-X    wheel_speed[1] = (float)(+vx_set + vy_set + wz_set*(0.0125f+0.0125f))/(0.0075f * 3.14159265358979f)*36*6;
-N    wheel_speed[2] = (float)(-vx_set + vy_set + wz_set*(A+B))/(WHEEL_R * PI)*36*6;
-X    wheel_speed[2] = (float)(-vx_set + vy_set + wz_set*(0.0125f+0.0125f))/(0.0075f * 3.14159265358979f)*36*6;
-N    wheel_speed[3] = (float)(-vx_set - vy_set + wz_set*(A+B))/(WHEEL_R * PI)*36*6;
-X    wheel_speed[3] = (float)(-vx_set - vy_set + wz_set*(0.0125f+0.0125f))/(0.0075f * 3.14159265358979f)*36*6;
+N	  wheel_speed[0] = (float)(+vx_set - vy_set + wz_set*(A+B))/(WHEEL_R * PI)*19*6;
+X	  wheel_speed[0] = (float)(+vx_set - vy_set + wz_set*(0.0211f+0.0160f))/(0.0152f * 3.14159265358979f)*19*6;
+N    wheel_speed[1] = (float)(+vx_set + vy_set + wz_set*(A+B))/(WHEEL_R * PI)*19*6;
+X    wheel_speed[1] = (float)(+vx_set + vy_set + wz_set*(0.0211f+0.0160f))/(0.0152f * 3.14159265358979f)*19*6;
+N    wheel_speed[2] = (float)(-vx_set + vy_set + wz_set*(A+B))/(WHEEL_R * PI)*19*6;
+X    wheel_speed[2] = (float)(-vx_set + vy_set + wz_set*(0.0211f+0.0160f))/(0.0152f * 3.14159265358979f)*19*6;
+N    wheel_speed[3] = (float)(-vx_set - vy_set + wz_set*(A+B))/(WHEEL_R * PI)*19*6;
+X    wheel_speed[3] = (float)(-vx_set - vy_set + wz_set*(0.0211f+0.0160f))/(0.0152f * 3.14159265358979f)*19*6;
 N}
 N
 N#endif	//#if(USING_MECANUM_WHEEL == 1)

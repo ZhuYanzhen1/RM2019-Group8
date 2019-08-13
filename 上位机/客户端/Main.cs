@@ -491,8 +491,21 @@ namespace 客户端
 
         private void button1_Click(object sender, EventArgs e)
         {
+            byte Cup_Num,Ball_Num,Start_Flag;
             byte[] Transmmit_Data=new byte[8];
-            Transmmit_Data[0] = 2;
+            Cup_Num = 1;
+            Ball_Num = 2;
+            Start_Flag = 0;
+            short X_Pos = Convert.ToInt16((Convert.ToSingle(x_e_pos.Text.ToString()) * 1000) / 1);
+            short Y_Pos = Convert.ToInt16((Convert.ToSingle(y_e_pos.Text.ToString()) * 1000) / 1);
+            Transmmit_Data[0] = Ball_Num;
+            Transmmit_Data[1] = Cup_Num;
+            Transmmit_Data[2] = Start_Flag;
+
+            Transmmit_Data[4] = Convert.ToByte(X_Pos >> 8);
+            Transmmit_Data[5] = Convert.ToByte(X_Pos & 0x00ff);
+            Transmmit_Data[6] = Convert.ToByte(Y_Pos >> 8);
+            Transmmit_Data[7] = Convert.ToByte(Y_Pos & 0x00ff);
             Send_Data(0, Transmmit_Data);
         }
     }
